@@ -56,6 +56,7 @@ bool ModuleWindow::Init()
 		}
 
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		SDL_GLContext gl_context = SDL_GL_CreateContext(window);
 
 		if(window == NULL)
 		{
