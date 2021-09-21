@@ -1,5 +1,5 @@
+#pragma once
 #include "Module.h"
-#include "Globals.h"
 
 class ModuleInterface : public Module
 {
@@ -11,5 +11,12 @@ public:
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
+
+
+public:
+
+	bool show_demo_window = false;
+	bool show_another_window = false;
+
 
 };
