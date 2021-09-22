@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\himarbg\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;C:\Users\himarbg\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;C:\Users\himarbg\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -87,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
