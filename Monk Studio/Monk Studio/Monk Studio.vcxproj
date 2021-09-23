@@ -73,13 +73,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
     <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
-    <LibraryPath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86</LibraryPath>
     <ExcludePath>$(CommonExcludePath);$(VC_ExecutablePath_x86);$(VC_LibraryPath_x86)</ExcludePath>
     <IncludePath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\himarbg\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;C:\Users\himarbg\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;C:\Users\himarbg\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
