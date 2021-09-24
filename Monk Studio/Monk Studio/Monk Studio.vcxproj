@@ -78,8 +78,8 @@
     <IncludePath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\External Libraries\SDL_mixer\include;$(ProjectDir)\External Libraries\SDL\include;$(ProjectDir)\External Libraries\imgui;$(ProjectDir)\External Libraries\glut;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\External Libraries\SDL_mixer\libx86;$(ProjectDir)\External Libraries\SDL\libx86;$(ProjectDir)\External Libraries\glut;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
