@@ -2,9 +2,11 @@
 #define __ModuleAudio_H__
 
 #include "Module.h"
-#include "External Libraries/SDL_mixer/include/SDL_mixer.h"
+#include <vector>
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
+
+using namespace std;
 
 class ModuleAudio : public Module
 {
@@ -26,9 +28,6 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
 private:
-
-	Mix_Music*			music;
-	p2List<Mix_Chunk*>	fx;
 };
 
 #endif // __ModuleAudio_H__

@@ -78,8 +78,8 @@
     <IncludePath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)External Libraries\MathGeoLib\include;$(ProjectDir)\External Libraries\SDL_mixer\include;$(ProjectDir)\External Libraries\SDL\include;$(ProjectDir)\External Libraries\imgui;$(ProjectDir)\External Libraries\glut;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\External Libraries\MathGeoLib\libx86\MGDebug;$(ProjectDir)\External Libraries\SDL_mixer\libx86;$(ProjectDir)\External Libraries\SDL\libx86;$(ProjectDir)\External Libraries\glut;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)External Libraries\MathGeoLib\include;$(ProjectDir)\External Libraries\SDL\include;$(ProjectDir)\External Libraries\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\External Libraries\MathGeoLib\libx86\MGDebug;$(ProjectDir)\External Libraries\SDL\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,7 +92,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;glut32.lib;SDL2_mixer.lib;MathGeoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;MathGeoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -189,9 +189,6 @@
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="p2DynArray.h" />
-    <ClInclude Include="p2List.h" />
-    <ClInclude Include="p2Point.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
