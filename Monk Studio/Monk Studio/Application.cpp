@@ -122,7 +122,7 @@ bool Application::CleanUp()
 	int i = item->size() - 1;
 	while (item != NULL && ret == true && i >= 0)
 	{
-		ret = item->at(i)->PreUpdate(dt);
+		ret = item->at(i)->CleanUp();
 		i--;
 	}
 	return ret;
