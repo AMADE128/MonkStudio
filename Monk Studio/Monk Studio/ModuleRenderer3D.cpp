@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "External Libraries/Glew/include/glew.h"
 #include "External Libraries/SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -31,68 +32,68 @@ bool ModuleRenderer3D::Init()
 	
 	if(ret == true)
 	{
-		////Use Vsync
-		//if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-		//	LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		//Use Vsync
+		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
+			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
-		////Initialize Projection Matrix
-		//glMatrixMode(GL_PROJECTION);
-		//glLoadIdentity();
+		//Initialize Projection Matrix
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
 
-		////Check for error
-		//GLenum error = glGetError();
-		//if(error != GL_NO_ERROR)
-		//{
-		//	LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-		//	ret = false;
-		//}
+		//Check for error
+		GLenum error = glewInit();
+		if(GLEW_OK != error)
+		{
+			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			ret = false;
+		}
 
-		////Initialize Modelview Matrix
-		//glMatrixMode(GL_MODELVIEW);
-		//glLoadIdentity();
+		//Initialize Modelview Matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 
-		////Check for error
-		//error = glGetError();
-		//if(error != GL_NO_ERROR)
-		//{
-		//	LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-		//	ret = false;
-		//}
-		//
-		//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-		//glClearDepth(1.0f);
-		//
-		////Initialize clear color
-		//glClearColor(0.f, 0.f, 0.f, 1.f);
+		//Check for error
+		error = glewInit();
+		if (GLEW_OK != error)
+		{
+			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			ret = false;
+		}
+		
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		glClearDepth(1.0f);
+		
+		//Initialize clear color
+		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		////Check for error
-		//error = glGetError();
-		//if(error != GL_NO_ERROR)
-		//{
-		//	LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-		//	ret = false;
-		//}
-		//
-		//GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-		//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
-		//
-		//lights[0].ref = GL_LIGHT0;
-		//lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
-		//lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
-		//lights[0].SetPos(0.0f, 0.0f, 2.5f);
-		//lights[0].Init();
-		//
-		//GLfloat MaterialAmbient[] = {1.0f, 1.0f, 1.0f, 1.0f};
-		//glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
+		//Check for error
+		error = glewInit();
+		if (GLEW_OK != error)
+		{
+			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			ret = false;
+		}
+		
+		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
+		
+		lights[0].ref = GL_LIGHT0;
+		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
+		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
+		lights[0].SetPos(0.0f, 0.0f, 2.5f);
+		lights[0].Init();
+		
+		GLfloat MaterialAmbient[] = {1.0f, 1.0f, 1.0f, 1.0f};
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
 
-		//GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-		//glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
-		//
-		//glEnable(GL_DEPTH_TEST);
-		//glEnable(GL_CULL_FACE);
-		//lights[0].Active(true);
-		//glEnable(GL_LIGHTING);
-		//glEnable(GL_COLOR_MATERIAL);
+		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
+		
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		lights[0].Active(true);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_COLOR_MATERIAL);
 	}
 
 	// Projection matrix for
