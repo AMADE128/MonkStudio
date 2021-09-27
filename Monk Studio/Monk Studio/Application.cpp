@@ -9,6 +9,7 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	imgui = new ModuleInterface(this);
+	editor = new ModuleEditor(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -25,6 +26,9 @@ Application::Application()
 
 	//Interface
 	AddModule(imgui);
+
+	//Editor
+	AddModule(editor);
 
 	// Renderer last!
 	AddModule(renderer3D);
@@ -131,4 +135,9 @@ bool Application::CleanUp()
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+const void Application::RequestBrowser(const char link)
+{
+	ShellExecuteA(NULL, "open", "https://",NULL, NULL, SW_SHOWNORMAL);
 }
