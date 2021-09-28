@@ -49,8 +49,8 @@ update_status ModuleInterface::PostUpdate(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
+	/*if (show_demo_window)
+		ImGui::ShowDemoWindow(&show_demo_window);*/
 
 	static float f = 0.0f;
 	static int counter = 0;
@@ -68,7 +68,10 @@ update_status ModuleInterface::PostUpdate(float dt)
 			{
 				show_console = !show_console;
 			}
-			if (ImGui::MenuItem("Configuration", "4")) { /* Do stuff */ }
+			if (ImGui::MenuItem("Configuration", "4", show_configuration))
+			{
+				show_configuration = !show_configuration;
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -84,9 +87,9 @@ update_status ModuleInterface::PostUpdate(float dt)
 		ImGui::EndMainMenuBar();
 	}
 
-	if (show_console)
+	if (show_configuration)
 	{
-		ImGui::Begin("Configuration", NULL, ImGuiWindowFlags_MenuBar);
+		ImGui::Begin("Configuration", &show_configuration);
 		if (ImGui::CollapsingHeader("Application"))
 		{
 
@@ -111,12 +114,10 @@ update_status ModuleInterface::PostUpdate(float dt)
 		ImGui::End();
 	}
 
-	if (show_another_window)
+	if (show_console)
 	{
-		ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+		ImGui::Begin("Console", &show_console);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
 		ImGui::Text("Hello from another window!");
-		if (ImGui::Button("Close Me"))
-			show_another_window = false;
 		ImGui::End();
 	}
 

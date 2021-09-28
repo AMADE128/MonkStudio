@@ -3,8 +3,6 @@
 #include "Globals.h"
 
 #include "External Libraries/SDL/include/SDL.h"
-#pragma comment( lib, "External Libraries/SDL/libx86/SDL2.lib" )
-#pragma comment( lib, "External Libraries/SDL/libx86/SDL2main.lib" )
 
 enum main_states
 {

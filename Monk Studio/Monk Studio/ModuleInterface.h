@@ -16,8 +16,8 @@ public:
 public:
 
 	bool show_demo_window = false;
-	bool show_another_window = false;
 	bool show_console = true;
+	bool show_configuration = true;
 
 
 };
