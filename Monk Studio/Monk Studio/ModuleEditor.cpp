@@ -7,6 +7,8 @@
 #include "ModuleWindow.h"
 #include "Globals.h"
 
+#include <stdio.h>
+
 //Constructor
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -40,6 +42,27 @@ bool ModuleEditor::Init()
 
 update_status ModuleEditor::PreUpdate(float dt)
 {
+	if (fps_log.size() > 99)
+	{
+		fps_log.clear();
+	}
+	fps_log.push_back(ImGui::GetIO().Framerate);
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleEditor::Update(float dt)
+{
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		show_console = !show_console;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		show_configuration = !show_configuration;
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -97,10 +120,14 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGui::Begin("Configuration", &show_configuration);
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			if (ImGui::InputText("App name", wTitle, 32))
-			{
+			if (ImGui::InputText("App name", wTitle, 32, ImGuiInputTextFlags_EnterReturnsTrue))
 				SDL_SetWindowTitle(App->window->window, wTitle);
-			}
+
+			if (ImGui::InputText("Organization", tTitle, 32, ImGuiInputTextFlags_EnterReturnsTrue)) { /* Do something if needed */ }
+
+			sprintf_s(fpsTitle, 25, "Framerate %.1f", fps_log[fps_log.size()-1]);
+			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, fpsTitle, 0.0f, 100.0f, ImVec2(310, 100));
+
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
@@ -118,7 +145,6 @@ update_status ModuleEditor::PostUpdate(float dt)
 		{
 
 		}
-		//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 	}
 
