@@ -1,5 +1,4 @@
 #pragma once
-#include "Globals.h"
 #include "Module.h"
 
 class ModuleEditor : public Module
@@ -9,8 +8,16 @@ public:
 	~ModuleEditor();
 
 	bool Init();
+	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
-	update_status Update(float dt);
 	bool CleanUp();
+
+public:
+
+	bool show_demo_window;
+	bool show_console = true;
+	bool show_configuration = true;
+
+	char wTitle[32] = "";
 
 };

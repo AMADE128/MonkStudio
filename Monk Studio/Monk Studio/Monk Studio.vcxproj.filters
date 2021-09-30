@@ -75,9 +75,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleInterface.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="External Libraries\imgui\imgui.cpp">
       <Filter>Source Files\Containers\imgui</Filter>
     </ClCompile>
@@ -145,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleInterface.h">
-      <Filter>Source Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="External Libraries\imgui\imconfig.h">
       <Filter>Source Files\Containers\imgui</Filter>
