@@ -37,7 +37,6 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
-	const void RequestBrowser(const char link);
 
 
 private:

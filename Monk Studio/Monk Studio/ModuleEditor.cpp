@@ -82,9 +82,9 @@ update_status ModuleEditor::PostUpdate(float dt)
 			{
 				show_demo_window = !show_demo_window;
 			}
-			if (ImGui::MenuItem("Documentation")) { /* Do stuff */ }
-			if (ImGui::MenuItem("Download Latest")) { /* Do stuff */ }
-			if (ImGui::MenuItem("Report a Bug")) { /* Do stuff */ }
+			if (ImGui::MenuItem("Documentation")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/wiki", 0, 0, SW_SHOW); }
+			if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/releases", 0, 0, SW_SHOW); }
+			if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/issues", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("About")) { /* Do stuff */ }
 			ImGui::EndMenu();
 		}

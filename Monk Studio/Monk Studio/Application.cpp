@@ -132,8 +132,3 @@ void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
 }
-
-const void Application::RequestBrowser(const char link)
-{
-	ShellExecuteA(NULL, "open", "https://",NULL, NULL, SW_SHOWNORMAL);
-}
