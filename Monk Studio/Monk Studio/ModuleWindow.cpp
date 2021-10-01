@@ -58,7 +58,6 @@ bool ModuleWindow::Init()
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 		gl_context = new SDL_GLContext(SDL_GL_CreateContext(window));
 		SDL_GL_MakeCurrent(window, gl_context);
-
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -93,4 +92,36 @@ bool ModuleWindow::CleanUp()
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
+}
+
+void ModuleWindow::SetFullscreen(bool fullscreen)
+{
+	if (fullscreen == true)
+	{
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	}
+	else SDL_SetWindowFullscreen(window, 0);
+}
+
+void ModuleWindow::SetBorderless(bool borderless)
+{
+	if (borderless == true)
+	{
+		SDL_SetWindowBordered(window, SDL_FALSE);
+	}
+	else SDL_SetWindowBordered(window, SDL_TRUE);
+}
+
+void ModuleWindow::SetFullscreenDesktop(bool fullscreendesk)
+{
+	if (fullscreendesk == true)
+	{
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	}
+	else SDL_SetWindowFullscreen(window, 0);
+}
+
+void ModuleWindow::SetResizable(bool resize)
+{
+	resizable = resize;
 }

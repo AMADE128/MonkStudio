@@ -20,6 +20,9 @@ public:
 	bool show_demo_window;
 	bool show_console = true;
 	bool show_configuration = true;
+	bool fullscreen = false;
+	bool borderless = false;
+	bool fulldeskscreen = false;
 
 	char wTitle[32] = "";
 	char tTitle[32] = "";

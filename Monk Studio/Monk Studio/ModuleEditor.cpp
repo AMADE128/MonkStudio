@@ -132,6 +132,17 @@ update_status ModuleEditor::PostUpdate(float dt)
 		if (ImGui::CollapsingHeader("Window"))
 		{
 
+			if (ImGui::Checkbox("Fullscreen", &fullscreen))
+				App->window->SetFullscreen(fullscreen);
+
+			if (ImGui::Checkbox("Resizable", &App->window->resizable))
+				App->window->SetResizable(App->window->resizable);
+
+			if (ImGui::Checkbox("Borderless", &borderless))
+				App->window->SetBorderless(borderless);
+
+			if (ImGui::Checkbox("Full Desktop", &fulldeskscreen))
+				App->window->SetFullscreenDesktop(fulldeskscreen);
 		}
 		if (ImGui::CollapsingHeader("File System"))
 		{
