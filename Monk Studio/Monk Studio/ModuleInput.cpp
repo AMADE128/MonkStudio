@@ -115,10 +115,7 @@ update_status ModuleInput::PreUpdate(float dt)
 						App->window->w = e.window.data1;
 						App->window->h = e.window.data2;
 					}
-					else
-					{
-						SDL_SetWindowSize(App->window->window, App->window->w, App->window->h);
-					}
+					else SDL_SetWindowSize(App->window->window, App->window->w, App->window->h);
 			}
 		}
 	}

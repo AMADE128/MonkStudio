@@ -23,6 +23,7 @@ public:
 	void SetResizable(bool set);
 	void SetBorderless(bool set);
 	void SetFullscreenDesktop(bool set);
+	int GetRefreshRate(SDL_Window* Window);
 
 	int width = 0; int height = 0;
 

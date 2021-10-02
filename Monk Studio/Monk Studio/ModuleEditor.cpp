@@ -117,6 +117,8 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	if (show_configuration)
 	{
+		ImGuiStyle* style = &ImGui::GetStyle();
+		style->Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 		ImGui::Begin("Configuration", &show_configuration);
 		if (ImGui::CollapsingHeader("Application"))
 		{
@@ -131,6 +133,30 @@ update_status ModuleEditor::PostUpdate(float dt)
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
+			float value = SDL_GetWindowBrightness(App->window->window);
+			if (ImGui::SliderFloat("Brightness", &value, 0, 1))
+			{
+				SDL_SetWindowBrightness(App->window->window, value);
+			}
+			
+			int w, h;
+			SDL_GetWindowSize(App->window->window, &w, &h);
+			if (ImGui::SliderInt("Width", &w, 640, 1920))
+			{
+				SDL_SetWindowSize(App->window->window, w, h);
+			}
+			
+			if (ImGui::SliderInt("Height", &h, 480, 1080))
+			{
+				SDL_SetWindowSize(App->window->window, w, h);
+			}
+
+			ImGui::Text("Refresh Rate:");
+			ImGui::SameLine();
+
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%.d", App->window->GetRefreshRate(App->window->window));
+			ImGui::PopStyleColor();
 
 			if (ImGui::Checkbox("Fullscreen", &fullscreen))
 				App->window->SetFullscreen(fullscreen);
@@ -147,14 +173,108 @@ update_status ModuleEditor::PostUpdate(float dt)
 		if (ImGui::CollapsingHeader("File System"))
 		{
 
+			ImGui::Text("Base Path:");
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%s", SDL_GetBasePath());
+			ImGui::PopStyleColor();
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
-
+			ImGui::Text("Mouse Position:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d, %d", App->input->GetMouseX(), App->input->GetMouseY());
+			ImGui::PopStyleColor();
+			ImGui::Text("Mouse Motion:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d, %d", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
+			ImGui::PopStyleColor();
+			ImGui::Text("Mouse Wheel:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d", App->input->GetMouseZ());
+			ImGui::PopStyleColor();
 		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
+			SDL_version linked;
+			SDL_GetVersion(&linked);
+			ImGui::Text("SDL Version:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d.%d.%d", linked.major, linked.minor, linked.patch);
+			ImGui::PopStyleColor();
 
+			ImGui::Separator();
+
+			ImGui::Text("CPUs:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+			ImGui::PopStyleColor();
+			ImGui::Text("System Ram:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%dGb", SDL_GetSystemRAM()/1000);
+			ImGui::PopStyleColor();
+
+			ImGui::Text("Caps:");
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			if (SDL_HasRDTSC())
+			{
+				ImGui::SameLine(); ImGui::Text("RDTSC,");
+			}
+			if (SDL_HasMMX())
+			{
+				ImGui::SameLine(); ImGui::Text("MMX,");
+			}
+			if (SDL_HasSSE())
+			{
+				ImGui::SameLine(); ImGui::Text("SSE,");
+			}
+			if (SDL_HasSSE2())
+			{
+				ImGui::SameLine(); ImGui::Text("SSE2,");
+			}
+			if (SDL_HasSSE3())
+			{
+				ImGui::SameLine(); ImGui::Text("SSE3,");
+			}
+			if (SDL_HasSSE41())
+			{
+				ImGui::SameLine(); ImGui::Text("SSE41,");
+			}
+			if (SDL_HasAVX())
+			{
+				ImGui::SameLine(); ImGui::Text("AVX,");
+			}
+			if (SDL_HasAVX2())
+			{
+				ImGui::SameLine(); ImGui::Text("AVX2,");
+			}
+			if (SDL_Has3DNow())
+			{
+				ImGui::SameLine(); ImGui::Text("3DNow,");
+			}
+			if (SDL_HasAltiVec())
+			{
+				ImGui::SameLine(); ImGui::Text("AltiVec,");
+			}
+			ImGui::PopStyleColor();
+
+			ImGui::Separator();
+
+			ImGui::Text("GPU:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%s", glGetString(GL_RENDERER));
+			ImGui::PopStyleColor();
+			ImGui::Text("Brand:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%s", glGetString(GL_VENDOR));
+			ImGui::PopStyleColor();
 		}
 		ImGui::End();
 	}
