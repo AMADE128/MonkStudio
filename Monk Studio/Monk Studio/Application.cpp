@@ -109,7 +109,6 @@ update_status Application::Update()
 		ret = item->at(i)->PostUpdate(dt);
 		i++;
 	}
-
 	FinishUpdate();
 	return ret;
 }
