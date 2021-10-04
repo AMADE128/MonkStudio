@@ -20,7 +20,7 @@ public:
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-	ModuleEditor* imgui;
+	ModuleEditor* editor;
 
 
 private:

@@ -73,6 +73,9 @@ bool ModuleRenderer3D::Init()
 			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
+
+		GLenum err = glewInit();
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);

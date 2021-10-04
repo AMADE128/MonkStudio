@@ -3,7 +3,6 @@
 #include "External Libraries/imgui/imgui.h"
 #include "External Libraries/imgui/imgui_impl_sdl.h"
 #include "External Libraries/imgui/imgui_impl_opengl2.h"
-#include "External Libraries/SDL/include/SDL_opengl.h"
 #include "ModuleWindow.h"
 #include "Globals.h"
 
@@ -288,10 +287,6 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	return UPDATE_CONTINUE;
 }
