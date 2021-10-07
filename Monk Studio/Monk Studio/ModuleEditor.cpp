@@ -83,11 +83,13 @@ update_status ModuleEditor::PostUpdate(float dt)
 	{
 		if (ImGui::BeginMenu("File"))
 		{
+			LOG("Open File");
 			if (ImGui::MenuItem("Quit", "ESC")) return UPDATE_STOP;
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
 		{
+			LOG("Open View");
 			if (ImGui::MenuItem("Console", "1", show_console))
 			{
 				show_console = !show_console;
@@ -281,7 +283,10 @@ update_status ModuleEditor::PostUpdate(float dt)
 	if (show_console)
 	{
 		ImGui::Begin("Console", &show_console);
-		ImGui::Text("Hello from another window!");
+		for (int i = 0; i < engineExternal->window->console.size(); i++)
+		{
+			ImGui::Text("%s", engineExternal->window->console.at(i));
+		}
 		ImGui::End();
 	}
 
@@ -302,4 +307,9 @@ bool ModuleEditor::CleanUp()
 	ImGui::DestroyContext();
 
 	return ret;
+}
+
+void ModuleEditor::LogToConsole(const char* txt)
+{
+	engineExternal->window->console.push_back(txt);
 }

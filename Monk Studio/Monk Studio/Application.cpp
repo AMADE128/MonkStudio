@@ -1,7 +1,11 @@
 #include "Application.h"
 
+extern Application* engineExternal = nullptr;
+
 Application::Application()
 {
+	engineExternal = this;
+
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);

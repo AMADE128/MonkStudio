@@ -1,5 +1,7 @@
 #pragma once
 #include "Module.h"
+#include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -14,6 +16,8 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
+
+	void LogToConsole(const char* txt);
 
 public:
 
