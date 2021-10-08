@@ -5,6 +5,7 @@
 #include "External Libraries/SDL/include/SDL.h"
 
 #include <vector>
+#include <string>
 #include <iostream>
 
 class Application;
@@ -42,7 +43,7 @@ public:
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
-	vector<const char*> console;
+	vector<std::string> console;
 };
 
 #endif // __ModuleWindow_H__

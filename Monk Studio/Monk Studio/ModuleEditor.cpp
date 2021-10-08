@@ -285,7 +285,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGui::Begin("Console", &show_console);
 		for (int i = 0; i < engineExternal->window->console.size(); i++)
 		{
-			ImGui::Text("%s", engineExternal->window->console.at(i));
+			ImGui::Text("%s", engineExternal->window->console.at(i).c_str());
 		}
 		ImGui::End();
 	}
@@ -311,5 +311,5 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::LogToConsole(const char* txt)
 {
-	engineExternal->window->console.push_back(txt);
+	engineExternal->window->console.push_back(std::string(txt));
 }
