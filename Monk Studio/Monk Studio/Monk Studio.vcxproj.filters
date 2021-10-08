@@ -99,9 +99,6 @@
     <ClCompile Include="ModuleEditor.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="JasonParser.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -171,9 +168,6 @@
       <Filter>Source Files\Containers\imgui</Filter>
     </ClInclude>
     <ClInclude Include="ModuleEditor.h">
-      <Filter>Source Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="JasonParser.h">
       <Filter>Source Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
