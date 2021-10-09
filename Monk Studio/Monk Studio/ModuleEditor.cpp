@@ -7,15 +7,22 @@
 #include "Globals.h"
 
 #include <stdio.h>
+#include <Psapi.h>
 
 //Constructor
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	fps_log.reserve(100);
+	ms_log.reserve(100);
+	memory_log.reserve(100);
 }
 
 // Destructor
 ModuleEditor::~ModuleEditor()
 {
+	fps_log.clear();
+	ms_log.clear();
+	memory_log.clear();
 }
 
 bool ModuleEditor::Init()
@@ -41,11 +48,6 @@ bool ModuleEditor::Init()
 
 update_status ModuleEditor::PreUpdate(float dt)
 {
-	if (fps_log.size() > 99)
-	{
-		fps_log.clear();
-	}
-	fps_log.push_back(ImGui::GetIO().Framerate);
 
 	return UPDATE_CONTINUE;
 }
@@ -67,6 +69,7 @@ update_status ModuleEditor::Update(float dt)
 
 update_status ModuleEditor::PostUpdate(float dt)
 {
+	UpdateProcessInfo(dt);
 
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -83,13 +86,11 @@ update_status ModuleEditor::PostUpdate(float dt)
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			LOG("Open File");
 			if (ImGui::MenuItem("Quit", "ESC")) return UPDATE_STOP;
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
 		{
-			LOG("Open View");
 			if (ImGui::MenuItem("Console", "1", show_console))
 			{
 				show_console = !show_console;
@@ -128,8 +129,14 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 			if (ImGui::InputText("Organization", tTitle, 32, ImGuiInputTextFlags_EnterReturnsTrue)) { /* Do something if needed */ }
 
-			sprintf_s(fpsTitle, 25, "Framerate %.1f", fps_log[fps_log.size()-1]);
-			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, fpsTitle, 0.0f, 100.0f, ImVec2(310, 100));
+			sprintf_s(fpsTitle, 25, "Framerate: %.1f", fps_log[fps_log.size()-1]);
+			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, fpsTitle, 0.0f, 200.0f, ImVec2(310, 100));
+
+			sprintf_s(msTitle, 25, "Miliseconds: %.1f", ms_log[ms_log.size() - 1]);
+			ImGui::PlotHistogram("##miliseconds", &ms_log[0], ms_log.size(), 0, msTitle, 0.0f, 100.0f, ImVec2(310, 100));
+			
+			sprintf_s(memoryTitle, 25, "Process Memory: %.1f", memory_log[memory_log.size() - 1]);
+			ImGui::PlotHistogram("##process memory", &memory_log[0], memory_log.size(), 0, memoryTitle, 0.0f, 200.0f, ImVec2(310, 100));
 
 		}
 		if (ImGui::CollapsingHeader("Window"))
@@ -294,6 +301,18 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleEditor::UpdateProcessInfo(float dt)
+{
+	PROCESS_MEMORY_COUNTERS_EX pmc;
+	DWORD ret = GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
+	float currentPrivate = pmc.PrivateUsage / 1000000;
+	float currentFPS = ImGui::GetIO().Framerate;
+	float currentMS = 1000 * dt;
+	FixVector(fps_log, currentFPS);
+	FixVector(ms_log, currentMS);
+	FixVector(memory_log, currentPrivate);
 }
 				
 			
