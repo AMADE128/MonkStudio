@@ -38,8 +38,12 @@ update_status ModuleSceneIntro::Update(float dt)
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
+
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
+
+	Sphere s(1, 36, 18);
+	s.Render();
 
 	p.Render();
 

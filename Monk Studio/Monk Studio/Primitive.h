@@ -2,6 +2,8 @@
 #pragma once
 #include "glmath.h"
 #include "Color.h"
+#include <vector>
+#include <cmath>
 
 enum PrimitiveTypes
 {
@@ -51,11 +53,36 @@ public:
 class Sphere : public Primitive
 {
 public:
-	Sphere();
-	Sphere(float radius);
+	Sphere(float radius = 1.0f, int sectorCount = 36, int stackCount = 18);
+	~Sphere() {}
+
+	void set(float radius, int sectorCount, int stackCount);
 	void InnerRender() const;
-public:
+private:
+	void buildVerticesFlat();
+	void buildInterleavedVertices();
+	void clearArrays();
+	void addVertex(float x, float y, float z);
+	void addTexCoord(float s, float t);
+	void addNormal(float x, float y, float z);
+	void addIndices(unsigned int i1, unsigned int i2, unsigned int i3);
+	std::vector<float> computeFaceNormal(float x1, float y1, float z1,
+										 float x2, float y2, float z2,
+										 float x3, float y3, float z3);
+	// memeber vars
 	float radius;
+	int sectorCount;                        // longitude, # of slices
+	int stackCount;                         // latitude, # of stacks
+	bool smooth;
+	std::vector<float> vertices;
+	std::vector<float> normals;
+	std::vector<float> texCoords;
+	std::vector<unsigned int> indices;
+	std::vector<unsigned int> lineIndices;
+
+	// interleaved
+	std::vector<float> interleavedVertices;
+	int interleavedStride;
 };
 
 // ============================================
