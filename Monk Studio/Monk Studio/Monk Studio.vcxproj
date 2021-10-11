@@ -73,9 +73,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
     <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
-    <LibraryPath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86;C:\Users\POL\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\Glew\libx86</LibraryPath>
+    <LibraryPath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\libx86;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\libx86;C:\Users\POL\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\Glew\libx86;C:\Users\POL\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\assimp\libx86</LibraryPath>
     <ExcludePath>$(CommonExcludePath);$(VC_ExecutablePath_x86);$(VC_LibraryPath_x86)</ExcludePath>
-    <IncludePath>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\POL\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\assimp\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL_mixer\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\SDL\include;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\glut;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(ProjectDir)\External Libraries\assimp\include;$(ProjectDir)\External Libraries\Glew\include;$(ProjectDir)\External Libraries\MathGeoLib\include;$(ProjectDir)\External Libraries\SDL\include;$(ProjectDir)\External Libraries\imgui;$(IncludePath)</IncludePath>
@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;C:\Users\POL\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +161,7 @@
     <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleEditor.cpp" />
+    <ClCompile Include="ModuleLoad.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleEditor.h" />
+    <ClInclude Include="ModuleLoad.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleWindow.h" />
