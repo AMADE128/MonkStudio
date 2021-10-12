@@ -92,6 +92,16 @@ public:
 	Cylinder();
 	Cylinder(float radius, float height);
 	void InnerRender() const;
+
+	std::vector<float> vertices;
+	std::vector<float> normals;
+	std::vector<float> texCoords;
+	std::vector<unsigned int> indices;
+	std::vector<unsigned int> lineIndices;
+
+	// interleaved
+	std::vector<float> interleavedVertices;
+	int interleavedStride;
 public:
 	float radius;
 	float height;

@@ -41,11 +41,10 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
-
-	Sphere s(1, 18, 9);
-	s.Render();
-
 	p.Render();
+
+	Cylinder c(1,2);
+	c.InnerRender();
 
 	return UPDATE_CONTINUE;
 }
