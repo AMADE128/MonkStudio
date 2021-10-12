@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Containers\imgui">
       <UniqueIdentifier>{076f0f60-8cd1-452c-868a-f73e5621956a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Containers\parson">
+      <UniqueIdentifier>{2c3dec06-affe-4e88-b244-b56e603dce94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="ModuleLoad.cpp">
       <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="External Libraries\parson\parson.c">
+      <Filter>Source Files\Containers\parson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="ModuleLoad.h">
       <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\parson\parson.h">
+      <Filter>Source Files\Containers\parson</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

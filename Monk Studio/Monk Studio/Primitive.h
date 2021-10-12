@@ -73,7 +73,6 @@ private:
 	float radius;
 	int sectorCount;                        // longitude, # of slices
 	int stackCount;                         // latitude, # of stacks
-	bool smooth;
 	std::vector<float> vertices;
 	std::vector<float> normals;
 	std::vector<float> texCoords;
@@ -89,10 +88,36 @@ private:
 class Cylinder : public Primitive
 {
 public:
-	Cylinder();
-	Cylinder(float radius, float height);
+	Cylinder(float baseRadius = 1.0f, float topRadius = 1.0f, float height = 1.0f,
+		int sectorCount = 36, int stackCount = 1);
+	~Cylinder() {}
+	void set(float baseRadius, float topRadius, float height,
+		int sectorCount, int stackCount);
 	void InnerRender() const;
+private:
+	// member functions
+	void clearArrays();
+	void buildVerticesFlat();
+	void buildInterleavedVertices();
+	void buildUnitCircleVertices();
+	void addVertex(float x, float y, float z);
+	void addNormal(float x, float y, float z);
+	void addTexCoord(float s, float t);
+	void addIndices(unsigned int i1, unsigned int i2, unsigned int i3);
+	std::vector<float> getSideNormals();
+	std::vector<float> computeFaceNormal(float x1, float y1, float z1,
+		float x2, float y2, float z2,
+		float x3, float y3, float z3);
 
+	// memeber vars
+	float baseRadius;
+	float topRadius;
+	float height;
+	int sectorCount;                        // # of slices
+	int stackCount;                         // # of stacks
+	unsigned int baseIndex;                 // starting index of base
+	unsigned int topIndex;                  // starting index of top
+	std::vector<float> unitCircleVertices;
 	std::vector<float> vertices;
 	std::vector<float> normals;
 	std::vector<float> texCoords;
@@ -102,9 +127,6 @@ public:
 	// interleaved
 	std::vector<float> interleavedVertices;
 	int interleavedStride;
-public:
-	float radius;
-	float height;
 };
 
 // ============================================
