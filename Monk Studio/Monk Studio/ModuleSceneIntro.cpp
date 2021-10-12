@@ -42,7 +42,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 
-	Sphere s(1, 36, 18);
+	Sphere s(1, 18, 9);
 	s.Render();
 
 	p.Render();
