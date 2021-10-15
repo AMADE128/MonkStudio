@@ -85,6 +85,11 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	float ms_max = (1000.0f / maxFPS);
+	float ms_now = ms_timer.Read();
+
+	if (ms_now < ms_max)
+		SDL_Delay((Uint32)(ms_max - ms_now)); // Delay to cap framerate
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

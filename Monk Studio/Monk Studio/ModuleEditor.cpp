@@ -163,6 +163,8 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 			if (ImGui::InputText("Organization", tTitle, 32, ImGuiInputTextFlags_EnterReturnsTrue)) { /* Do something if needed */ }
 
+			ImGui::SliderInt("Cap FPS", &App->maxFPS, 1, 60);
+
 			sprintf_s(fpsTitle, 25, "Framerate: %.1f", fps_log[fps_log.size()-1]);
 			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, fpsTitle, 0.0f, 200.0f, ImVec2(310, 100));
 

@@ -38,12 +38,14 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	int maxFPS = 60;
 
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
 };
 
 extern Application* engineExternal;
