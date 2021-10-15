@@ -333,11 +333,11 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	if (show_about)
 	{
-		ImGui::Begin("About Algo Engine", &show_about);
+		ImGui::Begin("About Monk Studio Engine", &show_about);
 		ImGui::Text("Version 0.1-alpha");
 		ImGui::Separator();
 		ImGui::Text("By Himar Bravo, Marc Pavon and Pol Vazquez for study purposes.\n"
-			"Algo Engine is licensed under the Public Domain, see LICENSE for more informaton.");
+			"Monk Studio Engine is licensed under the Public Domain, see LICENSE for more informaton.");
 		ImGui::NewLine();
 		//LIBRARIES USED(To update versions)
 		ImGui::Text("3rd Party Libraries used:");
