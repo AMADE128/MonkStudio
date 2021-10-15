@@ -74,6 +74,8 @@ bool ModuleWindow::Init()
 		GLenum err = glewInit();
 		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 
+		ShowWindow(::GetConsoleWindow(), SW_HIDE);
+
 		//Current hardware [!!!]DOESN'T WORK (RETURNS NULL)[!!!]
 		/*LOG("Vendor: %s", glGetString(GL_VENDOR));
 		LOG("Renderer: %s", glGetString(GL_RENDERER));

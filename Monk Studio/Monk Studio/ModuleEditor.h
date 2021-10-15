@@ -50,9 +50,17 @@ public:
 	bool show_demo_window;
 	bool show_console = true;
 	bool show_configuration = true;
+	bool show_about = false;
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fulldeskscreen = false;
+
+	//render propieties
+	bool depth_test = true;
+	bool cull_face = true;
+	bool lighting = true;
+	bool color_material = true;
+	bool texture_2d = true;
 
 	char wTitle[32] = "";
 	char tTitle[32] = "";

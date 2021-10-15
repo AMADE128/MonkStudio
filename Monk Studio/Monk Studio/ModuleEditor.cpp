@@ -89,6 +89,40 @@ update_status ModuleEditor::PostUpdate(float dt)
 			if (ImGui::MenuItem("Quit", "ESC")) return UPDATE_STOP;
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Render"))
+		{
+			if (ImGui::MenuItem("Depth Test", "", depth_test))
+			{
+				depth_test = !depth_test;
+				if (depth_test) glEnable(GL_DEPTH_TEST);
+				else glDisable(GL_DEPTH_TEST);
+			}
+			if (ImGui::MenuItem("Cull Face", "", cull_face))
+			{
+				cull_face = !cull_face;
+				if (cull_face) glEnable(GL_CULL_FACE);
+				else glDisable(GL_CULL_FACE);
+			}
+			if (ImGui::MenuItem("Lighting", "", lighting))
+			{
+				lighting = !lighting;
+				if (lighting) glEnable(GL_LIGHTING);
+				else glDisable(GL_LIGHTING);
+			}
+			if (ImGui::MenuItem("Color Material", "", color_material))
+			{
+				color_material = !color_material;
+				if (color_material) glEnable(GL_COLOR_MATERIAL);
+				else glDisable(GL_COLOR_MATERIAL);
+			}
+			if (ImGui::MenuItem("Textures", "", texture_2d))
+			{
+				texture_2d = !texture_2d;
+				if (depth_test) glEnable(GL_TEXTURE_2D);
+				else glDisable(GL_TEXTURE_2D);
+			}
+			ImGui::EndMenu();
+		}
 		if (ImGui::BeginMenu("View"))
 		{
 			if (ImGui::MenuItem("Console", "1", show_console))
@@ -110,7 +144,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 			if (ImGui::MenuItem("Documentation")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/wiki", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/releases", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/issues", 0, 0, SW_SHOW); }
-			if (ImGui::MenuItem("About")) { /* Do stuff */ }
+			if (ImGui::MenuItem("About")) { show_about = !show_about; }
 			ImGui::EndMenu();
 		}
 
@@ -294,6 +328,49 @@ update_status ModuleEditor::PostUpdate(float dt)
 		{
 			ImGui::Text("%s", engineExternal->window->console.at(i).c_str());
 		}
+		ImGui::End();
+	}
+
+	if (show_about)
+	{
+		ImGui::Begin("About Algo Engine", &show_about);
+		ImGui::Text("Version 0.1-alpha");
+		ImGui::Separator();
+		ImGui::Text("By Himar Bravo, Marc Pavon and Pol Vazquez for study purposes.\n"
+			"Algo Engine is licensed under the Public Domain, see LICENSE for more informaton.");
+		ImGui::NewLine();
+		//LIBRARIES USED(To update versions)
+		ImGui::Text("3rd Party Libraries used:");
+		ImGui::BulletText("SDL 2.0.6");
+		ImGui::BulletText("SDL Mixer 2.0.0");
+		ImGui::BulletText("ImGui 1.51");
+		ImGui::BulletText("MathGeoLib 1.5");
+		ImGui::BulletText("OpenGL 3.1");
+		ImGui::BulletText("Glew 2.0.0");
+		//MIT LICENSE
+		ImGui::NewLine();
+		ImGui::Text("License:");
+		ImGui::NewLine();
+		ImGui::Text("MIT License");
+		ImGui::NewLine();
+		ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy\n"
+			"of this software and associated documentation files (the 'Software'), to deal\n"
+			"in the Software without restriction, including without limitation the rights\n"
+			"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n"
+			"copies of the Software, and to permit persons to whom the Software is\n"
+			"furnished to do so, subject to the following conditions:\n");
+		ImGui::NewLine();
+		ImGui::Text("The above copyright notice and this permission notice shall be included in all\n"
+			"copies or substantial portions of the Software.\n");
+		ImGui::NewLine();
+		ImGui::Text("THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n"
+			"IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n"
+			"FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n"
+			"AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n"
+			"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
+			"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n"
+			"SOFTWARE.");
+
 		ImGui::End();
 	}
 
