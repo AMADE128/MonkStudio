@@ -44,12 +44,14 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	p.Render();
 
 	/*Cylinder c(1.0f, 1.0f, 2.0f, 36, 8);
+	c.transform.translate(2, 2, 2);
 	c.Render();*/
 
 	/*Cube c(1, 1, 1);
 	c.Render();*/
 
-	Pyramid py(2,2);
+	Pyramid py(2,2,4);
+	py.transform.translate(-2, -2, -2);
 	py.Render();
 
 
