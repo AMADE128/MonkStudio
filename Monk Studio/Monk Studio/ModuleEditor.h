@@ -15,6 +15,10 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
+	void MenuHelp();
+	void MenuView();
+	void MenuRender();
+	void MenuFile();
 	void UpdateProcessInfo(float dt);
 	bool CleanUp();
 
@@ -51,7 +55,10 @@ public:
 	bool show_console = true;
 	bool show_configuration = true;
 	bool show_about = false;
+	bool show_file = false;
 	bool show_render = false;
+	bool show_view = false;
+	bool show_help = false;
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fulldeskscreen = false;

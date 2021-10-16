@@ -86,69 +86,39 @@ update_status ModuleEditor::PostUpdate(float dt)
 	{
 		if (ImGui::BeginMenu("File"))
 		{
+			if (ImGui::MenuItem(":::::::::::::::"))
+			{
+				show_file = true;
+			}
+			MenuFile();
 			if (ImGui::MenuItem("Quit", "ESC")) return UPDATE_STOP;
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Render"))
 		{
-			if (ImGui::MenuItem(":::::::::::::::", "", show_render))
+			if (ImGui::MenuItem(":::::::::::::::"))
 			{
 				show_render = true;
 			}
-			if (ImGui::MenuItem("Depth Test", "", depth_test))
-			{
-				depth_test = !depth_test;
-				if (depth_test) glEnable(GL_DEPTH_TEST);
-				else glDisable(GL_DEPTH_TEST);
-			}
-			if (ImGui::MenuItem("Cull Face", "", cull_face))
-			{
-				cull_face = !cull_face;
-				if (cull_face) glEnable(GL_CULL_FACE);
-				else glDisable(GL_CULL_FACE);
-			}
-			if (ImGui::MenuItem("Lighting", "", lighting))
-			{
-				lighting = !lighting;
-				if (lighting) glEnable(GL_LIGHTING);
-				else glDisable(GL_LIGHTING);
-			}
-			if (ImGui::MenuItem("Color Material", "", color_material))
-			{
-				color_material = !color_material;
-				if (color_material) glEnable(GL_COLOR_MATERIAL);
-				else glDisable(GL_COLOR_MATERIAL);
-			}
-			if (ImGui::MenuItem("Textures", "", texture_2d))
-			{
-				texture_2d = !texture_2d;
-				if (texture_2d) glEnable(GL_TEXTURE_2D);
-				else glDisable(GL_TEXTURE_2D);
-			}
+			MenuRender();
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
 		{
-			if (ImGui::MenuItem("Console", "1", show_console))
+			if (ImGui::MenuItem(":::::::::::::::"))
 			{
-				show_console = !show_console;
+				show_view = true;
 			}
-			if (ImGui::MenuItem("Configuration", "4", show_configuration))
-			{
-				show_configuration = !show_configuration;
-			}
+			MenuView();
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
-			if (ImGui::MenuItem("Gui Demo", 0, show_demo_window))
+			if (ImGui::MenuItem(":::::::::::::::"))
 			{
-				show_demo_window = !show_demo_window;
+				show_help = true;
 			}
-			if (ImGui::MenuItem("Documentation")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/wiki", 0, 0, SW_SHOW); }
-			if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/releases", 0, 0, SW_SHOW); }
-			if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/issues", 0, 0, SW_SHOW); }
-			if (ImGui::MenuItem("About")) { show_about = !show_about; }
+			MenuHelp();
 			ImGui::EndMenu();
 		}
 
@@ -380,35 +350,37 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGui::End();
 	}
 
+	if (show_file)
+	{
+		ImGui::Begin("File", &show_file);
+		MenuFile();
+		if (ImGui::MenuItem("Quit", "ESC")) return UPDATE_STOP;
+		ImGui::End();
+	}
+
 	if (show_render)
 	{
-		ImGui::Begin(" ", &show_render);
-		if (ImGui::Checkbox("Depth Test", &depth_test))
-		{
-			if (depth_test) glEnable(GL_DEPTH_TEST);
-			else glDisable(GL_DEPTH_TEST);
-		}
-		if (ImGui::Checkbox("Cull Face", &cull_face))
-		{
-			if (cull_face) glEnable(GL_CULL_FACE);
-			else glDisable(GL_CULL_FACE);
-		}
-		if (ImGui::Checkbox("Lighting", &lighting))
-		{
-			if (lighting) glEnable(GL_LIGHTING);
-			else glDisable(GL_LIGHTING);
-		}
-		if (ImGui::Checkbox("Color Material", &color_material))
-		{
-			if (color_material) glEnable(GL_COLOR_MATERIAL);
-			else glDisable(GL_COLOR_MATERIAL);
-		}
-		if (ImGui::Checkbox("Textures", &texture_2d))
-		{
-			if (texture_2d) glEnable(GL_TEXTURE_2D);
-			else glDisable(GL_TEXTURE_2D);
-		}
-		
+		ImGui::Begin("Render", &show_render);
+
+		MenuRender();
+
+		ImGui::End();
+	}
+
+	if (show_view)
+	{
+		ImGui::Begin("View", &show_view);
+
+		MenuView();
+
+		ImGui::End();
+	}
+
+	if (show_help)
+	{
+		ImGui::Begin("Help", &show_help);
+
+		MenuHelp();
 
 		ImGui::End();
 	}
@@ -417,6 +389,69 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleEditor::MenuFile()
+{
+
+}
+
+void ModuleEditor::MenuRender()
+{
+	if (ImGui::MenuItem("Depth Test", "", depth_test))
+	{
+		depth_test = !depth_test;
+		if (depth_test) glEnable(GL_DEPTH_TEST);
+		else glDisable(GL_DEPTH_TEST);
+	}
+	if (ImGui::MenuItem("Cull Face", "", cull_face))
+	{
+		cull_face = !cull_face;
+		if (cull_face) glEnable(GL_CULL_FACE);
+		else glDisable(GL_CULL_FACE);
+	}
+	if (ImGui::MenuItem("Lighting", "", lighting))
+	{
+		lighting = !lighting;
+		if (lighting) glEnable(GL_LIGHTING);
+		else glDisable(GL_LIGHTING);
+	}
+	if (ImGui::MenuItem("Color Material", "", color_material))
+	{
+		color_material = !color_material;
+		if (color_material) glEnable(GL_COLOR_MATERIAL);
+		else glDisable(GL_COLOR_MATERIAL);
+	}
+	if (ImGui::MenuItem("Textures", "", texture_2d))
+	{
+		texture_2d = !texture_2d;
+		if (texture_2d) glEnable(GL_TEXTURE_2D);
+		else glDisable(GL_TEXTURE_2D);
+	}
+}
+
+void ModuleEditor::MenuView()
+{
+	if (ImGui::MenuItem("Console", "1", show_console))
+	{
+		show_console = !show_console;
+	}
+	if (ImGui::MenuItem("Configuration", "4", show_configuration))
+	{
+		show_configuration = !show_configuration;
+	}
+}
+
+void ModuleEditor::MenuHelp()
+{
+	if (ImGui::MenuItem("Gui Demo", 0, show_demo_window))
+	{
+		show_demo_window = !show_demo_window;
+	}
+	if (ImGui::MenuItem("Documentation")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/wiki", 0, 0, SW_SHOW); }
+	if (ImGui::MenuItem("Download Latest")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/releases", 0, 0, SW_SHOW); }
+	if (ImGui::MenuItem("Report a Bug")) { ShellExecute(0, 0, "https://github.com/AMADE128/MonkStudio/issues", 0, 0, SW_SHOW); }
+	if (ImGui::MenuItem("About")) { show_about = !show_about; }
 }
 
 void ModuleEditor::UpdateProcessInfo(float dt)
