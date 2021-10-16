@@ -51,6 +51,7 @@ public:
 	bool show_console = true;
 	bool show_configuration = true;
 	bool show_about = false;
+	bool show_render = false;
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fulldeskscreen = false;

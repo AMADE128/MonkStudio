@@ -91,6 +91,10 @@ update_status ModuleEditor::PostUpdate(float dt)
 		}
 		if (ImGui::BeginMenu("Render"))
 		{
+			if (ImGui::MenuItem(":::::::::::::::", "", show_render))
+			{
+				show_render = true;
+			}
 			if (ImGui::MenuItem("Depth Test", "", depth_test))
 			{
 				depth_test = !depth_test;
@@ -118,7 +122,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 			if (ImGui::MenuItem("Textures", "", texture_2d))
 			{
 				texture_2d = !texture_2d;
-				if (depth_test) glEnable(GL_TEXTURE_2D);
+				if (texture_2d) glEnable(GL_TEXTURE_2D);
 				else glDisable(GL_TEXTURE_2D);
 			}
 			ImGui::EndMenu();
@@ -372,6 +376,39 @@ update_status ModuleEditor::PostUpdate(float dt)
 			"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
 			"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n"
 			"SOFTWARE.");
+
+		ImGui::End();
+	}
+
+	if (show_render)
+	{
+		ImGui::Begin(" ", &show_render);
+		if (ImGui::Checkbox("Depth Test", &depth_test))
+		{
+			if (depth_test) glEnable(GL_DEPTH_TEST);
+			else glDisable(GL_DEPTH_TEST);
+		}
+		if (ImGui::Checkbox("Cull Face", &cull_face))
+		{
+			if (cull_face) glEnable(GL_CULL_FACE);
+			else glDisable(GL_CULL_FACE);
+		}
+		if (ImGui::Checkbox("Lighting", &lighting))
+		{
+			if (lighting) glEnable(GL_LIGHTING);
+			else glDisable(GL_LIGHTING);
+		}
+		if (ImGui::Checkbox("Color Material", &color_material))
+		{
+			if (color_material) glEnable(GL_COLOR_MATERIAL);
+			else glDisable(GL_COLOR_MATERIAL);
+		}
+		if (ImGui::Checkbox("Textures", &texture_2d))
+		{
+			if (texture_2d) glEnable(GL_TEXTURE_2D);
+			else glDisable(GL_TEXTURE_2D);
+		}
+		
 
 		ImGui::End();
 	}
