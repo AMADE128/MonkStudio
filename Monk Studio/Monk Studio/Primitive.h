@@ -159,13 +159,14 @@ class Pyramid : public Primitive
 {
 public:
 	Pyramid();
-	Pyramid(float high = 1, float base = 1);
-	void set(float high, int base);
+	Pyramid(float sizeX = 1, float sizeY = 1, float SizeZ = 1);
+	void set(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
 public:
 	vec3 size;
 private:
 	//member vars
-	float high;
-	float base;
+	float sizeX;
+	float sizeY;
+	float sizeZ;
 };

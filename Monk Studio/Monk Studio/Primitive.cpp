@@ -841,20 +841,21 @@ Pyramid::Pyramid() : Primitive(), size(1.0f, 1.0f)
 	type = PrimitiveTypes::Primitive_Pyramid;
 }
 
-Pyramid::Pyramid(float high, float base) : Primitive(), size(high, base)
+Pyramid::Pyramid(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
 {
-	set(high, base);
+	set(sizeX, sizeY, sizeZ);
 }
 
-void Pyramid::set(float high, int base)
+void Pyramid::set(float sizeX, float sizeY, float sizeZ)
 {
-	this->high = high;
-	this->base = base;
+	this->sizeX = sizeX;
+	this->sizeY = sizeY;
+	this->sizeZ = sizeZ;
 }
 
 void Pyramid::InnerRender() const
 {
-	GLfloat vertices[] = {  0, this->high, 0,  this->base, 0, this->base,  this->base, 0, -this->base,	-this->base, 0, -this->base,  -this->base, 0, this->base };   // v0,v1,v2,v3
+	GLfloat vertices[] = {  0, this->sizeY, 0,  this->sizeX, 0, this->sizeZ,  this->sizeX, 0, -this->sizeZ,	-this->sizeX, 0, -this->sizeZ,  -this->sizeX, 0, this->sizeZ };   // v0,v1,v2,v3
 	
 
 	GLubyte indices[] = 
