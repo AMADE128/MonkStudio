@@ -1,4 +1,3 @@
-
 #include "Globals.h"
 #include "External Libraries/Glew/include/glew.h"
 #include "External Libraries/SDL/include/SDL_opengl.h"
@@ -834,4 +833,46 @@ void Plane::InnerRender() const
 	}
 
 	glEnd();
+}
+
+// PYRAMID ============================================
+Pyramid::Pyramid() : Primitive(), size(1.0f, 1.0f)
+{
+	type = PrimitiveTypes::Primitive_Pyramid;
+}
+
+Pyramid::Pyramid(float high, float base) : Primitive(), size(high, base)
+{
+	set(high, base);
+}
+
+void Pyramid::set(float high, int base)
+{
+	this->high = high;
+	this->base = base;
+}
+
+void Pyramid::InnerRender() const
+{
+	GLfloat vertices[] = {  0, this->high, 0,  this->base, 0, this->base,  this->base, 0, -this->base,	-this->base, 0, -this->base,  -this->base, 0, this->base };   // v0,v1,v2,v3
+	
+
+	GLubyte indices[] = 
+	{						0, 1, 2,    // right
+							0, 2, 3,	// back
+							0, 3, 4,	// letf
+							0, 4, 1,	//front
+							1, 4, 3,  3, 2, 1 // bottom
+	};	
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+
+	glPushMatrix();
+
+	glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_BYTE, indices);
+
+	glPopMatrix();
+
+	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
 }

@@ -12,7 +12,8 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder
+	Primitive_Cylinder,
+	Primitive_Pyramid
 };
 
 class Primitive
@@ -151,4 +152,20 @@ public:
 public:
 	vec3 normal;
 	float constant;
+};
+
+// ============================================
+class Pyramid : public Primitive
+{
+public:
+	Pyramid();
+	Pyramid(float high = 1, float base = 1);
+	void set(float high, int base);
+	void InnerRender() const;
+public:
+	vec3 size;
+private:
+	//member vars
+	float high;
+	float base;
 };
