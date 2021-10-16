@@ -128,11 +128,11 @@ static void ImGui_ImplOpenGL2_SetupRenderState(ImDrawData* draw_data, int fb_wid
     // If you are using this code with non-legacy OpenGL header/contexts (which you should not, prefer using imgui_impl_opengl3.cpp!!),
     // you may need to backup/reset/restore other state, e.g. for current shader using the commented lines below.
     // (DO NOT MODIFY THIS FILE! Add the code in your calling function)
-    //   GLint last_program;
-    //   glGetIntegerv(GL_CURRENT_PROGRAM, &last_program);
-    //   glUseProgram(0);
-    //   ImGui_ImplOpenGL2_RenderDrawData(...);
-    //   glUseProgram(last_program)
+       /*GLint last_program;
+       glGetIntegerv(GL_CURRENT_PROGRAM, &last_program);
+       glUseProgram(0);
+       ImGui_ImplOpenGL2_RenderDrawData(...);
+       glUseProgram(last_program)*/
     // There are potentially many more states you could need to clear/setup that we can't access from default headers.
     // e.g. glBindBuffer(GL_ARRAY_BUFFER, 0), glDisable(GL_TEXTURE_CUBE_MAP).
 

@@ -10,6 +10,15 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 ModuleSceneIntro::~ModuleSceneIntro()
 {}
 
+bool ModuleSceneIntro::Init()
+{
+	bool ret = true;
+
+	example = new MeshData();
+
+	return ret;
+}
+
 // Load assets
 bool ModuleSceneIntro::Start()
 {
@@ -18,6 +27,9 @@ bool ModuleSceneIntro::Start()
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
+
+	example->LoadMesh("BakerHouse.fbx");
+
 	return ret;
 }
 
@@ -49,9 +61,10 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	/*Cube c(1, 1, 1);
 	c.Render();*/
 
-	Pyramid py(2,2);
-	py.Render();
+	/*Pyramid py(2,2);
+	py.Render();*/
 
+	example->Render();
 
 	return UPDATE_CONTINUE;
 }
