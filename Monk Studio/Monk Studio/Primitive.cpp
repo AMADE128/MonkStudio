@@ -105,16 +105,9 @@ Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, siz
 
 void Cube::InnerRender() const
 {	
-	float sx = size.x;
-	float sy = size.y;
-	float sz = size.z;
-
-	//GLfloat vertices[] = { sx, sy, sz,  -sx, sy, sz,  -sx,-sy, sz,   sx,-sy, sz,   // v0,v1,v2,v3 (front)
-	//					sx, sy, sz,   sx,-sy, sz,   sx,-sy,-sz,   sx, sy,-sz,   // v0,v3,v4,v5 (right)
-	//					sx, sy, sz,   sx, sy,-sz,  -sx,sy,-sz,  -sx, sy, sz,   // v0,v5,v6,v1 (top)
-	//				   -sx, sy, sz,  -sx, sy,-sz,  -sx,-sy,-sz,  -sx,-sy, sz,   // v1,v6,v7,v2 (left)
-	//				   -sx,-sy,-sz,   sx,-sy,-sz,   sx,-sy, sz,  -sx,-sy,sz,   // v7,v4,v3,v2 (bottom)
-	//					sx,-sy,-sz,  -sx,-sy,-sz,  -sx, sy,-sz,   sx, sy,-sz }; // v4,v7,v6,v5 (back)5
+	float sx = size.x/2;
+	float sy = size.y/2;
+	float sz = size.z/2;
 
 	GLfloat vertices[] = 
 	{ 
@@ -128,20 +121,13 @@ void Cube::InnerRender() const
 		sx, sy, -sz	//v7
 	}; 
 
-	//GLubyte indices[] = { 0, 1, 2,   2, 3, 0,      // front
-	//				   4, 5, 6,   6, 7, 4,      // right
-	//				   8, 9,10,  10,11, 8,      // top
-	//				  12,13,14,  14,15,12,      // left
-	//				  16,17,18,  18,19,16,      // bottom
-	//				  20,21,22,  22,23,20 };    // back
-
 	GLubyte indices[] = 
 	{ 
 		0, 1, 2,   2, 3, 0,		//front
 		2, 1, 5,   5, 7, 2,		//right
 		6, 3, 2,   2, 7, 6,		//top
 		3, 6, 4,   4, 0, 3,		//left
-		0, 1, 5,   5, 4, 0,		//bottom
+		0, 4, 5,   5, 1, 0,		//bottom
 		7, 5, 4,   4, 6, 7,		//back
 	};    
 
