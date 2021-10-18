@@ -59,9 +59,9 @@ public:
 	float material_scale[3] = { 1.0, 1.0, 1.0 };
 	float alpha_test = 0.5f;
 	bool show_demo_window;
-	bool show_console = true;
-	bool show_configuration = true;
-	bool show_inspector = true;
+	bool show_inspector = false;
+	bool show_console = false;
+	bool show_configuration = false;
 	bool show_about = false;
 	bool show_file = false;
 	bool show_render = false;
@@ -79,6 +79,7 @@ public:
 	bool lighting = true;
 	bool color_material = true;
 	bool texture_2d = true;
+	bool wireframe_mode = false;
 
 	char wTitle[32] = "";
 	char gameObjectName[32] = "";
