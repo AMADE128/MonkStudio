@@ -64,6 +64,10 @@ update_status ModuleEditor::Update(float dt)
 	{
 		show_configuration = !show_configuration;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		show_inspector = !show_inspector;
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -125,6 +129,41 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 		ImGui::EndMainMenuBar();
 	}
+
+	if (show_inspector)
+	{
+		ImGuiStyle* style = &ImGui::GetStyle();
+		style->Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		ImGui::Begin("Inspector", &show_inspector);
+		if (ImGui::CollapsingHeader("Properties"))
+		{
+			ImGui::Text("Options");
+			ImGui::Checkbox("", &show_game_object); ImGui::SameLine(); ImGui::InputText("Aún no hay nada aqui asi que peta xd", gameObjectName, 32);
+		}
+		if (ImGui::CollapsingHeader("Local Transformation"))
+		{
+			ImGui::InputFloat3("Position", pos, 0);
+			ImGui::SliderFloat3("Rotation", rot, -180, 180);
+			ImGui::InputFloat3("Scale", scale, 0);
+			ImGui::Text("Bounding Box: -not generated-");
+			ImGui::Text("Velocity: 0.00 0.00 0.00 (0.00 m/s)");
+		}
+		if (ImGui::CollapsingHeader("Material"))
+		{
+			ImGui::Checkbox("Active", &material_active); ImGui::SameLine(); ImGui::Button("Delete Component");
+			ImGui::Text("Path");
+			ImGui::Button("Change Resource");
+			ImGui::InputFloat3("Position", material_pos, 0);
+			ImGui::SliderFloat3("Rotation", material_rot, -180, 180);
+			ImGui::InputFloat3("Scale", material_scale, 0);
+			ImGui::Button("Reset Transform");
+			ImGui::Text("Tamanyo 256x256 y peso 0,3Mb");
+			ImGui::Text("Format: __  Depth: __  Bpp: __  Mips: __");
+			ImGui::SliderFloat("Alpha Test", &alpha_test, 0, 1);
+		}
+		ImGui::End();
+	}
+	
 
 	if (show_configuration)
 	{
