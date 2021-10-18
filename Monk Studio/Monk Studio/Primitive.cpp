@@ -55,11 +55,6 @@ void Primitive::Render() const
 
 	glColor3f(color.r, color.g, color.b);
 
-	if(wire)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 	InnerRender();
 
 	glPopMatrix();
@@ -856,14 +851,14 @@ void Pyramid::set(float sizeX, float sizeY, float sizeZ)
 void Pyramid::InnerRender() const
 {
 	GLfloat vertices[] = {  0, this->sizeY, 0,  this->sizeX, 0, this->sizeZ,  this->sizeX, 0, -this->sizeZ,	-this->sizeX, 0, -this->sizeZ,  -this->sizeX, 0, this->sizeZ };   // v0,v1,v2,v3
-	
 
 	GLubyte indices[] = 
-	{						0, 1, 2,    // right
-							0, 2, 3,	// back
-							0, 3, 4,	// letf
-							0, 4, 1,	//front
-							1, 4, 3,  3, 2, 1 // bottom
+	{		
+		0, 1, 2,    // right
+		0, 2, 3,	// back
+		0, 3, 4,	// left
+		0, 4, 1,	//front
+		1, 4, 3,  3, 2, 1 // bottom
 	};	
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -871,7 +866,7 @@ void Pyramid::InnerRender() const
 
 	glPushMatrix();
 
-	glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_BYTE, indices);
+	glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_BYTE, indices);
 
 	glPopMatrix();
 

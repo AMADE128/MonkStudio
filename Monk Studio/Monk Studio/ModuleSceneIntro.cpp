@@ -50,14 +50,12 @@ update_status ModuleSceneIntro::Update(float dt)
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
+	if (App->editor->wireframe_mode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-
-	/*Pyramid py(2,2,4);
-	py.transform.translate(-2, -2, -2);
-	py.Render();*/
 
 	example->Render();
 
