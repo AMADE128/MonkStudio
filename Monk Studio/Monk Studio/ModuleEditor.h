@@ -51,9 +51,17 @@ public:
 
 public:
 
+	float pos[3] = { 1.0, 1.0, 1.0 };
+	float rot[3] = { 0.0, 0.0, 0.0 };
+	float scale[3] = { 1.0, 1.0, 1.0 };
+	float material_pos[3] = { 1.0, 1.0, 1.0 };
+	float material_rot[3] = { 0.0, 0.0, 0.0 };
+	float material_scale[3] = { 1.0, 1.0, 1.0 };
+	float alpha_test = 0.5f;
 	bool show_demo_window;
 	bool show_console = true;
 	bool show_configuration = true;
+	bool show_inspector = true;
 	bool show_about = false;
 	bool show_file = false;
 	bool show_render = false;
@@ -62,6 +70,8 @@ public:
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fulldeskscreen = false;
+	bool show_game_object = true;
+	bool material_active = true;
 
 	//render propieties
 	bool depth_test = true;
@@ -71,6 +81,7 @@ public:
 	bool texture_2d = true;
 
 	char wTitle[32] = "";
+	char gameObjectName[32] = "";
 	char tTitle[32] = "";
 	char fpsTitle[25] = "";
 	char msTitle[25] = "";
