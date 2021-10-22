@@ -2,6 +2,8 @@
 #include "ModuleInput.h"
 #include "External Libraries/imgui/imgui_impl_sdl.h"
 
+#include <string.h>
+
 #define MAX_KEYS 300
 
 ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -28,6 +30,7 @@ bool ModuleInput::Init()
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 
 	return ret;
 }
@@ -102,6 +105,14 @@ update_status ModuleInput::PreUpdate(float dt)
 			mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
 			break;
 
+			case (SDL_DROPFILE):
+			{
+				LOG("Dropped file %c", e.drop.file);
+				App->scene_intro->example->LoadMesh(e.drop.file);
+				SDL_free(e.drop.file);
+				break;
+			}
+
 			case SDL_QUIT:
 			quit = true;
 			break;
@@ -117,6 +128,7 @@ update_status ModuleInput::PreUpdate(float dt)
 					}
 					else SDL_SetWindowSize(App->window->window, App->window->w, App->window->h);
 			}
+
 		}
 	}
 

@@ -15,6 +15,6 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-private:
 	MeshData* example;
+private:
 };
