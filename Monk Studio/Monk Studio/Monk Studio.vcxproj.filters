@@ -108,6 +108,9 @@
     <ClCompile Include="External Libraries\parson\parson.c">
       <Filter>Source Files\Containers\parson</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="External Libraries\parson\parson.h">
       <Filter>Source Files\Containers\parson</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

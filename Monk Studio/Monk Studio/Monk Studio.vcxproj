@@ -80,6 +80,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(ProjectDir)\External Libraries\parson;$(ProjectDir)\External Libraries\assimp\include;$(ProjectDir)\External Libraries\Glew\include;$(ProjectDir)\External Libraries\MathGeoLib\include;$(ProjectDir)\External Libraries\SDL\include;$(ProjectDir)\External Libraries\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\External Libraries\Glew\libx86;$(ProjectDir)\External Libraries\MathGeoLib\libx86\MGDebug;$(ProjectDir)\External Libraries\SDL\libx86;$(ProjectDir)\External Libraries\assimp\libx86;$(LibraryPath)</LibraryPath>
+    <OutDir>..\Project Folder</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,6 +155,7 @@
     <ClCompile Include="External Libraries\imgui\imgui_tables.cpp" />
     <ClCompile Include="External Libraries\imgui\imgui_widgets.cpp" />
     <ClCompile Include="External Libraries\parson\parson.c" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />
@@ -181,6 +183,7 @@
     <ClInclude Include="External Libraries\imgui\imstb_textedit.h" />
     <ClInclude Include="External Libraries\imgui\imstb_truetype.h" />
     <ClInclude Include="External Libraries\parson\parson.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Light.h" />
