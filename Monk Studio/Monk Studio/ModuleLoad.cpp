@@ -49,7 +49,7 @@ bool ModuleLoad::CleanUp()
 	return true;
 }
 
-MeshData::MeshData()
+MeshData::MeshData() : transform(IdentityMatrix)
 {
 
 }
@@ -57,6 +57,23 @@ MeshData::MeshData()
 MeshData::~MeshData()
 {
 
+}
+
+void MeshData::SetPos(float x, float y, float z)
+{
+	transform.translate(x, y, z);
+}
+
+// ------------------------------------------------------------
+void MeshData::SetRotation(float angle, const vec3& u)
+{
+	transform.rotate(angle, u);
+}
+
+// ------------------------------------------------------------
+void MeshData::Scale(float x, float y, float z)
+{
+	transform.scale(x, y, z);
 }
 
 bool MeshData::LoadMesh(const std::string& fileName)
@@ -82,6 +99,8 @@ void MeshData::Render()
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
+	glPushMatrix();
+	glMultMatrixf(transform.M);
 
 	for (unsigned int i = 0; i < mEntries.size(); i++) {
 		glBindBuffer(GL_ARRAY_BUFFER, mEntries[i].VB);
@@ -95,6 +114,7 @@ void MeshData::Render()
 
 		glBindVertexArray(0);
 	}
+	glPopMatrix();
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

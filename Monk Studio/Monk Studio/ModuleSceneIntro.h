@@ -2,6 +2,10 @@
 #include "Module.h"
 #include "Globals.h"
 #include "ModuleLoad.h"
+#include "GameObject.h"
+
+#include <vector>
+
 
 class ModuleSceneIntro : public Module
 {
@@ -16,5 +20,5 @@ public:
 	bool CleanUp();
 
 	MeshData* example;
-private:
+	std::vector<GameObject*> gameObjects;
 };
