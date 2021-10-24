@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Containers\parson">
       <UniqueIdentifier>{2c3dec06-affe-4e88-b244-b56e603dce94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Helpers\Components">
+      <UniqueIdentifier>{3697321b-1467-4f9f-8732-6ba9e3a36cfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -110,6 +113,12 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Mesh.cpp">
+      <Filter>Source Files\Helpers\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Transform.cpp">
+      <Filter>Source Files\Helpers\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +199,15 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Transform.h">
+      <Filter>Source Files\Helpers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Mesh.h">
+      <Filter>Source Files\Helpers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MS_Math.h">
+      <Filter>Source Files\Containers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

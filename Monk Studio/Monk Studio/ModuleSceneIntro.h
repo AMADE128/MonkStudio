@@ -19,6 +19,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	MeshData* example;
-	std::vector<GameObject*> gameObjects;
+	GameObject* CreateGameObject();
+
+public:
+	GameObject* root;
 };

@@ -5,10 +5,10 @@
 
 class GameObject;
 
-class Component{
+class Component {
 public:
-	Component() {};
-	virtual~Component() {};
+	Component(GameObject* _gm);
+	virtual~Component();
 
 	virtual void Enable()
 	{
@@ -17,55 +17,43 @@ public:
 
 	virtual void Update() {}
 
-	virtual void Disable()
+	void Disable()
 	{
 		active = false;
 	}
 
-	virtual bool isEnable()
+	bool isEnable()
 	{
 		return active;
 	}
 
-	virtual GameObject* getOwner()
+	GameObject* getOwner()
 	{
 		return owner;
 	}
 
 	enum Type
 	{
+		NONE,
 		TRANSFORM,
 		MESH,
 		MATERIAL,
 	};
 
+	Type type;
+
 protected:
 
 	bool active;
+	std::string name;
 	GameObject* owner;
-	Type type;
 
-};
-
-class ComponentTransform : public Component
-{
-public:
-	ComponentTransform()
-	{
-		type = Type::TRANSFORM;
-	}
-	~ComponentTransform();
-
-public:
-	vec3 position;
-	vec3 rotation;
-	vec3 scale;
 };
 
 class GameObject {
 public:
-	GameObject() {};
-	~GameObject() {};
+	GameObject(std::string _name = "GameObject");
+	virtual ~GameObject();
 
 	void Update();
 	Component* CreateComponent(Component::Type type);
@@ -82,9 +70,10 @@ public:
 		return active;
 	}
 
-private:
-
-	bool active;
+public:
 	std::string name;
+	bool active;
 	std::vector<Component*> components;
+	GameObject* parent;
+	std::vector<GameObject*> children;
 };

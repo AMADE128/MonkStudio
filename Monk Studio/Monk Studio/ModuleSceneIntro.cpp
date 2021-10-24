@@ -14,8 +14,6 @@ bool ModuleSceneIntro::Init()
 {
 	bool ret = true;
 
-	example = new MeshData();
-
 	return ret;
 }
 
@@ -27,8 +25,6 @@ bool ModuleSceneIntro::Start()
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-
-	//example->LoadMesh("BakerHouse.fbx");
 
 	return ret;
 }
@@ -56,8 +52,6 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-
-	example->Render();
 
 	return UPDATE_CONTINUE;
 }
