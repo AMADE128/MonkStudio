@@ -120,6 +120,9 @@
     <ClCompile Include="C_Transform.cpp">
       <Filter>Source Files\Helpers\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -208,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="MS_Math.h">
       <Filter>Source Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Tetures.h">
+      <Filter>Source Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
