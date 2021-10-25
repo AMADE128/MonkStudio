@@ -5,6 +5,7 @@
 #include "External Libraries/imgui/imgui_impl_opengl2.h"
 #include "ModuleWindow.h"
 #include "Globals.h"
+#include "GameObject.h"
 
 #include <stdio.h>
 #include <Psapi.h>
@@ -108,6 +109,15 @@ update_status ModuleEditor::PostUpdate(float dt)
 			MenuRender();
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Game Object"))
+		{
+			if (ImGui::MenuItem(":::::::::::::::"))
+			{
+				show_gameObject = true;
+			}
+			MenuGameObject();
+			ImGui::EndMenu();
+		}
 		if (ImGui::BeginMenu("View"))
 		{
 			if (ImGui::MenuItem(":::::::::::::::"))
@@ -128,6 +138,13 @@ update_status ModuleEditor::PostUpdate(float dt)
 		}
 
 		ImGui::EndMainMenuBar();
+	}
+
+	if (show_hierarchy)
+	{
+		ImGui::Begin("Hierarchy", &show_hierarchy);
+		HierarchyDraw(App->scene_intro->root);
+		ImGui::End();
 	}
 
 	if (show_inspector)
@@ -398,6 +415,13 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGui::End();
 	}
 
+	if (show_gameObject)
+	{
+		ImGui::Begin("Game Object", &show_gameObject);
+		MenuGameObject();
+		ImGui::End();
+	}
+
 	if (show_render)
 	{
 		ImGui::Begin("Render", &show_render);
@@ -436,6 +460,20 @@ void ModuleEditor::MenuFile()
 
 }
 
+void ModuleEditor::HierarchyDraw(GameObject* parent)
+{
+	bool open = ImGui::TreeNodeEx(parent->name.c_str(),
+		ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen | (parent->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0));
+	if (open) {
+		// Recursive call...
+		for (size_t i = 0; i < parent->children.size(); i++)
+		{
+			HierarchyDraw(parent->children.at(i));
+		};
+		ImGui::TreePop();
+	}
+}
+
 void ModuleEditor::MenuRender()
 {
 	if (ImGui::MenuItem("Depth Test", "", depth_test))
@@ -471,6 +509,40 @@ void ModuleEditor::MenuRender()
 	if (ImGui::MenuItem("Wireframe", "", wireframe_mode))
 	{
 		wireframe_mode = !wireframe_mode;
+	}
+}
+
+void ModuleEditor::MenuGameObject()
+{
+	if (ImGui::MenuItem("Cube"))
+	{
+		GameObject* cube = App->scene_intro->CreateGameObject("Cube", App->scene_intro->root);
+		cube->CreateComponent(Component::Type::MESH);
+		cube->LoadComponents("Assets/Primitives/Cube.fbx");
+	}
+	if (ImGui::MenuItem("Sphere"))
+	{
+		GameObject* sphere = App->scene_intro->CreateGameObject("Sphere", App->scene_intro->root);
+		sphere->CreateComponent(Component::Type::MESH);
+		sphere->LoadComponents("Assets/Primitives/Sphere.fbx");
+	}
+	if (ImGui::MenuItem("Pyramid"))
+	{
+		GameObject* pyramid = App->scene_intro->CreateGameObject("Pyramid", App->scene_intro->root);
+		pyramid->CreateComponent(Component::Type::MESH);
+		pyramid->LoadComponents("Assets/Primitives/Pyramid.fbx");
+	}
+	if (ImGui::MenuItem("Cylinder"))
+	{
+		GameObject* cylinder = App->scene_intro->CreateGameObject("Cylinder", App->scene_intro->root);
+		cylinder->CreateComponent(Component::Type::MESH);
+		cylinder->LoadComponents("Assets/Primitives/Cylinder.fbx");
+	}
+	if (ImGui::MenuItem("Plane"))
+	{
+		GameObject* plane = App->scene_intro->CreateGameObject("Plane", App->scene_intro->root);
+		plane->CreateComponent(Component::Type::MESH);
+		plane->LoadComponents("Assets/Primitives/Plane.fbx");
 	}
 }
 

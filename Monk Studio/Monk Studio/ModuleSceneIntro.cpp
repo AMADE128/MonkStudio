@@ -14,6 +14,8 @@ bool ModuleSceneIntro::Init()
 {
 	bool ret = true;
 
+	root = CreateGameObject("Scene root", nullptr);
+
 	return ret;
 }
 
@@ -37,9 +39,30 @@ bool ModuleSceneIntro::CleanUp()
 	return true;
 }
 
+GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* parent, int _uid)
+{
+	GameObject* gm = new GameObject(name, parent, _uid);
+	return gm;
+}
+
+void ModuleSceneIntro::UpdateGameObjects(GameObject* parent)
+{
+	if (parent->IsEnable())
+	{
+		parent->Update();
+
+		for (size_t i = 0; i < parent->children.size(); i++)
+		{
+			UpdateGameObjects(parent->children[i]);
+		}
+	}
+}
+
 // Update: draw background
 update_status ModuleSceneIntro::Update(float dt)
 {
+	
+	UpdateGameObjects(root);
 
 	return UPDATE_CONTINUE;
 }

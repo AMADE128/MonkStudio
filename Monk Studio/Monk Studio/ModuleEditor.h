@@ -2,6 +2,7 @@
 #include "Module.h"
 #include <vector>
 #include <iostream>
+#include "GameObject.h"
 
 using namespace std;
 
@@ -18,7 +19,9 @@ public:
 	void MenuHelp();
 	void MenuView();
 	void MenuRender();
+	void MenuGameObject();
 	void MenuFile();
+	void HierarchyDraw(GameObject* parent);
 	void UpdateProcessInfo(float dt);
 	bool CleanUp();
 
@@ -60,11 +63,13 @@ public:
 	float alpha_test = 0.5f;
 	bool show_demo_window;
 	bool show_inspector = false;
+	bool show_hierarchy = true;
 	bool show_console = false;
 	bool show_configuration = false;
 	bool show_about = false;
 	bool show_file = false;
 	bool show_render = false;
+	bool show_gameObject = false;
 	bool show_view = false;
 	bool show_help = false;
 	bool fullscreen = false;

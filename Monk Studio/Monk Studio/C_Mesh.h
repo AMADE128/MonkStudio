@@ -19,6 +19,8 @@ public:
 
 	void Update() override;
 
+	void LoadData(const char*) override;
+
 	bool LoadMesh(const std::string& fileName);
 	void Render();
 

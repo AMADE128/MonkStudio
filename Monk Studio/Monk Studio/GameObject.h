@@ -4,11 +4,14 @@
 #include <vector>
 
 class GameObject;
+class ComponentTransform;
 
 class Component {
 public:
 	Component(GameObject* _gm);
 	virtual~Component();
+
+	virtual void LoadData(const char*);
 
 	virtual void Enable()
 	{
@@ -32,7 +35,7 @@ public:
 		return owner;
 	}
 
-	enum Type
+	enum class Type
 	{
 		NONE,
 		TRANSFORM,
@@ -52,11 +55,13 @@ protected:
 
 class GameObject {
 public:
-	GameObject(std::string _name = "GameObject");
+	GameObject(const char*, GameObject* _parent, int _uid = -1);
 	virtual ~GameObject();
 
 	void Update();
-	Component* CreateComponent(Component::Type type);
+	Component* CreateComponent(Component::Type _type);
+	Component* GetComponent(Component::Type _type);
+	void LoadComponents(const char*);
 	void Enable()
 	{
 		active = true;
@@ -75,5 +80,7 @@ public:
 	bool active;
 	std::vector<Component*> components;
 	GameObject* parent;
+	int uid;
 	std::vector<GameObject*> children;
+	ComponentTransform* transform;
 };

@@ -19,7 +19,9 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	GameObject* CreateGameObject();
+	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
+
+	void UpdateGameObjects(GameObject* parent);
 
 public:
 	GameObject* root;

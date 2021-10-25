@@ -2,6 +2,7 @@
 #include "C_Mesh.h"
 #include"Globals.h"
 #include <assert.h>
+#include "Primitive.h"
 
 ComponentMesh::ComponentMesh(GameObject* _gm) : Component(_gm)
 {
@@ -15,6 +16,15 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Update()
 {
+	if (active)
+	{
+		Render();
+	}
+}
+
+void ComponentMesh::LoadData(const char* path)
+{
+	LoadMesh(path);
 }
 
 bool ComponentMesh::LoadMesh(const std::string& fileName)
