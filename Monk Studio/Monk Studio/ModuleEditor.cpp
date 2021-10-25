@@ -480,10 +480,15 @@ void ModuleEditor::MenuView()
 	{
 		show_console = !show_console;
 	}
+	if (ImGui::MenuItem("Inspector", "3", show_inspector))
+	{
+		show_inspector = !show_inspector;
+	}
 	if (ImGui::MenuItem("Configuration", "4", show_configuration))
 	{
 		show_configuration = !show_configuration;
 	}
+
 }
 
 void ModuleEditor::MenuHelp()
