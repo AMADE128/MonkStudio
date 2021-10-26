@@ -462,8 +462,16 @@ void ModuleEditor::MenuFile()
 
 void ModuleEditor::HierarchyDraw(GameObject* parent)
 {
-	bool open = ImGui::TreeNodeEx(parent->name.c_str(),
-		ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen | (parent->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0));
+	ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen | (parent->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0);
+	if (parent == selectedNode)
+	{
+		parentFlags |= ImGuiTreeNodeFlags_Selected;
+	}
+	bool open = ImGui::TreeNodeEx(parent->name.c_str(), parentFlags);
+	if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
+	{
+		selectedNode = parent;
+	}
 	if (open) {
 		// Recursive call...
 		for (size_t i = 0; i < parent->children.size(); i++)

@@ -108,7 +108,9 @@ update_status ModuleInput::PreUpdate(float dt)
 			case (SDL_DROPFILE):
 			{
 				LOG("Dropped file %c", e.drop.file);
-				//App->scene_intro->example->LoadMesh(e.drop.file);
+				GameObject* fbx = App->scene_intro->CreateGameObject("GameObject", App->scene_intro->root);
+				fbx->CreateComponent(Component::Type::MESH);
+				fbx->LoadComponents(e.drop.file);
 				SDL_free(e.drop.file);
 				break;
 			}

@@ -77,6 +77,7 @@ public:
 	bool fulldeskscreen = false;
 	bool show_game_object = true;
 	bool material_active = true;
+	GameObject* selectedNode;
 
 	//render propieties
 	bool depth_test = true;
