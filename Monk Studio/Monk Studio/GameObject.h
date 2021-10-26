@@ -20,6 +20,8 @@ public:
 
 	virtual void Update() {}
 
+	virtual void InspectorDraw() {}
+
 	void Disable()
 	{
 		active = false;

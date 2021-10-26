@@ -152,18 +152,11 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGuiStyle* style = &ImGui::GetStyle();
 		style->Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 		ImGui::Begin("Inspector", &show_inspector);
+		UpdateInspector(selectedNode);
 		if (ImGui::CollapsingHeader("Properties"))
 		{
 			ImGui::Text("Options");
-			ImGui::Checkbox("", &show_game_object); ImGui::SameLine(); ImGui::InputText("Aún no hay nada aqui asi que peta xd", gameObjectName, 32);
-		}
-		if (ImGui::CollapsingHeader("Local Transformation"))
-		{
-			ImGui::InputFloat3("Position", pos, 0);
-			ImGui::SliderFloat3("Rotation", rot, -180, 180);
-			ImGui::InputFloat3("Scale", scale, 0);
-			ImGui::Text("Bounding Box: -not generated-");
-			ImGui::Text("Velocity: 0.00 0.00 0.00 (0.00 m/s)");
+			ImGui::Checkbox("", &selectedNode->active); ImGui::SameLine(); ImGui::InputText("", gameObjectName, 32);
 		}
 		if (ImGui::CollapsingHeader("Material"))
 		{
@@ -453,6 +446,17 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleEditor::UpdateInspector(GameObject* parent)
+{
+	for (size_t i = 0; i < parent->components.size(); i++)
+	{
+		if (parent->components.at(i)->isEnable())
+		{
+			parent->components.at(i)->InspectorDraw();
+		}
+	}
 }
 
 void ModuleEditor::MenuFile()

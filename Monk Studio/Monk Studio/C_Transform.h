@@ -14,6 +14,7 @@ public:
 	virtual ~ComponentTransform();
 
 	void Update() override;
+	void InspectorDraw() override;
 
 	void UpdateTransform();
 

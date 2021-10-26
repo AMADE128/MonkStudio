@@ -1,6 +1,10 @@
 
 #include "C_Transform.h"
 
+#include "External Libraries/imgui/imgui.h"
+#include "External Libraries/imgui/imgui_impl_sdl.h"
+#include "External Libraries/imgui/imgui_impl_opengl2.h"
+
 ComponentTransform::ComponentTransform() : Component(nullptr)
 {
 	transform = IdentityMatrix;
@@ -21,6 +25,18 @@ void ComponentTransform::Update()
 {
 	if (updateTransform)
 		UpdateTransform();
+}
+
+void ComponentTransform::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Local Transformation"))
+	{
+		ImGui::InputFloat3("Position", &position, 0);
+		ImGui::SliderFloat3("Rotation", &rotation, -180, 180);
+		ImGui::InputFloat3("Scale", &scale, 0);
+		ImGui::Text("Bounding Box: -not generated-");
+		ImGui::Text("Velocity: 0.00 0.00 0.00 (0.00 m/s)");
+	}
 }
 
 void ComponentTransform::UpdateTransform()

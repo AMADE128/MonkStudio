@@ -16,6 +16,7 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
+	void UpdateInspector(GameObject* parent);
 	void MenuHelp();
 	void MenuView();
 	void MenuRender();
@@ -75,7 +76,6 @@ public:
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fulldeskscreen = false;
-	bool show_game_object = true;
 	bool material_active = true;
 	GameObject* selectedNode;
 
