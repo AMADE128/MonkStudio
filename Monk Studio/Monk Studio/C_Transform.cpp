@@ -14,6 +14,7 @@ ComponentTransform::ComponentTransform() : Component(nullptr)
 ComponentTransform::ComponentTransform(GameObject* _gm) : Component(_gm)
 {
 	transform = IdentityMatrix;
+	scale = (1, 1, 1);
 	name = "Transform";
 }
 
@@ -31,9 +32,9 @@ void ComponentTransform::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Local Transformation"))
 	{
-		ImGui::InputFloat3("Position", &position, 0);
-		ImGui::SliderFloat3("Rotation", &rotation, -180, 180);
-		ImGui::InputFloat3("Scale", &scale, 0);
+		if (ImGui::InputFloat3("Position", &position, 0)) updateTransform = true;
+		if (ImGui::SliderFloat3("Rotation", &rotation, -180, 180)) updateTransform = true;
+		if (ImGui::InputFloat3("Scale", &scale, 0)) updateTransform = true;
 		ImGui::Text("Bounding Box: -not generated-");
 		ImGui::Text("Velocity: 0.00 0.00 0.00 (0.00 m/s)");
 	}
@@ -67,4 +68,9 @@ void ComponentTransform::SetRotation(float angle, const vec3& u)
 void ComponentTransform::Scale(float x, float y, float z)
 {
 	transform.scale(x, y, z);
+}
+
+mat4x4 ComponentTransform::GetTransform()
+{
+	return transform;
 }

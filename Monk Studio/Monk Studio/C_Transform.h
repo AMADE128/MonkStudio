@@ -24,6 +24,8 @@ public:
 	void SetRotation(float angle, const vec3& u);
 	void Scale(float x, float y, float z);
 
+	mat4x4 GetTransform();
+
 public:
 	bool updateTransform;
 

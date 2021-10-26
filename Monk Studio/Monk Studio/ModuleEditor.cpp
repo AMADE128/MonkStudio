@@ -152,11 +152,14 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGuiStyle* style = &ImGui::GetStyle();
 		style->Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 		ImGui::Begin("Inspector", &show_inspector);
-		UpdateInspector(selectedNode);
+		if (selectedNode != nullptr)
+		{
+			UpdateInspector(selectedNode);
+		}
 		if (ImGui::CollapsingHeader("Properties"))
 		{
 			ImGui::Text("Options");
-			ImGui::Checkbox("", &selectedNode->active); ImGui::SameLine(); ImGui::InputText("", gameObjectName, 32);
+			//ImGui::Checkbox("", &selectedNode->active); ImGui::SameLine(); ImGui::InputText("", gameObjectName, 32);
 		}
 		if (ImGui::CollapsingHeader("Material"))
 		{
@@ -450,11 +453,14 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 void ModuleEditor::UpdateInspector(GameObject* parent)
 {
-	for (size_t i = 0; i < parent->components.size(); i++)
+	if (parent->components.size() > 0)
 	{
-		if (parent->components.at(i)->isEnable())
+		for (size_t i = 0; i < parent->components.size(); i++)
 		{
-			parent->components.at(i)->InspectorDraw();
+			if (parent->components.at(i)->isEnable())
+			{
+				parent->components.at(i)->InspectorDraw();
+			}
 		}
 	}
 }

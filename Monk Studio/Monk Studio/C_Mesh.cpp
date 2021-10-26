@@ -3,6 +3,7 @@
 #include"Globals.h"
 #include <assert.h>
 #include "Primitive.h"
+#include "C_Transform.h"
 
 ComponentMesh::ComponentMesh(GameObject* _gm) : Component(_gm)
 {
@@ -47,11 +48,13 @@ bool ComponentMesh::LoadMesh(const std::string& fileName)
 
 void ComponentMesh::Render()
 {
+	ComponentTransform* tf = new ComponentTransform(nullptr);
+	tf = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 	glPushMatrix();
-	//glMultMatrixf(transform.M);
+	glMultMatrixf(tf->transform.M);
 
 	for (unsigned int i = 0; i < mEntries.size(); i++) {
 		glBindBuffer(GL_ARRAY_BUFFER, mEntries[i].VB);
