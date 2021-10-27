@@ -35,12 +35,12 @@ bool ComponentMesh::LoadMesh(const std::string& fileName)
 
 	if (scene)
 	{
-		InitFromScene(scene);
+		InitFromScene(scene, fileName);
 		ret = true;
 	}
 	else
 	{
-		printf("Error loading '%s'", fileName.c_str());
+		LOG("Error loading '%s'", fileName.c_str());
 	}
 
 	return ret;
@@ -64,9 +64,15 @@ void ComponentMesh::Render()
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].IB);
 
+		const unsigned int MaterialIndex = mEntries[i].MaterialIndex;
+
+		if (MaterialIndex < mTextures.size() && mTextures[MaterialIndex]) {
+			mTextures[MaterialIndex]->Bind();
+		}
+
 		glDrawElements(GL_TRIANGLES, mEntries[i].NumIndices, GL_UNSIGNED_INT, 0);
 
-		glBindVertexArray(0);
+		//glBindVertexArray(0);
 	}
 	glPopMatrix();
 
@@ -79,9 +85,10 @@ void ComponentMesh::Render()
 	glDisableVertexAttribArray(2);
 }
 
-void ComponentMesh::InitFromScene(const aiScene* pScene)
+bool ComponentMesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
 {
 	mEntries.resize(pScene->mNumMeshes);
+	mTextures.resize(pScene->mNumMaterials);
 
 	// Initialize the meshes in the scene one by one
 	for (unsigned int i = 0; i < mEntries.size(); i++) {
@@ -89,19 +96,25 @@ void ComponentMesh::InitFromScene(const aiScene* pScene)
 		InitMesh(i, paiMesh);
 	}
 
+	return InitMaterials(pScene, Filename);
 }
 
 void ComponentMesh::InitMesh(unsigned int index, const aiMesh* paiMesh)
 {
+	mEntries[index].MaterialIndex = paiMesh->mMaterialIndex;
 
 	std::vector<Vertex> Vertices;
 	std::vector<unsigned int> Indices;
 
+	const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
+
 	for (unsigned int i = 0; i < paiMesh->mNumVertices; i++) {
 		const aiVector3D* pPos = &(paiMesh->mVertices[i]);
 		const aiVector3D* pNormal = &(paiMesh->mNormals[i]);
+		const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][i]) : &Zero3D;
 
 		Vertex v(vec3(pPos->x, pPos->y, pPos->z),
+			vec2(pTexCoord->x, pTexCoord->y),
 			vec3(pNormal->x, pNormal->y, pNormal->z));
 
 		Vertices.push_back(v);
@@ -118,11 +131,59 @@ void ComponentMesh::InitMesh(unsigned int index, const aiMesh* paiMesh)
 	mEntries[index].Init(Vertices, Indices);
 }
 
+bool ComponentMesh::InitMaterials(const aiScene* pScene, const std::string& Filename)
+{
+	std::string::size_type SlashIndex = Filename.find_last_of("/");
+	std::string Dir;
+
+	if (SlashIndex == std::string::npos) {
+		Dir = ".";
+	}
+	else if (SlashIndex == 0) {
+		Dir = "/";
+	}
+	else {
+		Dir = Filename.substr(0, SlashIndex);
+	}
+
+	bool ret = true;
+
+	for (unsigned int i = 0; i < pScene->mNumMaterials; i++) {
+		const aiMaterial* pMaterial = pScene->mMaterials[i];
+		mTextures[i] = NULL;
+		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+			aiString Path;
+
+			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+				std::string FullPath = Dir + "/" + Path.data;
+				mTextures[i] = new Texture();
+				mTextures[i]->Load(FullPath);
+
+				if (!mTextures[i]->Load(FullPath)) {
+					LOG("Error loading texture '%s'\n", FullPath.c_str());
+					delete mTextures[i];
+					mTextures[i] = NULL;
+					ret = false;
+				}
+			}
+		}
+
+		// Load a white texture in case the model does not include its own texture
+		if (!mTextures[i]) {
+			mTextures[i] = new Texture();
+
+			ret = mTextures[i]->Load("Assets/Textures/white.png");
+		}
+	}
+	return ret;
+}
+
 ComponentMesh::MeshEntry::MeshEntry()
 {
 	VB = INVALID_OGL_VALUE;
 	IB = INVALID_OGL_VALUE;
 	NumIndices = 0;
+	MaterialIndex = INVALID_MATERIAL;
 }
 
 ComponentMesh::MeshEntry::~MeshEntry()

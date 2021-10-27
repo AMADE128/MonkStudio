@@ -212,7 +212,7 @@
     <ClInclude Include="MS_Math.h">
       <Filter>Source Files\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Tetures.h">
+    <ClInclude Include="Textures.h">
       <Filter>Source Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>

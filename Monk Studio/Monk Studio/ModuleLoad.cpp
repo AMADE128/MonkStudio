@@ -5,6 +5,10 @@
 #include "External Libraries/assimp/include/scene.h"
 #include "External Libraries/assimp/include/postprocess.h"
 
+#include "il.h"
+#include "ilu.h"
+#include "ilut.h"
+
 // Constructor
 ModuleLoad::ModuleLoad(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -25,6 +29,20 @@ bool ModuleLoad::Init()
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
+
+	ILuint devilError;
+
+
+	ilInit();
+
+	LOG("Loading DevIL");
+
+	devilError = ilGetError();
+
+	if (devilError != IL_NO_ERROR) {
+		LOG("Devil Error: %s\n", iluErrorString(devilError));
+		ret = false;
+	}
 
 	return ret;
 }
