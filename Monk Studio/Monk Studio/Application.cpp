@@ -119,6 +119,12 @@ update_status Application::Update()
 		ret = item->at(i)->PostUpdate(dt);
 		i++;
 	}
+	i = 0;
+	while (item != NULL && ret == UPDATE_CONTINUE && i < item->size())
+	{
+		ret = item->at(i)->DrawUI(dt);
+		i++;
+	}
 	FinishUpdate();
 	return ret;
 }
