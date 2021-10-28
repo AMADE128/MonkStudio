@@ -40,9 +40,10 @@ public:
 	{
 		return UPDATE_CONTINUE;
 	}
-	virtual update_status DrawUI(float dt)
+
+	virtual bool DrawUI()
 	{
-		return UPDATE_CONTINUE;
+		return true;
 	}
 
 	virtual bool CleanUp()

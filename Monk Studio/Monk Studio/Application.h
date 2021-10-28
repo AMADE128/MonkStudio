@@ -27,7 +27,7 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
-	vector<Module*> list_modules;
+
 
 public:
 
@@ -39,6 +39,7 @@ public:
 	bool CleanUp();
 
 	int maxFPS = 60;
+	vector<Module*> list_modules;
 
 private:
 

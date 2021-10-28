@@ -18,6 +18,7 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
+	bool DrawUI();
 
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 

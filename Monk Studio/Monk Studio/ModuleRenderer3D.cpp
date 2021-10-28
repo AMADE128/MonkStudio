@@ -153,6 +153,19 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+bool ModuleRenderer3D::DrawUI()
+{
+	if (App->editor->show_render)
+	{
+		ImGui::Begin("Render", &App->editor->show_render);
+
+		App->editor->MenuRender();
+
+		ImGui::End();
+	}
+	return true;
+}
+
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {

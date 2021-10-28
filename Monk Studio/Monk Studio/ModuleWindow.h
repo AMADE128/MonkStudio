@@ -22,6 +22,7 @@ public:
 
 	bool Init();
 	bool CleanUp();
+	bool DrawUI();
 
 	void SetTitle(const char* title);
 	void SetFullscreen(bool set);

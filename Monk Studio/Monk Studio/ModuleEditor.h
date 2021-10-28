@@ -3,6 +3,15 @@
 #include <vector>
 #include <iostream>
 #include "GameObject.h"
+#include "External Libraries/imgui/imgui.h"
+#include "External Libraries/imgui/imgui_impl_sdl.h"
+#include "External Libraries/imgui/imgui_impl_opengl2.h"
+#include "ModuleWindow.h"
+#include "Globals.h"
+#include "GameObject.h"
+
+#include <stdio.h>
+#include <Psapi.h>
 
 using namespace std;
 
