@@ -172,7 +172,7 @@ bool ComponentMesh::InitMaterials(const aiScene* pScene, const std::string& File
 		if (!mTextures[i]) {
 			mTextures[i] = new Texture();
 
-			ret = mTextures[i]->Load("Assets/Textures/white.png");
+			ret = mTextures[i]->Load("Assets/Textures/missing_texture.png");
 		}
 	}
 	return ret;
