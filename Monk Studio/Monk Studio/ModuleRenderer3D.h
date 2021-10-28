@@ -23,6 +23,9 @@ public:
 
 public:
 
+	GLuint checkersTexture;
+	GLubyte checkerImage[256][256][4];
+
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;

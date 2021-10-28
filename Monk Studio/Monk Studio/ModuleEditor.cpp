@@ -256,7 +256,10 @@ void ModuleEditor::MenuRender()
 	{
 		texture_2d = !texture_2d;
 		if (texture_2d) glEnable(GL_TEXTURE_2D);
-		else glDisable(GL_TEXTURE_2D);
+		else
+		{
+			glDisable(GL_TEXTURE_2D);
+		}
 	}
 	if (ImGui::MenuItem("Wireframe", "", wireframe_mode))
 	{

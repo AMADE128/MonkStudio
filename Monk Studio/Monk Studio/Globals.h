@@ -20,6 +20,8 @@ void log(const char file[], int line, const char* format, ...);
 #define INVALID_MATERIAL 0xFFFFFFFF
 #define INVALID_OGL_VALUE 0xffffffff
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals |  aiProcess_JoinIdenticalVertices )
+#define SAFE_DELETE(p) if (p) { delete p; p = NULL; }
+#define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
 typedef unsigned int uint;
 

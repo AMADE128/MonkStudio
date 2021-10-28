@@ -1,5 +1,8 @@
 #include "Textures.h"
 #include "il.h"
+#include "ilut.h"
+
+#include "Application.h"
 #include "Globals.h"
 #include "External Libraries/Glew/include/glew.h"
 #include "External Libraries/SDL/include/SDL_opengl.h"
@@ -43,6 +46,7 @@ bool Texture::Load(const std::string path)
 
         //Delete file from memory
         ilDeleteImages(1, &imgID);
+		glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     //Report error
@@ -57,24 +61,28 @@ bool Texture::Load(const std::string path)
 bool Texture::Load32(GLuint* pixels, GLuint width, GLuint height)
 {
     //Free texture if it exists
-    //Unload();
+    Unload();
 
     //Get texture dimensions
     mTextureWidth = width;
     mTextureHeight = height;
 
     //Generate texture ID
-    glGenTextures(1, &mTextureID);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	mTextureID = ilutGLBindTexImage();
 
     //Bind texture ID
     glBindTexture(GL_TEXTURE_2D, mTextureID);
 
     //Generate texture
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
     //Set texture parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
 
     //Unbind texture
     glBindTexture(GL_TEXTURE_2D, NULL);
@@ -87,11 +95,12 @@ bool Texture::Load32(GLuint* pixels, GLuint width, GLuint height)
         return false;
     }
 
-	return false;
+	return true;
 }
 
 void Texture::Bind()
 {
+	glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, mTextureID);
 }
 

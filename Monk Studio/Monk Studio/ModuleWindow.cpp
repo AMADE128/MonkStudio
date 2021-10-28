@@ -2,6 +2,10 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 
+#include "il.h"
+#include "ilu.h"
+#include "ilut.h"
+
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	window = NULL;
@@ -18,6 +22,8 @@ bool ModuleWindow::Init()
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;
+
+	ilutRenderer(ILUT_OPENGL);
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{

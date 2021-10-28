@@ -25,11 +25,17 @@ public:
 	bool LoadMesh(const std::string& fileName);
 	void Render();
 
+	void Unload();
+
 private:
 
 	bool InitFromScene(const aiScene* pScene, const std::string& Filename);
+	void InitAllMeshes(const aiScene* pScene);
 	void InitMesh(unsigned int Index, const aiMesh* paiMesh);
 	bool InitMaterials(const aiScene* pScene, const std::string& Filename);
+	void CountVerticesAndIndices(const aiScene* pScene, unsigned int NumVertices, unsigned int NumIndices);
+	void ReserveSpace(unsigned int NumVertices, unsigned int NumIndices);
+	void PopulateBuffers();
 
 	struct MeshEntry {
 		MeshEntry();
@@ -44,7 +50,13 @@ private:
 		unsigned int NumIndices;
 		unsigned int MaterialIndex;
 	};
-
+	GLuint mVAO = 0;
+	GLuint mBuffers[6] = { 0 };
 	std::vector<MeshEntry> mEntries;
 	std::vector<Texture*> mTextures;
+
+	std::vector<vec3> mPosition;
+	std::vector<vec3> mNormals;
+	std::vector<vec2> mTexCoords;
+	std::vector<unsigned int> mIndices;
 };

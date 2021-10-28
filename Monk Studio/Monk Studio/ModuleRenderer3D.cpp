@@ -65,17 +65,24 @@ bool ModuleRenderer3D::Init()
 		
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		//Check for error
-		error = glewInit();
+		error = glGetError();
 		if (GLEW_OK != error)
 		{
 			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 
-		GLenum err = glewInit();
 		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		
+		// Blend for transparency
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.1f);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
@@ -92,6 +99,7 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
+		glEnable(GL_MULTISAMPLE);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
@@ -99,10 +107,9 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 
-		//Checker texture
-		GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
-		for (int i = 0; i < CHECKERS_HEIGHT; i++) {
-			for (int j = 0; j < CHECKERS_WIDTH; j++) {
+		//Generate texture
+		for (int i = 0; i < 256; i++) {
+			for (int j = 0; j < 256; j++) {
 				int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
 				checkerImage[i][j][0] = (GLubyte)c;
 				checkerImage[i][j][1] = (GLubyte)c;
@@ -111,15 +118,15 @@ bool ModuleRenderer3D::Init()
 			}
 		}
 
-		/*glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glGenTextures(1, &textureID);
-		glBindTexture(GL_TEXTURE_2D, textureID);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glGenTextures(1, &checkersTexture);
+		glBindTexture(GL_TEXTURE_2D, checkersTexture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);*/
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	// Projection matrix for
