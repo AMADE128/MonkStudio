@@ -96,7 +96,15 @@ update_status ModuleEditor::PostUpdate(float dt)
 		}
 	}
 
+	ImGui::EndFrame();
+	ImGui::Render();
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
+	return UPDATE_CONTINUE;
+}
+
+bool ModuleEditor::DrawUI()
+{
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -182,11 +190,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGui::End();
 	}
 
-	ImGui::EndFrame();
-	ImGui::Render();
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-
-	return UPDATE_CONTINUE;
+	return true;
 }
 
 void ModuleEditor::UpdateInspector(GameObject* parent)

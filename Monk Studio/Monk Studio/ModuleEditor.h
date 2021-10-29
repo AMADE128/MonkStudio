@@ -25,6 +25,7 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
+	bool DrawUI();
 	void UpdateInspector(GameObject* parent);
 	void MenuHelp();
 	void MenuView();
