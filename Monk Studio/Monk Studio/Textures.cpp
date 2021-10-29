@@ -100,7 +100,6 @@ bool Texture::Load32(GLuint* pixels, GLuint width, GLuint height)
 
 void Texture::Bind()
 {
-	glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, mTextureID);
 }
 

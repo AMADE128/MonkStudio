@@ -31,7 +31,7 @@ private:
 
 	bool InitFromScene(const aiScene* pScene, const std::string& Filename);
 	void InitAllMeshes(const aiScene* pScene);
-	void InitMesh(unsigned int Index, const aiMesh* paiMesh);
+	void InitMesh(const aiMesh* paiMesh);
 	bool InitMaterials(const aiScene* pScene, const std::string& Filename);
 	void CountVerticesAndIndices(const aiScene* pScene, unsigned int NumVertices, unsigned int NumIndices);
 	void ReserveSpace(unsigned int NumVertices, unsigned int NumIndices);
