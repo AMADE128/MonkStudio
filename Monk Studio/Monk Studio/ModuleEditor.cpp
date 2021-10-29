@@ -47,19 +47,19 @@ update_status ModuleEditor::PreUpdate(float dt)
 
 update_status ModuleEditor::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		show_console = !show_console;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		show_hierarchy = !show_hierarchy;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		show_inspector = !show_inspector;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		show_configuration = !show_configuration;
 	}
@@ -311,15 +311,19 @@ void ModuleEditor::MenuGameObject()
 
 void ModuleEditor::MenuView()
 {
-	if (ImGui::MenuItem("Console", "1", show_console))
+	if (ImGui::MenuItem("Console", "Alt + 1", show_console))
 	{
 		show_console = !show_console;
 	}
-	if (ImGui::MenuItem("Inspector", "3", show_inspector))
+	if (ImGui::MenuItem("Hierarchy", "Alt + 2", show_inspector))
+	{
+		show_hierarchy = !show_hierarchy;
+	}
+	if (ImGui::MenuItem("Inspector", "Alt + 3", show_inspector))
 	{
 		show_inspector = !show_inspector;
 	}
-	if (ImGui::MenuItem("Configuration", "4", show_configuration))
+	if (ImGui::MenuItem("Configuration", "Alt + 4", show_configuration))
 	{
 		show_configuration = !show_configuration;
 	}
