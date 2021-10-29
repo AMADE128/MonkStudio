@@ -28,6 +28,8 @@ bool ModuleEditor::Init()
     ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	io.ConfigViewportsNoAutoMerge = true;
 
     ImGui::StyleColorsDark();
 
@@ -70,14 +72,16 @@ update_status ModuleEditor::Update(float dt)
 
 update_status ModuleEditor::PostUpdate(float dt)
 {
+	//glClearColor(0.08f, 0.08f, 0.08f, 1.f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	UpdateProcessInfo(dt);
-
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+
+	DrawMenuBar();
 
 	if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 
@@ -100,63 +104,20 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
+	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		SDL_Window* currentWindow = SDL_GL_GetCurrentWindow();
+		SDL_GLContext currentContext = SDL_GL_GetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		SDL_GL_MakeCurrent(currentWindow, currentContext);
+	}
+
 	return UPDATE_CONTINUE;
 }
 
 bool ModuleEditor::DrawUI()
 {
-	if (ImGui::BeginMainMenuBar())
-	{
-		if (ImGui::BeginMenu("File"))
-		{
-			if (ImGui::MenuItem(":::::::::::::::"))
-			{
-				show_file = true;
-			}
-			MenuFile();
-			if (ImGui::MenuItem("Quit", "ESC")) return UPDATE_STOP;
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Render"))
-		{
-			if (ImGui::MenuItem(":::::::::::::::"))
-			{
-				show_render = true;
-			}
-			MenuRender();
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Game Object"))
-		{
-			if (ImGui::MenuItem(":::::::::::::::"))
-			{
-				show_gameObject = true;
-			}
-			MenuGameObject();
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("View"))
-		{
-			if (ImGui::MenuItem(":::::::::::::::"))
-			{
-				show_view = true;
-			}
-			MenuView();
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Help"))
-		{
-			if (ImGui::MenuItem(":::::::::::::::"))
-			{
-				show_help = true;
-			}
-			MenuHelp();
-			ImGui::EndMenu();
-		}
-
-		ImGui::EndMainMenuBar();
-	}
-
 	if (show_file)
 	{
 		ImGui::Begin("File", &show_file);
@@ -306,6 +267,64 @@ void ModuleEditor::MenuGameObject()
 		GameObject* plane = App->scene_intro->CreateGameObject("Plane", App->scene_intro->root);
 		plane->CreateComponent(Component::Type::MESH);
 		plane->LoadComponents("Assets/Primitives/Plane.fbx");
+	}
+}
+
+void ModuleEditor::DrawMenuBar()
+{
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem(":::::::::::::::"))
+			{
+				show_file = true;
+			}
+			MenuFile();
+			if (ImGui::MenuItem("Quit", "ESC"))
+			{
+				App->Exit();
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Render"))
+		{
+			if (ImGui::MenuItem(":::::::::::::::"))
+			{
+				show_render = true;
+			}
+			MenuRender();
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Game Object"))
+		{
+			if (ImGui::MenuItem(":::::::::::::::"))
+			{
+				show_gameObject = true;
+			}
+			MenuGameObject();
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("View"))
+		{
+			if (ImGui::MenuItem(":::::::::::::::"))
+			{
+				show_view = true;
+			}
+			MenuView();
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Help"))
+		{
+			if (ImGui::MenuItem(":::::::::::::::"))
+			{
+				show_help = true;
+			}
+			MenuHelp();
+			ImGui::EndMenu();
+		}
+
+		ImGui::EndMainMenuBar();
 	}
 }
 

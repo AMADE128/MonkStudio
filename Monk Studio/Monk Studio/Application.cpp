@@ -137,6 +137,16 @@ bool Application::CleanUp()
 	return ret;
 }
 
+void Application::Exit()
+{
+	exit = true;
+}
+
+bool Application::GetExit()
+{
+	return exit;
+}
+
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);

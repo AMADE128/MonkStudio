@@ -31,6 +31,8 @@ public:
 	void MenuView();
 	void MenuRender();
 	void MenuGameObject();
+	void DrawMenuBar();
+
 	void MenuFile();
 	void HierarchyDraw(GameObject* parent);
 	void UpdateProcessInfo(float dt);
@@ -42,9 +44,6 @@ public:
 	void FixVector(std::vector<T>& vec, T& value) {
 		if (vec.size() == vec.capacity())
 		{
-			//Vector is full
-			//delete vector's oldest element
-			//Move all elements 1 position back
 			for (unsigned int i = 0; i < vec.size(); i++)
 			{
 				if (i + 1 < vec.size())
@@ -54,13 +53,9 @@ public:
 				}
 			}
 			vec[vec.capacity() - 1] = value;
-			//Pushback new element
 		}
 		else
-		{
-			//Vector is not full
 			vec.push_back(value);
-		}
 	}
 
 public:

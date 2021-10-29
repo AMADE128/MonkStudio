@@ -38,6 +38,9 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void Exit();
+	bool GetExit();
+
 	int maxFPS = 60;
 	vector<Module*> list_modules;
 
@@ -46,6 +49,8 @@ private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	bool exit = false;
 
 };
 
