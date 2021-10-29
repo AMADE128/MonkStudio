@@ -66,6 +66,11 @@ void ComponentMesh::Render()
 
 	if (mTextures.size() > 0)
 	{
+		glBindTexture(GL_TEXTURE_2D, mTextures[0]->GetTextureID());
+	}
+
+	if (mTexCoords.size() > 0)
+	{
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, mBuffers[2]);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
@@ -83,19 +88,8 @@ void ComponentMesh::Render()
 	glPushMatrix();
 	glMultMatrixf(tf->transform.M);
 
-	for (unsigned int i = 0; i < mEntries.size(); i++)
-	{
-		unsigned int MaterialIndex = mEntries[i].MaterialIndex;
+	glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, NULL);
 
-		assert(MaterialIndex < mTextures.size());
-
-		if (mTextures[MaterialIndex])
-		{
-			mTextures[MaterialIndex]->Bind();
-		}
-
-		glDrawElements(GL_TRIANGLES, mEntries[i].NumIndices, GL_UNSIGNED_INT, NULL);
-	}
 	glPopMatrix();
 
 	if (mTextures.size() > 0)
