@@ -139,7 +139,7 @@ bool ComponentMesh::InitFromScene(const aiScene* pScene, const std::string& File
 		return false;
 	}
 
-	PopulateBuffers();
+	GenerateBuffers();
 
 	return true;
 }
@@ -258,7 +258,7 @@ void ComponentMesh::ReserveSpace(unsigned int NumVertices, unsigned int NumIndic
 	mIndices.reserve(NumIndices);
 }
 
-void ComponentMesh::PopulateBuffers()
+void ComponentMesh::GenerateBuffers()
 {
 	//Position attributes
 	glGenBuffers(1, &mBuffers[1]);

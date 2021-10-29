@@ -15,7 +15,7 @@ bool ModuleSceneIntro::Init()
 {
 	bool ret = true;
 
-	root = CreateGameObject("Scene root", nullptr);
+	sceneObjects = CreateGameObject("Scene sceneObjects", nullptr);
 
 	return ret;
 }
@@ -64,7 +64,7 @@ bool ModuleSceneIntro::DrawUI()
 	if (App->editor->show_hierarchy)
 	{
 		ImGui::Begin("Hierarchy", &App->editor->show_hierarchy);
-		App->editor->HierarchyDraw(App->scene_intro->root);
+		App->editor->HierarchyDraw(App->scene_intro->sceneObjects);
 		ImGui::End();
 	}
 
@@ -117,7 +117,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	p.axis = true;
 	p.Render();
 
-	UpdateGameObjects(root);
+	UpdateGameObjects(sceneObjects);
 
 	return UPDATE_CONTINUE;
 }

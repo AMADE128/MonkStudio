@@ -35,7 +35,7 @@ private:
 	bool InitMaterials(const aiScene* pScene, const std::string& Filename);
 	void CountVerticesAndIndices(const aiScene* pScene, unsigned int NumVertices, unsigned int NumIndices);
 	void ReserveSpace(unsigned int NumVertices, unsigned int NumIndices);
-	void PopulateBuffers();
+	void GenerateBuffers();
 
 	struct MeshEntry {
 		MeshEntry();

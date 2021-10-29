@@ -72,8 +72,6 @@ update_status ModuleEditor::Update(float dt)
 
 update_status ModuleEditor::PostUpdate(float dt)
 {
-	//glClearColor(0.08f, 0.08f, 0.08f, 1.f);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	UpdateProcessInfo(dt);
 
@@ -240,31 +238,31 @@ void ModuleEditor::MenuGameObject()
 {
 	if (ImGui::MenuItem("Cube"))
 	{
-		GameObject* cube = App->scene_intro->CreateGameObject("Cube", App->scene_intro->root);
+		GameObject* cube = App->scene_intro->CreateGameObject("Cube", App->scene_intro->sceneObjects);
 		cube->CreateComponent(Component::Type::MESH);
 		cube->LoadComponents("Assets/Primitives/Cube.fbx");
 	}
 	if (ImGui::MenuItem("Sphere"))
 	{
-		GameObject* sphere = App->scene_intro->CreateGameObject("Sphere", App->scene_intro->root);
+		GameObject* sphere = App->scene_intro->CreateGameObject("Sphere", App->scene_intro->sceneObjects);
 		sphere->CreateComponent(Component::Type::MESH);
 		sphere->LoadComponents("Assets/Primitives/Sphere.fbx");
 	}
 	if (ImGui::MenuItem("Pyramid"))
 	{
-		GameObject* pyramid = App->scene_intro->CreateGameObject("Pyramid", App->scene_intro->root);
+		GameObject* pyramid = App->scene_intro->CreateGameObject("Pyramid", App->scene_intro->sceneObjects);
 		pyramid->CreateComponent(Component::Type::MESH);
 		pyramid->LoadComponents("Assets/Primitives/Pyramid.fbx");
 	}
 	if (ImGui::MenuItem("Cylinder"))
 	{
-		GameObject* cylinder = App->scene_intro->CreateGameObject("Cylinder", App->scene_intro->root);
+		GameObject* cylinder = App->scene_intro->CreateGameObject("Cylinder", App->scene_intro->sceneObjects);
 		cylinder->CreateComponent(Component::Type::MESH);
 		cylinder->LoadComponents("Assets/Primitives/Cylinder.fbx");
 	}
 	if (ImGui::MenuItem("Plane"))
 	{
-		GameObject* plane = App->scene_intro->CreateGameObject("Plane", App->scene_intro->root);
+		GameObject* plane = App->scene_intro->CreateGameObject("Plane", App->scene_intro->sceneObjects);
 		plane->CreateComponent(Component::Type::MESH);
 		plane->LoadComponents("Assets/Primitives/Plane.fbx");
 	}
@@ -368,9 +366,9 @@ void ModuleEditor::UpdateProcessInfo(float dt)
 	float currentPrivate = pmc.PrivateUsage / 1000000;
 	float currentFPS = ImGui::GetIO().Framerate;
 	float currentMS = 1000 * dt;
-	FixVector(fps_log, currentFPS);
-	FixVector(ms_log, currentMS);
-	FixVector(memory_log, currentPrivate);
+	UpdatePlotVector(fps_log, currentFPS);
+	UpdatePlotVector(ms_log, currentMS);
+	UpdatePlotVector(memory_log, currentPrivate);
 }
 				
 			

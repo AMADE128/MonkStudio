@@ -40,16 +40,16 @@ public:
 
 	void LogToConsole(const char* txt);
 
-	template <class T>
-	void FixVector(std::vector<T>& vec, T& value) {
+	void UpdatePlotVector(std::vector<float>& vec, float& value)
+	{
 		if (vec.size() == vec.capacity())
 		{
-			for (unsigned int i = 0; i < vec.size(); i++)
+			for (int i = 0; i < vec.size(); i++)
 			{
 				if (i + 1 < vec.size())
 				{
-					float iCopy = vec[i + 1];
-					vec[i] = iCopy;
+					float ret = vec[i + 1];
+					vec[i] = ret;
 				}
 			}
 			vec[vec.capacity() - 1] = value;

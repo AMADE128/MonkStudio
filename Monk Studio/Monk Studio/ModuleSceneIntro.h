@@ -25,5 +25,5 @@ public:
 	void UpdateGameObjects(GameObject* parent);
 
 public:
-	GameObject* root;
+	GameObject* sceneObjects;
 };
