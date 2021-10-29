@@ -51,15 +51,19 @@ update_status ModuleEditor::Update(float dt)
 	{
 		show_console = !show_console;
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
-		show_configuration = !show_configuration;
+		show_hierarchy = !show_hierarchy;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
 		show_inspector = !show_inspector;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		show_configuration = !show_configuration;
+	}
+
 
 	return UPDATE_CONTINUE;
 }
