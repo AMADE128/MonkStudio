@@ -183,6 +183,14 @@ bool ModuleWindow::DrawUI()
 			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
 			ImGui::Text("%d", App->input->GetMouseZ());
 			ImGui::PopStyleColor();
+			if(ImGui::CollapsingHeader("Mouse Output"))
+			{
+
+				for (int i = 0; i < App->input->debug_mouse.size(); i++)
+				{
+					ImGui::Text("%s", App->input->debug_mouse.at(i).c_str());
+				}
+			}
 		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{

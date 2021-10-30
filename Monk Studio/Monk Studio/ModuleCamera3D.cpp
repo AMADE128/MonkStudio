@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera3D.h"
+#include "C_Transform.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -37,31 +38,48 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movememnt frame rate independant!
 
 	vec3 newPos(0,0,0);
-	float speed = 3.0f * dt;
+	float speed = 4.0f * dt;
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
 
-	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed; 
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) App->input->LogToConsole("E");
 
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y -= speed;
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) App->input->LogToConsole("R");
 
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed; 
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) App->input->LogToConsole("W");
 
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed; 
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->input->LogToConsole("S");
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed; 
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) App->input->LogToConsole("A");
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) App->input->LogToConsole("D");
+	}
+
+	//Wheel zoom ------------------
+	if (App->input->GetMouseZ() > 0) newPos -= Z * speed * 10;
+	else if (App->input->GetMouseZ() < 0) newPos += Z * speed * 10;
 
 	Position += newPos;
-	Reference += newPos;
+
+	if(App->editor->selectedNode) Reference = App->editor->selectedNode->transform->position;
+	else Reference += newPos;
 
 	// Mouse motion ----------------
 
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if(App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && (App->input->GetKey(SDL_SCANCODE_LALT)))
 	{
+		if (App->editor->selectedNode) LookAt(Reference);
+
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
