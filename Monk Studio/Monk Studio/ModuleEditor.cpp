@@ -366,7 +366,7 @@ void ModuleEditor::MenuView()
 	{
 		show_console = !show_console;
 	}
-	if (ImGui::MenuItem("Hierarchy", "Alt + 2", show_inspector))
+	if (ImGui::MenuItem("Hierarchy", "Alt + 2", show_hierarchy))
 	{
 		show_hierarchy = !show_hierarchy;
 	}
