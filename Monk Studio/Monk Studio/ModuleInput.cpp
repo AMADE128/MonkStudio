@@ -95,15 +95,24 @@ update_status ModuleInput::PreUpdate(float dt)
 		{
 			case SDL_MOUSEWHEEL:
 			mouse_z = e.wheel.y;
+			LogToConsole("Mouse Wheel");
 			break;
 
 			case SDL_MOUSEMOTION:
+
 			mouse_x = e.motion.x / SCREEN_SIZE;
 			mouse_y = e.motion.y / SCREEN_SIZE;
 
 			mouse_x_motion = e.motion.xrel / SCREEN_SIZE;
 			mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
 			break;
+			
+			case SDL_MOUSEBUTTONDOWN:
+				if (e.button.button == SDL_BUTTON_LEFT) LogToConsole("Left Click");
+				if (e.button.button == SDL_BUTTON_MIDDLE) LogToConsole("Middle Click");
+				if (e.button.button == SDL_BUTTON_RIGHT) LogToConsole("Right Click");
+			break;
+
 
 			case (SDL_DROPFILE):
 			{
@@ -130,7 +139,6 @@ update_status ModuleInput::PreUpdate(float dt)
 					}
 					else SDL_SetWindowSize(App->window->window, App->window->w, App->window->h);
 			}
-
 		}
 	}
 
@@ -146,4 +154,9 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+void ModuleInput::LogToConsole(const char* txt)
+{
+    debug_mouse.push_back(std::string(txt));
 }

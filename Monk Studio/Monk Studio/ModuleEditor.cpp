@@ -51,18 +51,22 @@ update_status ModuleEditor::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		show_console = !show_console;
+		App->input->LogToConsole("ALT + 1");
 	}
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		show_hierarchy = !show_hierarchy;
+		App->input->LogToConsole("ALT + 2");
 	}
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		show_inspector = !show_inspector;
+		App->input->LogToConsole("ALT + 3");
 	}
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		show_configuration = !show_configuration;
+		App->input->LogToConsole("ALT + 4");
 	}
 
 
@@ -183,6 +187,7 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 	if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
 	{
 		selectedNode = parent;
+		App->input->LogToConsole("Left Click");
 	}
 	if (open) {
 		// Recursive call...
