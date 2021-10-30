@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleEditor.h"
 #include "Primitive.h"
+#include "C_Material.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -15,7 +16,7 @@ bool ModuleSceneIntro::Init()
 {
 	bool ret = true;
 
-	sceneObjects = CreateGameObject("Scene sceneObjects", nullptr);
+	sceneObjects = CreateGameObject("Scene", nullptr);
 
 	return ret;
 }
@@ -29,6 +30,8 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	App->load->LoadFile("Assets/BakerHouse.fbx");
+
 	return ret;
 }
 
@@ -40,9 +43,9 @@ bool ModuleSceneIntro::CleanUp()
 	return true;
 }
 
-GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* parent, int _uid)
+GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* parent)
 {
-	GameObject* gm = new GameObject(name, parent, _uid);
+	GameObject* gm = new GameObject(name, parent);
 	return gm;
 }
 

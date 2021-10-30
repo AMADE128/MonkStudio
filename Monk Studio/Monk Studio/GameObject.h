@@ -57,7 +57,7 @@ protected:
 
 class GameObject {
 public:
-	GameObject(const char*, GameObject* _parent, int _uid = -1);
+	GameObject(const char*, GameObject* _parent);
 	virtual ~GameObject();
 
 	void Update();
@@ -82,7 +82,6 @@ public:
 	bool active;
 	std::vector<Component*> components;
 	GameObject* parent;
-	int uid;
 	std::vector<GameObject*> children;
 	ComponentTransform* transform;
 };

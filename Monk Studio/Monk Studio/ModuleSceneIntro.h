@@ -20,7 +20,7 @@ public:
 	bool CleanUp();
 	bool DrawUI();
 
-	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
+	GameObject* CreateGameObject(const char* name, GameObject* parent);
 
 	void UpdateGameObjects(GameObject* parent);
 

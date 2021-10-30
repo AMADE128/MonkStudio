@@ -12,6 +12,8 @@ public:
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 
+	bool LoadFile(const std::string& fileName);
+
 	bool CleanUp();
 public:
 	

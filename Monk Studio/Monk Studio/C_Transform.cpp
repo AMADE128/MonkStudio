@@ -24,17 +24,26 @@ ComponentTransform::~ComponentTransform()
 
 void ComponentTransform::Update()
 {
-	if (updateTransform)
-		UpdateTransform();
+	//if (updateTransform)
+	UpdateTransform();
 }
 
 void ComponentTransform::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Local Transformation"))
 	{
-		if (ImGui::InputFloat3("Position", &position, 0)) updateTransform = true;
-		if (ImGui::SliderFloat3("Rotation", &rotation, -180, 180)) updateTransform = true;
-		if (ImGui::InputFloat3("Scale", &scale, 0)) updateTransform = true;
+		if (ImGui::InputFloat3("Position", &position, 0))
+		{
+			//updateTransform = true;
+		}
+		if (ImGui::SliderFloat3("Rotation", &rotation, -180, 180))
+		{
+			//updateTransform = true;
+		}
+		if (ImGui::InputFloat3("Scale", &scale, 0))
+		{
+			//updateTransform = true;
+		}
 		ImGui::Text("Bounding Box: -not generated-");
 		ImGui::Text("Velocity: 0.00 0.00 0.00 (0.00 m/s)");
 	}
@@ -42,15 +51,21 @@ void ComponentTransform::InspectorDraw()
 
 void ComponentTransform::UpdateTransform()
 {
-	SetPos(position.x, position.y, position.z);
+	ComponentTransform* cf = new ComponentTransform(nullptr);
+	if (owner->parent != nullptr)
+	{
+		cf = dynamic_cast<ComponentTransform*>(owner->parent->GetComponent(Component::Type::TRANSFORM));
+	}
+
+	SetPos(position.x + cf->position.x, position.y + cf->position.y, position.z + cf->position.z);
 
 	SetRotation(rotation.x, vec3(1, 0, 0));
 	SetRotation(rotation.y, vec3(0, 1, 0));
 	SetRotation(rotation.z, vec3(0, 0, 1));
 
-	Scale(scale.x, scale.y, scale.z);
+	Scale(scale.x + cf->scale.x, scale.y + cf->scale.y, scale.z + cf->scale.z);
 
-	updateTransform = false;
+	//updateTransform = false;
 }
 
 void ComponentTransform::SetPos(float x, float y, float z)

@@ -123,6 +123,12 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Material.cpp">
+      <Filter>Source Files\Helpers\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -214,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="Textures.h">
       <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Material.h">
+      <Filter>Source Files\Helpers\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

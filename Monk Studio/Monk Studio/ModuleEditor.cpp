@@ -185,7 +185,6 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 		selectedNode = parent;
 	}
 	if (open) {
-		// Recursive call...
 		for (size_t i = 0; i < parent->children.size(); i++)
 		{
 			HierarchyDraw(parent->children.at(i));
@@ -272,33 +271,23 @@ void ModuleEditor::MenuGameObject()
 {
 	if (ImGui::MenuItem("Cube"))
 	{
-		GameObject* cube = App->scene_intro->CreateGameObject("Cube", App->scene_intro->sceneObjects);
-		cube->CreateComponent(Component::Type::MESH);
-		cube->LoadComponents("Assets/Primitives/Cube.fbx");
+		App->load->LoadFile("Assets/Primitives/Cube.fbx");
 	}
 	if (ImGui::MenuItem("Sphere"))
 	{
-		GameObject* sphere = App->scene_intro->CreateGameObject("Sphere", App->scene_intro->sceneObjects);
-		sphere->CreateComponent(Component::Type::MESH);
-		sphere->LoadComponents("Assets/Primitives/Sphere.fbx");
+		App->load->LoadFile("Assets/Primitives/Sphere.fbx");
 	}
 	if (ImGui::MenuItem("Pyramid"))
 	{
-		GameObject* pyramid = App->scene_intro->CreateGameObject("Pyramid", App->scene_intro->sceneObjects);
-		pyramid->CreateComponent(Component::Type::MESH);
-		pyramid->LoadComponents("Assets/Primitives/Pyramid.fbx");
+		App->load->LoadFile("Assets/Primitives/Pyramid.fbx");
 	}
 	if (ImGui::MenuItem("Cylinder"))
 	{
-		GameObject* cylinder = App->scene_intro->CreateGameObject("Cylinder", App->scene_intro->sceneObjects);
-		cylinder->CreateComponent(Component::Type::MESH);
-		cylinder->LoadComponents("Assets/Primitives/Cylinder.fbx");
+		App->load->LoadFile("Assets/Primitives/Cylinder.fbx");
 	}
 	if (ImGui::MenuItem("Plane"))
 	{
-		GameObject* plane = App->scene_intro->CreateGameObject("Plane", App->scene_intro->sceneObjects);
-		plane->CreateComponent(Component::Type::MESH);
-		plane->LoadComponents("Assets/Primitives/Plane.fbx");
+		App->load->LoadFile("Assets/Primitives/Plane.fbx");
 	}
 }
 

@@ -3,10 +3,11 @@
 
 #include "C_Transform.h"
 #include "C_Mesh.h"
+#include "C_Material.h"
 
 #include <assert.h>
 
-GameObject::GameObject(const char* _name, GameObject* _parent, int _uid) : name(_name), active(true), parent(_parent), uid(_uid)
+GameObject::GameObject(const char* _name, GameObject* _parent) : name(_name), active(true), parent(_parent)
 {
 	if (parent != nullptr)
 	{
@@ -50,9 +51,10 @@ Component* GameObject::CreateComponent(Component::Type _type)
 		ret = new ComponentMesh(this);
 		LOG("Added Mesh component in %s", this->name.c_str());
 		break;
-	/*case Component::Type::MATERIAL:
-		ret = new C_Material(this);
-		break;*/
+	case Component::Type::MATERIAL:
+		ret = new ComponentMaterial(this);
+		LOG("Added Material component in %s", this->name.c_str());
+		break;
 	}
 
 	if (ret != nullptr)
