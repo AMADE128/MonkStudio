@@ -26,17 +26,19 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool DrawUI();
+	bool CleanUp();
+
 	void UpdateInspector(GameObject* parent);
+	void UpdateProcessInfo(float dt);
+
 	void MenuHelp();
 	void MenuView();
 	void MenuRender();
 	void MenuGameObject();
 	void DrawMenuBar();
-
 	void MenuFile();
 	void HierarchyDraw(GameObject* parent);
-	void UpdateProcessInfo(float dt);
-	bool CleanUp();
+	void CreateDockAPI();
 
 	void LogToConsole(const char* txt);
 
@@ -70,8 +72,8 @@ public:
 	bool show_demo_window;
 	bool show_inspector = false;
 	bool show_hierarchy = true;
-	bool show_console = false;
-	bool show_configuration = false;
+	bool show_console = true;
+	bool show_configuration = true;
 	bool show_about = false;
 	bool show_file = false;
 	bool show_render = false;

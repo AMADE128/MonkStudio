@@ -35,7 +35,7 @@ bool ModuleWindow::Init()
 		//Create window
 		int width = SCREEN_WIDTH * SCREEN_SIZE;
 		int height = SCREEN_HEIGHT * SCREEN_SIZE;
-		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_MAXIMIZED;
 
 		//Use OpenGL 2.1
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -270,9 +270,9 @@ bool ModuleWindow::DrawUI()
 	if (App->editor->show_console)
 	{
 		ImGui::Begin("Console", &App->editor->show_console);
-		for (int i = 0; i < engineExternal->window->console.size(); i++)
+		for (int i = 0; i < appExternal->window->console.size(); i++)
 		{
-			ImGui::Text("%s", engineExternal->window->console.at(i).c_str());
+			ImGui::Text("%s", appExternal->window->console.at(i).c_str());
 		}
 		ImGui::End();
 	}

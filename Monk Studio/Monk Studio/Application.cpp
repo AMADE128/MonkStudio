@@ -1,10 +1,10 @@
 #include "Application.h"
 
-extern Application* engineExternal = nullptr;
+extern Application* appExternal = nullptr;
 
 Application::Application()
 {
-	engineExternal = this;
+	appExternal = this;
 
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);

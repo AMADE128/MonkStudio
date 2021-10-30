@@ -54,4 +54,4 @@ private:
 
 };
 
-extern Application* engineExternal;
+extern Application* appExternal;

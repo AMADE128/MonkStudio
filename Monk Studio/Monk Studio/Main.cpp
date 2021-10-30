@@ -82,7 +82,7 @@ int main(int argc, char ** argv)
 	}
 
 	delete App;
-	engineExternal = nullptr;
+	appExternal = nullptr;
 	LOG("Exiting game '%s'...\n", TITLE);
 	return main_return;
 }

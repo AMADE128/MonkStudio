@@ -29,7 +29,6 @@ bool ModuleEditor::Init()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-	io.ConfigViewportsNoAutoMerge = true;
 
     ImGui::StyleColorsDark();
 
@@ -81,15 +80,17 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	DrawMenuBar();
 
+	CreateDockAPI();
+
 	if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 
 	static float f = 0.0f;
 	static int counter = 0;
 
-	vector<Module*>* item = &engineExternal->list_modules;
+	vector<Module*>* item = &appExternal->list_modules;
 	bool ret = true;
 
-	for (int i = 0; i < engineExternal->list_modules.size(); i++)
+	for (int i = 0; i < appExternal->list_modules.size(); i++)
 	{
 		while (item != NULL && ret == true && i < item->size())
 		{
@@ -191,6 +192,39 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 		};
 		ImGui::TreePop();
 	}
+}
+
+void ModuleEditor::CreateDockAPI()
+{
+	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+	if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
+		window_flags |= ImGuiWindowFlags_NoBackground;
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("DockSpace", nullptr, window_flags);
+	ImGui::PopStyleVar();
+	ImGui::PopStyleVar(2);
+
+	// DockSpace
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	{
+		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+	}
+
+	ImGui::End();
 }
 
 void ModuleEditor::MenuRender()
@@ -386,5 +420,5 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::LogToConsole(const char* txt)
 {
-	engineExternal->window->console.push_back(std::string(txt));
+	appExternal->window->console.push_back(std::string(txt));
 }
