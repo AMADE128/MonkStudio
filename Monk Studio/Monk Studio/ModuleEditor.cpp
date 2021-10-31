@@ -269,6 +269,14 @@ void ModuleEditor::MenuRender()
 	if (ImGui::MenuItem("Wireframe", "", wireframe_mode))
 	{
 		wireframe_mode = !wireframe_mode;
+		if (wireframe_mode)
+		{
+			glDisable(GL_TEXTURE_2D);
+		}
+		else if (!wireframe_mode && texture_2d)
+		{
+			glEnable(GL_TEXTURE_2D);
+		}
 	}
 }
 
