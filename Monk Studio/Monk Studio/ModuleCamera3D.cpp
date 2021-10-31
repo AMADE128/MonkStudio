@@ -45,6 +45,9 @@ update_status ModuleCamera3D::Update(float dt)
 	float speed = 4.0f * dt;
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
+		FrontObjectView();
+
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -210,4 +213,21 @@ void ModuleCamera3D::CalculateViewMatrix()
 {
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
+}
+
+void ModuleCamera3D::FrontObjectView()
+{
+	GameObject* object = App->editor->selectedNode;
+	vec3 destination = { 0,0,0 };
+	vec3 newPos = { 0,0,0 };
+
+	if (object != nullptr)
+	{
+		destination = object->transform->GetPosition();
+
+		newPos = vec3(destination.x, destination.y, destination.z);
+
+		Position = newPos + vec3(0, 10, -30);
+		LookAt(newPos);
+	}
 }

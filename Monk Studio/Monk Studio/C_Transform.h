@@ -19,6 +19,7 @@ public:
 	void UpdateTransform();
 
 	static inline Type GetType() { return Type::TRANSFORM; };
+	vec3 GetPosition() { return position; };
 
 	void SetPos(float x, float y, float z);
 	void SetRotation(float angle, const vec3& u);
