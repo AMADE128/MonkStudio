@@ -19,7 +19,7 @@ public:
 	float* GetViewMatrix();
 	void FrontObjectView();
 
-	vec3 X, Y, Z, Position, Reference;
+	vec3 X, Y, Z, Position, Reference, ReferenceFPS;
 
 private:
 
