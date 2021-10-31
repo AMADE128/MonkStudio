@@ -14,17 +14,17 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::Render(Texture* texture)
+void Mesh::Render(GLuint texture)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mBuffers[1]);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	if (texture != nullptr)
+	if (texture)
 	{
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, texture->GetTextureID());
+		glBindTexture(GL_TEXTURE_2D, texture);
 	}
 
 	if (mTexCoords.size() > 0)
@@ -48,7 +48,7 @@ void Mesh::Render(Texture* texture)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-	if (texture != nullptr)
+	if (texture)
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);

@@ -25,14 +25,9 @@ void ComponentMaterial::InspectorDraw()
 		ImGui::SameLine();
 		ImGui::Button("Delete Component");
 		ImGui::Text("%s", tex->GetTexPath().c_str());
-		//ImGui::Button("Change Resource");
-		//ImGui::InputFloat3("Position", App->editor->material_pos, 0);
-		//ImGui::SliderFloat3("Rotation", App->editor->material_rot, -180, 180);
-		//ImGui::InputFloat3("Scale", App->editor->material_scale, 0);
-		//ImGui::Button("Reset Transform");
-		//ImGui::Text("Tamanyo 256x256 y peso 0,3Mb");
-		//ImGui::Text("Format: __  Depth: __  Bpp: __  Mips: __");
-		//ImGui::SliderFloat("Alpha Test", &App->editor->alpha_test, 0, 1);
+		ImGui::Image((void*)(intptr_t)tex->GetTextureID(), ImVec2(tex->GetTextureWidth()/4, tex->GetTextureHeight()/4));
+		ImGui::Text("Size: %dx%d", tex->GetTextureWidth(), tex->GetTextureHeight());
+		ImGui::Checkbox("Default Texture", &defaultTex);
 	}
 }
 

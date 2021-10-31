@@ -18,10 +18,13 @@ public:
 	~Mesh();
 
 	bool InitFromScene(const aiMesh* paiMesh);
-	void Render(Texture* texture);
+	void Render(GLuint texture);
 	std::vector<vec3> GetVecPosition();
 
 	void Unload();
+
+	std::vector<vec3> mPosition;
+	std::vector<vec3> mNormals;
 
 private:
 
@@ -33,8 +36,6 @@ private:
 	GLuint mVAO = 0;
 	GLuint mBuffers[6] = { 0 };
 
-	std::vector<vec3> mPosition;
-	std::vector<vec3> mNormals;
 	std::vector<vec2> mTexCoords;
 	std::vector<unsigned int> mIndices;
 	unsigned int MaterialIndex;

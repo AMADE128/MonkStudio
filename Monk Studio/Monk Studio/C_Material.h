@@ -14,6 +14,8 @@ public:
 	Texture* GetTexture();
 	void SetTexture(Texture* _tex);
 
+	bool defaultTex = false;
+
 private:
 
 	Texture* tex;

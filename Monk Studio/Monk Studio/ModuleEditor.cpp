@@ -166,10 +166,7 @@ void ModuleEditor::UpdateInspector(GameObject* parent)
 	{
 		for (size_t i = 0; i < parent->components.size(); i++)
 		{
-			if (parent->components.at(i)->isEnable())
-			{
-				parent->components.at(i)->InspectorDraw();
-			}
+			parent->components.at(i)->InspectorDraw();
 		}
 	}
 }

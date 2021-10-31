@@ -50,3 +50,15 @@ public:
 	vec3 normal;
 	float constant;
 };
+
+// ============================================
+class Line : public Primitive
+{
+public:
+	Line();
+	Line(float x, float y, float z);
+	void InnerRender() const;
+public:
+	vec3 origin;
+	vec3 destination;
+};
