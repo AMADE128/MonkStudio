@@ -166,32 +166,6 @@ bool ModuleWindow::DrawUI()
 			ImGui::Text("%s", SDL_GetBasePath());
 			ImGui::PopStyleColor();
 		}
-		if (ImGui::CollapsingHeader("Input"))
-		{
-			ImGui::Text("Mouse Position:");
-			ImGui::SameLine();
-			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
-			ImGui::Text("%d, %d", App->input->GetMouseX(), App->input->GetMouseY());
-			ImGui::PopStyleColor();
-			ImGui::Text("Mouse Motion:");
-			ImGui::SameLine();
-			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
-			ImGui::Text("%d, %d", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
-			ImGui::PopStyleColor();
-			ImGui::Text("Mouse Wheel:");
-			ImGui::SameLine();
-			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
-			ImGui::Text("%d", App->input->GetMouseZ());
-			ImGui::PopStyleColor();
-			if(ImGui::CollapsingHeader("Mouse Output"))
-			{
-
-				for (int i = 0; i < App->input->debug_mouse.size(); i++)
-				{
-					ImGui::Text("%s", App->input->debug_mouse.at(i).c_str());
-				}
-			}
-		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
 			SDL_version linked;
@@ -272,7 +246,33 @@ bool ModuleWindow::DrawUI()
 			ImGui::Text("%s", glGetString(GL_VENDOR));
 			ImGui::PopStyleColor();
 		}
+		if (ImGui::CollapsingHeader("Input"))
+		{
+			ImGui::Text("Mouse Position:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d, %d", App->input->GetMouseX(), App->input->GetMouseY());
+			ImGui::PopStyleColor();
+			ImGui::Text("Mouse Motion:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d, %d", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
+			ImGui::PopStyleColor();
+			ImGui::Text("Mouse Wheel:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d", App->input->GetMouseZ());
+			ImGui::PopStyleColor();
+			ImGui::Separator();
+			ImGui::Text("Inputs Output");
+			for (int i = 0; i < App->input->debug_mouse.size(); i++)
+			{
+				ImGui::Text("%s", App->input->debug_mouse.at(i).c_str());
+			}
+		}
 		ImGui::End();
+
+
 	}
 
 	if (App->editor->show_console)
