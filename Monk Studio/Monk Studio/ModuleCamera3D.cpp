@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleCamera3D.h"
 #include "C_Transform.h"
+#include "C_Mesh.h"
+#include "Mesh.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -11,8 +13,8 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(0.0f, 0.0f, 5.0f);
-	Reference = vec3(0.0f, 0.0f, 0.0f);
+	Position = vec3(0.0f, 0.0f, 20.0f);
+	Reference = vec3(0.0f, 0.0f, 5.0f);
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -86,14 +88,30 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 	}
 
-	//Wheel zoom ------------------
+	// Wheel zoom ------------------
+
 	if (App->input->GetMouseZ() > 0) newPos -= Z * speed * 10;
 	else if (App->input->GetMouseZ() < 0) newPos += Z * speed * 10;
 
 	Position += newPos;
 
-	if(App->editor->selectedNode) Reference = App->editor->selectedNode->transform->position;
+	if (App->editor->selectedNode)
+	{
+		ComponentTransform* meshPosition = dynamic_cast<ComponentTransform*>(App->editor->selectedNode->GetComponent(Component::Type::TRANSFORM));
+		Reference = meshPosition->GetCombinedPosition(App->editor->selectedNode);
+	}
 	else Reference += newPos;
+
+	// Focus object ----------------
+
+
+	/*ComponentMesh* meshVecMaxDistance = dynamic_cast<ComponentMesh*>(App->editor->selectedNode->GetComponent(Component::Type::MESH));
+	meshVecMaxDistance->GetMesh()->GetVecPosition;
+	for (int i = 0; i < length; i++)
+	{
+
+	}*/
+
 
 	// Mouse motion ----------------
 

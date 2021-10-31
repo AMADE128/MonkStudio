@@ -19,6 +19,7 @@ public:
 
 	bool InitFromScene(const aiMesh* paiMesh);
 	void Render(Texture* texture);
+	std::vector<vec3> GetVecPosition();
 
 	void Unload();
 

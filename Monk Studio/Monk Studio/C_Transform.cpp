@@ -51,19 +51,18 @@ void ComponentTransform::InspectorDraw()
 
 void ComponentTransform::UpdateTransform()
 {
-	ComponentTransform* cf = new ComponentTransform(nullptr);
-	if (owner->parent != nullptr)
-	{
-		cf = dynamic_cast<ComponentTransform*>(owner->parent->GetComponent(Component::Type::TRANSFORM));
-	}
 
-	SetPos(position.x + cf->position.x, position.y + cf->position.y, position.z + cf->position.z);
+	combinedPosition = GetCombinedPosition(owner);
+
+	SetPos(combinedPosition.x, combinedPosition.y, combinedPosition.z);
 
 	SetRotation(rotation.x, vec3(1, 0, 0));
 	SetRotation(rotation.y, vec3(0, 1, 0));
 	SetRotation(rotation.z, vec3(0, 0, 1));
 
-	Scale(scale.x + cf->scale.x, scale.y + cf->scale.y, scale.z + cf->scale.z);
+	combinedScale = GetCombinedScale(owner);
+
+	Scale(combinedScale.x, combinedScale.y, combinedScale.z);
 
 	//updateTransform = false;
 }
@@ -89,3 +88,47 @@ mat4x4 ComponentTransform::GetTransform()
 {
 	return transform;
 }
+
+vec3 ComponentTransform::GetParentsTransform(vec3 combinedPosition, GameObject* parent)
+{
+	combinedPosition += parent->transform->position;
+	
+	if (parent->parent != nullptr)
+	{
+		combinedPosition = GetParentsTransform(combinedPosition, parent->parent);
+	}
+
+	return vec3(combinedPosition);
+}
+
+vec3 ComponentTransform::GetCombinedPosition(GameObject* selected)
+{
+
+	combinedPosition = selected->transform->position;
+
+	if (selected->parent != nullptr) combinedPosition = GetParentsTransform(combinedPosition, selected->parent);
+
+	return vec3(combinedPosition);
+}
+
+vec3 ComponentTransform::GetParentsScale(vec3 combinedScale, GameObject* parent)
+{
+	combinedScale += parent->transform->scale;
+
+	if (parent->parent != nullptr)
+	{
+		combinedScale = GetParentsScale(combinedScale, parent->parent);
+	}
+
+	return vec3(combinedScale);
+}
+
+vec3 ComponentTransform::GetCombinedScale(GameObject* selected)
+{
+	combinedScale = selected->transform->scale;
+
+	if (selected->parent != nullptr) combinedScale = GetParentsScale(combinedScale, selected->parent);
+
+	return vec3(combinedScale);
+}
+

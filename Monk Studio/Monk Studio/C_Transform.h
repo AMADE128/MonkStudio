@@ -26,10 +26,19 @@ public:
 
 	mat4x4 GetTransform();
 
+	vec3 GetParentsTransform(vec3 combinedPosition, GameObject* parent);
+	vec3 GetCombinedPosition(GameObject* selected);
+
+	vec3 GetParentsScale(vec3 combinedScale, GameObject* parent);
+	vec3 GetCombinedScale(GameObject* selected);
+
 public:
 	bool updateTransform;
 
 	mat4x4 transform;
 
 	vec3 position, scale, rotation;
+
+	vec3 combinedPosition;
+	vec3 combinedScale;
 };
