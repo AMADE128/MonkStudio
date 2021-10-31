@@ -19,6 +19,27 @@ GameObject::GameObject(const char* _name, GameObject* _parent) : name(_name), ac
 
 GameObject::~GameObject()
 {
+	delete transform;
+	transform = NULL;
+
+	delete parent;
+	parent = NULL;
+
+	for (unsigned int i = 0; i < components.size(); i++)
+	{
+		delete components[i];
+		components[i] = NULL;
+	}
+	components.clear();
+	std::vector<Component*>().swap(components);
+
+	for (unsigned int i = 0; i < children.size(); i++)
+	{
+		delete children[i];
+		children[i] = NULL;
+	}
+	children.clear();
+	std::vector<GameObject*>().swap(children);
 }
 
 void GameObject::Update()

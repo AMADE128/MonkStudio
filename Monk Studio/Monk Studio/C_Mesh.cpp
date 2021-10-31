@@ -16,6 +16,8 @@ ComponentMesh::ComponentMesh(GameObject* _gm) : Component(_gm), mesh(new Mesh())
 ComponentMesh::~ComponentMesh()
 {
 	mesh->Unload();
+	delete mesh;
+	mesh = NULL;
 }
 
 void ComponentMesh::Update()

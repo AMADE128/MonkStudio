@@ -22,7 +22,7 @@ Texture::~Texture()
 	Unload();
 }
 
-bool Texture::Load(const std::string path)
+bool Texture::Load(const std::string _path)
 {
 	bool ret = false;
 
@@ -31,7 +31,7 @@ bool Texture::Load(const std::string path)
     ilBindImage(imgID);
 
     //Load image
-    ILboolean success = ilLoadImage(path.c_str());
+    ILboolean success = ilLoadImage(_path.c_str());
 
     //Image loaded successfully
     if (success == IL_TRUE)
@@ -44,6 +44,8 @@ bool Texture::Load(const std::string path)
             ret = Load32((GLuint*)ilGetData(), (GLuint)ilGetInteger(IL_IMAGE_WIDTH), (GLuint)ilGetInteger(IL_IMAGE_HEIGHT));
         }
 
+		path = _path;
+
         //Delete file from memory
         ilDeleteImages(1, &imgID);
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -52,7 +54,7 @@ bool Texture::Load(const std::string path)
     //Report error
     if (!ret)
     {
-        LOG("Unable to load %s\n", path.c_str());
+        LOG("Unable to load %s\n", _path.c_str());
     }
 
 	return ret;
@@ -128,4 +130,9 @@ GLuint Texture::GetTextureWidth()
 GLuint Texture::GetTextureHeight()
 {
 	return mTextureHeight;
+}
+
+const std::string Texture::GetTexPath()
+{
+	return path;
 }

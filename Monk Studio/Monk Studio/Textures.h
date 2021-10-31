@@ -10,7 +10,7 @@ public:
 
     ~Texture();
 
-    bool Load(const std::string path);
+    bool Load(const std::string _path);
 
     bool Load32(GLuint* pixels, GLuint width, GLuint height);
 
@@ -24,9 +24,13 @@ public:
 
     GLuint GetTextureHeight();
 
+	const std::string GetTexPath();
+
 private:
 
     GLuint mTextureID;
+
+	std::string path;
 
     GLuint mTextureWidth;
     GLuint mTextureHeight;

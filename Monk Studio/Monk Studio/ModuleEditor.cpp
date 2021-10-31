@@ -13,8 +13,11 @@ ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, s
 ModuleEditor::~ModuleEditor()
 {
 	fps_log.clear();
+	std::vector<float>().swap(fps_log);
 	ms_log.clear();
+	std::vector<float>().swap(ms_log);
 	memory_log.clear();
+	std::vector<float>().swap(memory_log);
 }
 
 bool ModuleEditor::Init()
