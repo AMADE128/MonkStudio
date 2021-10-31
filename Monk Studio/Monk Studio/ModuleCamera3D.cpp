@@ -65,6 +65,27 @@ update_status ModuleCamera3D::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) App->input->LogToConsole("D");
 	}
 
+	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT && (App->input->GetKey(SDL_SCANCODE_LALT)))
+	{
+		if (App->input->GetMouseXMotion() < 0)
+		{
+			newPos += X * -App->input->GetMouseXMotion()/20;
+		}
+		else if (App->input->GetMouseXMotion() > 0)
+		{
+			newPos -= X * App->input->GetMouseXMotion()/20;
+		}
+
+		if (App->input->GetMouseYMotion() > 0)
+		{
+			newPos += Y * App->input->GetMouseYMotion()/20;
+		}
+		else if (App->input->GetMouseYMotion() < 0)
+		{
+			newPos -= Y * -App->input->GetMouseYMotion()/20;
+		}
+	}
+
 	//Wheel zoom ------------------
 	if (App->input->GetMouseZ() > 0) newPos -= Z * speed * 10;
 	else if (App->input->GetMouseZ() < 0) newPos += Z * speed * 10;
@@ -83,7 +104,7 @@ update_status ModuleCamera3D::Update(float dt)
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
-		float Sensitivity = 0.25f;
+		float Sensitivity = 0.5f;
 
 		Position -= Reference;
 

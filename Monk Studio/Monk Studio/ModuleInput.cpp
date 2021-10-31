@@ -103,8 +103,8 @@ update_status ModuleInput::PreUpdate(float dt)
 			mouse_x = e.motion.x / SCREEN_SIZE;
 			mouse_y = e.motion.y / SCREEN_SIZE;
 
-			mouse_x_motion = e.motion.xrel / SCREEN_SIZE;
-			mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
+			mouse_x_motion =  e.motion.xrel / SCREEN_SIZE;
+			mouse_y_motion =  e.motion.yrel / SCREEN_SIZE;
 			break;
 			
 			case SDL_MOUSEBUTTONDOWN:

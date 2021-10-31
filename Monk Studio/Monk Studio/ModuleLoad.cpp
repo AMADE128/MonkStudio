@@ -83,7 +83,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 		}
 		for (unsigned int i = 0; i < meshes.size(); i++)
 		{
-			std::string childName = parentName + std::string("%d", i);
+			std::string childName = parentName + to_string(i);
 			GameObject* childObject = App->scene_intro->CreateGameObject(childName.c_str(), parentObject);
 
 			childObject->CreateComponent(Component::Type::MESH);
