@@ -48,7 +48,7 @@ void ComponentMesh::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Mesh Renderer"))
 	{
-		if (ImGui::Checkbox("Display Vertex", &dispNormal))
+		if (ImGui::Checkbox("Display Vertex Normals", &dispNormal))
 		{
 			UpdateNormals();
 		}
