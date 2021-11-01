@@ -47,8 +47,8 @@ update_status ModuleCamera3D::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
 
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
-		FrontObjectView();
+	/*if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
+		FrontObjectView();*/
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -144,14 +144,10 @@ update_status ModuleCamera3D::Update(float dt)
 
 	// Focus object ----------------
 
-
-	/*ComponentMesh* meshVecMaxDistance = dynamic_cast<ComponentMesh*>(App->editor->selectedNode->GetComponent(Component::Type::MESH));
-	meshVecMaxDistance->GetMesh()->GetVecPosition;
-	for (int i = 0; i < length; i++)
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && App->editor->selectedNode &&App->editor->selectedNode->GetComponent(Component::Type::MESH))
 	{
-
-	}*/
-
+		FocusObject();
+	}
 
 	// Mouse motion ----------------
 
@@ -195,6 +191,51 @@ update_status ModuleCamera3D::Update(float dt)
 	CalculateViewMatrix();
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleCamera3D::FocusObject()
+{
+	OBBmaxVector = (0, 0, 0);
+	OBBminVector = (0, 0, 0);
+
+	ComponentMesh* meshOBB = dynamic_cast<ComponentMesh*>(App->editor->selectedNode->GetComponent(Component::Type::MESH));
+	for (int i = 0; i < meshOBB->GetMesh()->mPosition.size(); i++)
+	{
+		//OBBmaxVector
+		if (meshOBB->GetMesh()->mPosition[i].x > OBBmaxVector.x) OBBmaxVector.x = meshOBB->GetMesh()->mPosition[i].x;
+		if (meshOBB->GetMesh()->mPosition[i].y > OBBmaxVector.y) OBBmaxVector.y = meshOBB->GetMesh()->mPosition[i].y;
+		if (meshOBB->GetMesh()->mPosition[i].z > OBBmaxVector.z) OBBmaxVector.z = meshOBB->GetMesh()->mPosition[i].z;
+
+		//OBBminVector
+		if (meshOBB->GetMesh()->mPosition[i].x < OBBminVector.x) OBBminVector.x = meshOBB->GetMesh()->mPosition[i].x;
+		if (meshOBB->GetMesh()->mPosition[i].y < OBBminVector.y) OBBminVector.y = meshOBB->GetMesh()->mPosition[i].y;
+		if (meshOBB->GetMesh()->mPosition[i].z < OBBminVector.z) OBBminVector.z = meshOBB->GetMesh()->mPosition[i].z;
+	}
+
+
+	float dx = OBBmaxVector.x - OBBminVector.x;
+	float dy = OBBmaxVector.y - OBBminVector.y;
+	float dz = OBBmaxVector.z - OBBminVector.z;
+
+	focusDistance = sqrt(dx * dx + dy * dy + dz * dz);
+
+	if (App->editor->selectedNode->transform->scale.x > App->editor->selectedNode->transform->scale.y && App->editor->selectedNode->transform->scale.x > App->editor->selectedNode->transform->scale.z)
+	{
+		focusScale = App->editor->selectedNode->transform->scale.x;
+	}
+	else if (App->editor->selectedNode->transform->scale.y > App->editor->selectedNode->transform->scale.z && App->editor->selectedNode->transform->scale.y > App->editor->selectedNode->transform->scale.z)
+	{
+		focusScale = App->editor->selectedNode->transform->scale.y;
+	}
+	else if (App->editor->selectedNode->transform->scale.z > App->editor->selectedNode->transform->scale.x && App->editor->selectedNode->transform->scale.z > App->editor->selectedNode->transform->scale.y)
+	{
+		focusScale = App->editor->selectedNode->transform->scale.z;
+	}
+	else focusScale = App->editor->selectedNode->transform->scale.x;
+
+	Position = (App->editor->selectedNode->transform->position) + (0, 0, focusDistance * 2 + focusScale);
+
+	LookAt(App->editor->selectedNode->transform->position);
 }
 
 // -----------------------------------------------------------------

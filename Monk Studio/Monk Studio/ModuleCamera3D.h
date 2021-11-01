@@ -11,6 +11,7 @@ public:
 
 	bool Start();
 	update_status Update(float dt);
+	void FocusObject();
 	bool CleanUp();
 
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
@@ -18,6 +19,11 @@ public:
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
 	void FrontObjectView();
+
+	vec3 OBBminVector;
+	vec3 OBBmaxVector;
+	float focusDistance;
+	float focusScale;
 
 	vec3 X, Y, Z, Position, Reference, ReferenceFPS;
 
