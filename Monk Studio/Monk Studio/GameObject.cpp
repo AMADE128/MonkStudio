@@ -41,11 +41,14 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-	for (int i = 0; i < components.size(); i++)
+	if (active)
 	{
-		if (components.at(i)->isEnable())
+		for (int i = 0; i < components.size(); i++)
 		{
-			components.at(i)->Update();
+			if (components.at(i)->isEnable())
+			{
+				components.at(i)->Update();
+			}
 		}
 	}
 }

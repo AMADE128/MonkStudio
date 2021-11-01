@@ -31,6 +31,10 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	App->load->LoadFile("Assets/BakerHouse.fbx");
+	App->editor->selectedNode = sceneObjects->children[0]->children[0];
+	App->load->LoadFile("Assets/Textures/bakeHouse.png");
+	App->editor->selectedNode = sceneObjects->children[0]->children[1];
+	App->load->LoadFile("Assets/Textures/bakeHouse.png");
 
 	return ret;
 }

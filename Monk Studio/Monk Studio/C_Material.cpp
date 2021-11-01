@@ -22,12 +22,21 @@ void ComponentMaterial::InspectorDraw()
 	if (ImGui::CollapsingHeader("Material"))
 	{
 		ImGui::Checkbox("Active", &active);
-		ImGui::SameLine();
-		ImGui::Button("Delete Component");
 		ImGui::Text("%s", tex->GetTexPath().c_str());
 		ImGui::Image((void*)(intptr_t)tex->GetTextureID(), ImVec2(tex->GetTextureWidth()/4, tex->GetTextureHeight()/4));
 		ImGui::Text("Size: %dx%d", tex->GetTextureWidth(), tex->GetTextureHeight());
 		ImGui::Checkbox("Default Texture", &defaultTex);
+		if (ImGui::Button("Delete Component"))
+		{
+			for (unsigned int i = 0; i < owner->components.size(); i++)
+			{
+				if (owner->components[i] == this)
+				{
+					owner->components.erase(owner->components.begin() + i);
+				}
+			}
+			Unload();
+		}
 	}
 }
 
@@ -39,4 +48,11 @@ Texture* ComponentMaterial::GetTexture()
 void ComponentMaterial::SetTexture(Texture* _tex)
 {
 	tex = _tex;
+}
+
+void ComponentMaterial::Unload()
+{
+	tex->Unload();
+	delete tex;
+	tex = nullptr;
 }

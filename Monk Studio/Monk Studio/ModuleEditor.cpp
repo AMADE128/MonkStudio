@@ -197,6 +197,10 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 		}
 		if (ImGui::BeginPopup("GameObject Options"))
 		{
+			if (ImGui::MenuItem("Empty Object"))
+			{
+				App->scene_intro->CreateGameObject("Empty Object", parent);
+			}
 			if (parent->parent != nullptr)
 			{
 				MoveUpHierarchy(parent);

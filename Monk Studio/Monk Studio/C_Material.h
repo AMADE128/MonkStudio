@@ -13,6 +13,7 @@ public:
 
 	Texture* GetTexture();
 	void SetTexture(Texture* _tex);
+	void Unload();
 
 	bool defaultTex = false;
 
