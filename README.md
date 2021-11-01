@@ -1,5 +1,6 @@
-# Monk Studio
-Monk Studio is a 3D game engine developed by students at CITM. https://github.com/AMADE128/MonkStudio
+# MonkStudio
+MonkStudio is a 3D game engine developed by students at CITM. 
+https://github.com/AMADE128/MonkStudio
 
 ## Developers
 - Himar Bravo González (https://github.com/himar33)
@@ -8,8 +9,7 @@ Monk Studio is a 3D game engine developed by students at CITM. https://github.co
 
 ## How to use
 The user can move through the menus by clicking on them.
-On the main menu bar at the top of the screen:
-(each main menu button has an option :::::::::: that opens that menu as a windows, so the user won't have to enter multiple times).
+On the main menu bar at the top of the screen: (each main menu button has an option :::::::::: that opens that menu as a windows, so the user won't have to enter multiple times).
 ### File:
  Quit: Exit the game. (can also be done pressing ESC).
 
@@ -29,7 +29,7 @@ User can select and move objects by clicking in them and droping over others, ri
 
 - Inspector:
 Shows the properties from the selected object, those can be: (also opens with Alt + 3)
-Changing the name of the object. 
+Changing the name of the object.
 Local Transformation: The user can see and change the Position, Rotation and scale of the selected object by scrolling or writing the variables.
 Mesh Renderer: Checkbox to see Vertex Normals.
 Material: User can activate/desactivate the texture, see the path and size of the image, and set a default texure over it.
@@ -79,8 +79,6 @@ The same can be done with .png .dds and .jpgs to load them as texutre for the se
 - The option to open all main menu buttons as windows pressing the first option that is (::::::::::::) a line of dots. (Such as Maya 2020 does).
 - Render menu where the user can enable/disable Depth Test, Cull Face, Lighting, Color Material, Textures and Wireframe mode.
 - User can move around objects playing with the Local Transformation on the inspector, moving, rotating and scaling the object.
-- Docking between the diferent windows displayed on the engine.
-- Aditional moving functions such as: E and R to move up and down, or ALT + pressing mouse wheel to move in a plane the same way that unity does.
 
 
 
