@@ -17,6 +17,7 @@ public:
 	void InspectorDraw() override;
 
 	void UpdateTransform();
+	void RotateObject(vec3 rotation, GameObject* object);
 
 	static inline Type GetType() { return Type::TRANSFORM; };
 	vec3 GetPosition() { return position; };
