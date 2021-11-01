@@ -81,12 +81,6 @@ bool ModuleWindow::Init()
 		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 
 		ShowWindow(::GetConsoleWindow(), SW_HIDE);
-
-		//Current hardware [!!!]DOESN'T WORK (RETURNS NULL)[!!!]
-		/*LOG("Vendor: %s", glGetString(GL_VENDOR));
-		LOG("Renderer: %s", glGetString(GL_RENDERER));
-		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));*/
 	}
 
 	return ret;
@@ -174,6 +168,24 @@ bool ModuleWindow::DrawUI()
 			ImGui::SameLine();
 			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
 			ImGui::Text("%d.%d.%d", linked.major, linked.minor, linked.patch);
+			ImGui::PopStyleColor();
+
+			ImGui::Text("OpenGL Version:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%s", glGetString(GL_VERSION));
+			ImGui::PopStyleColor();
+
+			ImGui::Text("Glew Version:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%s", glewGetString(GLEW_VERSION));
+			ImGui::PopStyleColor();
+
+			ImGui::Text("DevIL Version:");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			ImGui::Text("%d", IL_VERSION);
 			ImGui::PopStyleColor();
 
 			ImGui::Separator();
@@ -301,6 +313,7 @@ bool ModuleWindow::DrawUI()
 		ImGui::BulletText("MathGeoLib 1.5");
 		ImGui::BulletText("OpenGL 3.1");
 		ImGui::BulletText("Glew 2.0.0");
+		ImGui::BulletText("DevIL 1.8.0");
 		//MIT LICENSE
 		ImGui::NewLine();
 		ImGui::Text("License:");

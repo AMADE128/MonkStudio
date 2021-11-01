@@ -74,8 +74,6 @@ bool ModuleRenderer3D::Init()
 			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
-
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 		
 		// Blend for transparency
 		glEnable(GL_ALPHA_TEST);

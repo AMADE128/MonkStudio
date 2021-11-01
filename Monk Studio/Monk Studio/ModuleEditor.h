@@ -42,6 +42,8 @@ public:
 
 	void LogToConsole(const char* txt);
 
+	void DeleteFromScene(GameObject* parent);
+
 	void UpdatePlotVector(std::vector<float>& vec, float& value)
 	{
 		if (vec.size() == vec.capacity())

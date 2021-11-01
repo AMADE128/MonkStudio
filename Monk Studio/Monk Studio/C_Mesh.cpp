@@ -18,7 +18,7 @@ ComponentMesh::~ComponentMesh()
 {
 	mesh->Unload();
 	delete mesh;
-	mesh = NULL;
+	mesh = nullptr;
 }
 
 void ComponentMesh::Update()
@@ -48,16 +48,11 @@ void ComponentMesh::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Mesh Renderer"))
 	{
-		if (ImGui::Checkbox("Display Normals", &dispNormal))
+		if (ImGui::Checkbox("Display Vertex", &dispNormal))
 		{
 			UpdateNormals();
 		}
 	}
-}
-
-void ComponentMesh::LoadData(const char* path)
-{
-	// Here comes de load data
 }
 
 Mesh* ComponentMesh::GetMesh()

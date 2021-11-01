@@ -187,7 +187,44 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 	if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
 	{
 		selectedNode = parent;
-		App->input->LogToConsole("Left Click");
+	}
+	if (parent != App->scene_intro->sceneObjects)
+	{
+		if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Right))
+		{
+			ImGui::OpenPopup("A");
+		}
+		if (ImGui::BeginPopup("A"))
+		{
+			if (ImGui::MenuItem("Delete"))
+			{
+				DeleteFromScene(parent);
+				selectedNode = nullptr;
+			}
+			ImGui::EndPopup();
+		}
+		if (ImGui::BeginDragDropTarget() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
+		{
+			for (unsigned int i = 0; i < parent->parent->children.size(); i++)
+			{
+				if (parent->parent->children[i] == selectedNode)
+				{
+					parent->parent->children.erase(parent->parent->children.begin() + i);
+					break;
+				}
+			}
+			parent->children.push_back(selectedNode);
+			selectedNode->parent = parent;
+			//selectedNode->~GameObject();
+			ImGui::EndDragDropTarget();
+		}
+		if (ImGui::BeginDragDropSource())
+		{
+			selectedNode = parent;
+			ImGui::SetDragDropPayload("dragging", NULL, 0);
+			ImGui::Text("%s", parent->name.c_str());
+			ImGui::EndDragDropSource();
+		}
 	}
 	if (open) {
 		for (size_t i = 0; i < parent->children.size(); i++)
@@ -423,4 +460,22 @@ bool ModuleEditor::CleanUp()
 void ModuleEditor::LogToConsole(const char* txt)
 {
 	appExternal->window->console.push_back(std::string(txt));
+}
+
+void ModuleEditor::DeleteFromScene(GameObject* parent)
+{
+	if (parent->parent != nullptr)
+	{
+		for (unsigned int i = 0; i < parent->parent->children.size(); i++)
+		{
+			if (parent->parent->children[i] == parent)
+			{
+				parent->parent->children.erase(parent->parent->children.begin() + i);
+				break;
+			}
+		}
+	}
+	parent->~GameObject();
+	delete parent;
+	parent = nullptr;
 }

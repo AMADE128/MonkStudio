@@ -16,8 +16,6 @@ public:
 
 	void InspectorDraw() override;
 
-	void LoadData(const char* path) override;
-
 	Mesh* GetMesh();
 	void SetMesh(Mesh* _mesh);
 

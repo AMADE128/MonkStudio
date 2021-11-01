@@ -20,6 +20,7 @@ public:
 	bool InitFromScene(const aiMesh* paiMesh);
 	void Render(GLuint texture);
 	std::vector<vec3> GetVecPosition();
+	std::string GetMeshName();
 
 	void Unload();
 
@@ -39,5 +40,6 @@ private:
 	std::vector<vec2> mTexCoords;
 	std::vector<unsigned int> mIndices;
 	unsigned int MaterialIndex;
+	std::string mName;
 
 };

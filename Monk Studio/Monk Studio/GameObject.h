@@ -11,8 +11,6 @@ public:
 	Component(GameObject* _gm);
 	virtual~Component();
 
-	virtual void LoadData(const char*);
-
 	virtual void Enable()
 	{
 		active = true;

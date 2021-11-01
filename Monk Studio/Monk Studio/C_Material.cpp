@@ -14,7 +14,7 @@ ComponentMaterial::~ComponentMaterial()
 {
 	tex->Unload();
 	delete tex;
-	tex = NULL;
+	tex = nullptr;
 }
 
 void ComponentMaterial::InspectorDraw()

@@ -12,6 +12,7 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
+	Unload();
 }
 
 void Mesh::Render(GLuint texture)
@@ -22,8 +23,6 @@ void Mesh::Render(GLuint texture)
 
 	if (texture)
 	{
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBindTexture(GL_TEXTURE_2D, texture);
 	}
 
@@ -104,6 +103,8 @@ void Mesh::InitMesh(const aiMesh* paiMesh)
 		mIndices.push_back(Face.mIndices[1]);
 		mIndices.push_back(Face.mIndices[2]);
 	}
+
+	mName = paiMesh->mName.C_Str();
 }
 
 void Mesh::CountVerticesAndIndices(const aiMesh* aiMesh, unsigned int NumVertices, unsigned int NumIndices)
@@ -153,5 +154,10 @@ void Mesh::GenerateBuffers()
 std::vector<vec3> Mesh::GetVecPosition()
 {
 	return mPosition;
+}
+
+std::string Mesh::GetMeshName()
+{
+	return mName;
 }
 

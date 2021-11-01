@@ -19,24 +19,21 @@ GameObject::GameObject(const char* _name, GameObject* _parent) : name(_name), ac
 
 GameObject::~GameObject()
 {
-	delete transform;
-	transform = NULL;
-
-	delete parent;
-	parent = NULL;
 
 	for (unsigned int i = 0; i < components.size(); i++)
 	{
+		components[i]->~Component();
 		delete components[i];
-		components[i] = NULL;
+		components[i] = nullptr;
 	}
 	components.clear();
 	std::vector<Component*>().swap(components);
 
 	for (unsigned int i = 0; i < children.size(); i++)
 	{
+		children[i]->~GameObject();
 		delete children[i];
-		children[i] = NULL;
+		children[i] = nullptr;
 	}
 	children.clear();
 	std::vector<GameObject*>().swap(children);
@@ -100,25 +97,10 @@ Component* GameObject::GetComponent(Component::Type _type)
 	return nullptr;
 }
 
-void GameObject::LoadComponents(const char* path)
-{
-	for (size_t i = 0; i < components.size(); i++)
-	{
-		if (components.at(i)->type == Component::Type::MESH)
-		{
-			components.at(i)->LoadData(path);
-		}
-	}
-}
-
 Component::Component(GameObject* _gm) : active(true), owner(_gm), type(Type::NONE)
 {
 }
 
 Component::~Component()
-{
-}
-
-void Component::LoadData(const char*)
 {
 }

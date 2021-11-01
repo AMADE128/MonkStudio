@@ -71,8 +71,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		std::string parentName = scene->GetShortFilename(fileName.c_str());
-		GameObject* parentObject = App->scene_intro->CreateGameObject(parentName.c_str(), App->scene_intro->sceneObjects);
+		GameObject* parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->scene_intro->sceneObjects);
 
 		std::vector<Mesh*>meshes;
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
@@ -83,13 +82,13 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 		}
 		for (unsigned int i = 0; i < meshes.size(); i++)
 		{
-			std::string childName = parentName + to_string(i);
-			GameObject* childObject = App->scene_intro->CreateGameObject(childName.c_str(), parentObject);
+			GameObject* childObject = App->scene_intro->CreateGameObject("", parentObject);
 
 			childObject->CreateComponent(Component::Type::MESH);
 			ComponentMesh* cm = new ComponentMesh(nullptr);
 			cm = dynamic_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
 			cm->SetMesh(meshes.at(i));
+			childObject->name = cm->GetMesh()->GetMeshName();
 
 			childObject->CreateComponent(Component::Type::MATERIAL);
 			ComponentMaterial* cMat = new ComponentMaterial(nullptr);
