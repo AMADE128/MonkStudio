@@ -1,5 +1,11 @@
 
 #include "C_Transform.h"
+#include "Application.h"
+#include "Module.h"
+#include "Globals.h"
+#include "ModuleEditor.h"
+
+#include "External Libraries/MathGeoLib/include/MathGeoLib.h"
 
 #include "External Libraries/imgui/imgui.h"
 #include "External Libraries/imgui/imgui_impl_sdl.h"
@@ -38,6 +44,7 @@ void ComponentTransform::InspectorDraw()
 		}
 		if (ImGui::SliderFloat3("Rotation", &rotation, -180, 180))
 		{
+			RotateObject(rotation, owner);
 			//updateTransform = true;
 		}
 		if (ImGui::InputFloat3("Scale", &scale, 0))
@@ -132,3 +139,40 @@ vec3 ComponentTransform::GetCombinedScale(GameObject* selected)
 	return vec3(combinedScale);
 }
 
+void ComponentTransform::RotateObject(vec3 rotation, GameObject* object)
+{
+	rotation = {rotation.x * (180/ pi), rotation.y * (180 / pi), rotation.z * (180 / pi) };
+	vec3 current_pos = { 0,0,0 };
+	Quat final_pos = { 0,0,0,0 };
+	float3 rot = { rotation.x, rotation.y, rotation.z};
+
+	//Quat x;
+	//Quat y;
+	//Quat z;
+
+	//x.RotateX(rotation.x);
+	//y.RotateY(rotation.y);
+	//z.RotateZ(rotation.z);	
+
+	if (object != nullptr) current_pos = object->transform->GetPosition();
+	current_pos = { current_pos.x * (180 / pi), current_pos.y * (180 / pi), current_pos.z * (180 / pi) };
+	float3 current_po = { current_pos.x, current_pos.y, current_pos.z };
+
+	float3 c = Cross(rot, current_po);
+	float d = dot(rotation, current_pos);
+	float angle = cos(d/length(rotation)*length(current_pos));
+
+	Quat q; q.RotateAxisAngle(c,angle);
+
+
+	Quat pos_quat = { current_pos.x, current_pos.y, current_pos.z, 0 };
+
+	final_pos = pos_quat * q;
+
+	//final_pos = pos_quat * x;
+	//final_pos = pos_quat * y;
+	//final_pos = pos_quat * z;
+
+	object->transform->SetPos(final_pos.x, final_pos.y, final_pos.z);
+
+}
