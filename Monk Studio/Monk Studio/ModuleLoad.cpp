@@ -71,7 +71,11 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		GameObject* parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->scene_intro->sceneObjects);
+		GameObject* parentObject = App->scene_intro->sceneObjects;
+		if (scene->mNumMeshes > 1)
+		{
+			parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->scene_intro->sceneObjects);
+		}
 
 		std::vector<Mesh*>meshes;
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)

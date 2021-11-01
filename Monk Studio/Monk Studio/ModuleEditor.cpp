@@ -184,7 +184,7 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 		parentFlags |= ImGuiTreeNodeFlags_Selected;
 	}
 	bool open = ImGui::TreeNodeEx(parent->name.c_str(), parentFlags);
-	if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
+	if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left))
 	{
 		selectedNode = parent;
 	}
@@ -205,17 +205,18 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 		}
 		if (ImGui::BeginDragDropTarget() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
 		{
-			for (unsigned int i = 0; i < parent->parent->children.size(); i++)
+			if (selectedNode->parent->children.size() > 0)
 			{
-				if (parent->parent->children[i] == selectedNode)
+				for (unsigned int i = 0; i < selectedNode->parent->children.size(); i++)
 				{
-					parent->parent->children.erase(parent->parent->children.begin() + i);
-					break;
+					if (selectedNode->parent->children[i] == selectedNode)
+					{
+						selectedNode->parent->children.erase(selectedNode->parent->children.begin() + i);
+					}
 				}
 			}
 			parent->children.push_back(selectedNode);
 			selectedNode->parent = parent;
-			//selectedNode->~GameObject();
 			ImGui::EndDragDropTarget();
 		}
 		if (ImGui::BeginDragDropSource())
