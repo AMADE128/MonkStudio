@@ -1,5 +1,5 @@
-# MonkStudio
-MonkStudio is a 3D game engine developed by students at CITM. https://github.com/AMADE128/MonkStudio
+# Monk Studio
+Monk Studio is a 3D game engine developed by students at CITM. https://github.com/AMADE128/MonkStudio
 
 ## Developers
 - Himar Bravo González (https://github.com/himar33)
