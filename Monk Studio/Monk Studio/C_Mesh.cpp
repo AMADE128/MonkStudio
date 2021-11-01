@@ -52,6 +52,17 @@ void ComponentMesh::InspectorDraw()
 		{
 			UpdateNormals();
 		}
+		if (ImGui::Button("Delete Component"))
+		{
+			for (unsigned int i = 0; i < owner->components.size(); i++)
+			{
+				if (owner->components[i] == this)
+				{
+					owner->components.erase(owner->components.begin() + i);
+				}
+			}
+			Unload();
+		}
 	}
 }
 
@@ -63,6 +74,13 @@ Mesh* ComponentMesh::GetMesh()
 void ComponentMesh::SetMesh(Mesh* _mesh)
 {
 	mesh = _mesh;
+}
+
+void ComponentMesh::Unload()
+{
+	mesh->Unload();
+	delete mesh;
+	mesh = nullptr;
 }
 
 void ComponentMesh::UpdateNormals()

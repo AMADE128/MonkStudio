@@ -19,6 +19,7 @@ public:
 
 	Mesh* GetMesh();
 	void SetMesh(Mesh* _mesh);
+	void Unload();
 
 	void UpdateNormals();
 	void RenderNormals();

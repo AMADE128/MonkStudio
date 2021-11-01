@@ -21,7 +21,10 @@ void ComponentMaterial::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Material"))
 	{
-		ImGui::Checkbox("Active", &active);
+		if (ImGui::Checkbox("Active", &active))
+		{
+			active = !active;
+		}
 		ImGui::Text("%s", tex->GetTexPath().c_str());
 		ImGui::Image((void*)(intptr_t)tex->GetTextureID(), ImVec2(tex->GetTextureWidth()/4, tex->GetTextureHeight()/4));
 		ImGui::Text("Size: %dx%d", tex->GetTextureWidth(), tex->GetTextureHeight());
