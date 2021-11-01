@@ -85,6 +85,10 @@ bool ModuleSceneIntro::DrawUI()
 				ImGui::SameLine();
 				char* objectName = &App->editor->selectedNode->name[0];
 				ImGui::InputText("##Name", objectName, 20);
+				if (ImGui::Checkbox("Active", &App->editor->selectedNode->active))
+				{
+					&App->editor->selectedNode->active != &App->editor->selectedNode->active;
+				}
 
 				App->editor->UpdateInspector(App->editor->selectedNode);
 			}
