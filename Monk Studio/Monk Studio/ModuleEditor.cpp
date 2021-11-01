@@ -211,6 +211,12 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 		}
 		if (ImGui::BeginDragDropTarget() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
 		{
+			/*vec3 pos, scale;
+			ComponentTransform* cf = dynamic_cast<ComponentTransform*>(selectedNode->GetComponent(Component::Type::TRANSFORM));
+
+			pos = cf->GetCombinedPosition(selectedNode);
+			scale = cf->GetCombinedScale(selectedNode);*/
+
 			if (selectedNode->parent->children.size() > 0)
 			{
 				for (unsigned int i = 0; i < selectedNode->parent->children.size(); i++)
@@ -223,6 +229,14 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 			}
 			parent->children.push_back(selectedNode);
 			selectedNode->parent = parent;
+
+			/*pos = pos - cf->GetCombinedPosition(selectedNode);
+			scale = scale - cf->GetCombinedScale(selectedNode);
+
+			selectedNode->transform->position = pos;
+			selectedNode->transform->scale = scale;
+			selectedNode->transform->SetPos(pos.x, pos.y, pos.z);*/
+
 			ImGui::EndDragDropTarget();
 		}
 		if (ImGui::BeginDragDropSource())
