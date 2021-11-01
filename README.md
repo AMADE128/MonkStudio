@@ -8,7 +8,8 @@ MonkStudio is a 3D game engine developed by students at CITM. https://github.com
 
 ## How to use
 The user can move through the menus by clicking on them.
-On the main menu bar at the top of the screen: (each main menu button has an option :::::::::: that opens that menu as a windows, so the user won't have to enter multiple times).
+On the main menu bar at the top of the screen:
+(each main menu button has an option :::::::::: that opens that menu as a windows, so the user won't have to enter multiple times).
 ### File:
  Quit: Exit the game. (can also be done pressing ESC).
 
@@ -28,7 +29,7 @@ User can select and move objects by clicking in them and droping over others, ri
 
 - Inspector:
 Shows the properties from the selected object, those can be: (also opens with Alt + 3)
-Changing the name of the object.
+Changing the name of the object. 
 Local Transformation: The user can see and change the Position, Rotation and scale of the selected object by scrolling or writing the variables.
 Mesh Renderer: Checkbox to see Vertex Normals.
 Material: User can activate/desactivate the texture, see the path and size of the image, and set a default texure over it.
