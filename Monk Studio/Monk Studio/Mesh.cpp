@@ -98,7 +98,7 @@ void Mesh::InitMesh(const aiMesh* paiMesh)
 
 	for (unsigned int i = 0; i < paiMesh->mNumFaces; i++) {
 		const aiFace& Face = paiMesh->mFaces[i];
-		assert(Face.mNumIndices == 3);
+		//assert(Face.mNumIndices == 3);
 		mIndices.push_back(Face.mIndices[0]);
 		mIndices.push_back(Face.mIndices[1]);
 		mIndices.push_back(Face.mIndices[2]);

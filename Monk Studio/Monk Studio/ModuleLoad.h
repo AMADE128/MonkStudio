@@ -14,6 +14,8 @@ public:
 
 	bool LoadFile(const std::string& fileName);
 
+	std::string GetFileExtension(std::string fileName);
+
 	bool CleanUp();
 public:
 	

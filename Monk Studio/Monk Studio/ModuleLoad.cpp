@@ -67,51 +67,97 @@ update_status ModuleLoad::PostUpdate(float dt)
 bool ModuleLoad::LoadFile(const std::string& fileName)
 {
 	bool ret = false;
-	const aiScene* scene = aiImportFile(fileName.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 
-	if (scene != nullptr && scene->HasMeshes())
+	std::string fileExtension = GetFileExtension(fileName.c_str());
+
+	if (fileExtension == "fbx")
 	{
-		GameObject* parentObject = App->scene_intro->sceneObjects;
-		if (scene->mNumMeshes > 1)
+		const aiScene* scene = aiImportFile(fileName.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+
+		if (scene != nullptr && scene->HasMeshes())
 		{
-			parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->scene_intro->sceneObjects);
-		}
+			GameObject* parentObject = App->scene_intro->sceneObjects;
+			if (scene->mNumMeshes > 1)
+			{
+				parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->scene_intro->sceneObjects);
+			}
 
-		std::vector<Mesh*>meshes;
-		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+			std::vector<Mesh*>meshes;
+			for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+			{
+				Mesh* mesh = new Mesh();
+				mesh->InitFromScene(scene->mMeshes[i]);
+				meshes.push_back(mesh);
+			}
+			for (unsigned int i = 0; i < meshes.size(); i++)
+			{
+				GameObject* childObject = App->scene_intro->CreateGameObject("", parentObject);
+
+				childObject->CreateComponent(Component::Type::MESH);
+				ComponentMesh* cm = new ComponentMesh(nullptr);
+				cm = dynamic_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
+				cm->SetMesh(meshes.at(i));
+				childObject->name = cm->GetMesh()->GetMeshName();
+
+				/*childObject->CreateComponent(Component::Type::MATERIAL);
+				ComponentMaterial* cMat = new ComponentMaterial(nullptr);
+				cMat = dynamic_cast<ComponentMaterial*>(childObject->GetComponent(Component::Type::MATERIAL));
+				Texture* newTex = new Texture();
+				newTex->Load("Assets/Textures/bakeHouse.png");
+				cMat->SetTexture(newTex);*/
+			}
+			LOG("Loaded mesh data from this file: %s", fileName.c_str());
+
+			meshes.clear();
+			std::vector<Mesh*>().swap(meshes);
+		}
+		else
 		{
-			Mesh* mesh = new Mesh();
-			mesh->InitFromScene(scene->mMeshes[i]);
-			meshes.push_back(mesh);
+			LOG("Error loading '%s'", fileName.c_str());
 		}
-		for (unsigned int i = 0; i < meshes.size(); i++)
-		{
-			GameObject* childObject = App->scene_intro->CreateGameObject("", parentObject);
-
-			childObject->CreateComponent(Component::Type::MESH);
-			ComponentMesh* cm = new ComponentMesh(nullptr);
-			cm = dynamic_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
-			cm->SetMesh(meshes.at(i));
-			childObject->name = cm->GetMesh()->GetMeshName();
-
-			childObject->CreateComponent(Component::Type::MATERIAL);
-			ComponentMaterial* cMat = new ComponentMaterial(nullptr);
-			cMat = dynamic_cast<ComponentMaterial*>(childObject->GetComponent(Component::Type::MATERIAL));
-			Texture* newTex = new Texture();
-			newTex->Load("Assets/Textures/bakeHouse.png");
-			cMat->SetTexture(newTex);
-		}
-		LOG("Loaded mesh data from this file: %s", fileName.c_str());
-
-		meshes.clear();
-		std::vector<Mesh*>().swap(meshes);
 	}
-	else
+	else if (fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds")
 	{
-		LOG("Error loading '%s'", fileName.c_str());
+		if (App->editor->selectedNode != nullptr )
+		{
+			if (App->editor->selectedNode->GetComponent(Component::Type::MATERIAL) != nullptr)
+			{
+				ComponentMaterial* cMat = new ComponentMaterial(nullptr);
+				cMat = dynamic_cast<ComponentMaterial*>(App->editor->selectedNode->GetComponent(Component::Type::MATERIAL));
+				Texture* newTex = new Texture();
+				newTex->Load(fileName.c_str());
+				cMat->SetTexture(newTex);
+			}
+			else
+			{
+				App->editor->selectedNode->CreateComponent(Component::Type::MATERIAL);
+				ComponentMaterial* cMat = new ComponentMaterial(nullptr);
+				cMat = dynamic_cast<ComponentMaterial*>(App->editor->selectedNode->GetComponent(Component::Type::MATERIAL));
+				Texture* newTex = new Texture();
+				newTex->Load(fileName.c_str());
+				cMat->SetTexture(newTex);
+			}
+		}
 	}
 
 	return true;
+}
+
+std::string ModuleLoad::GetFileExtension(std::string fileName)
+{
+	std::string::size_type idx;
+
+	idx = fileName.rfind('.');
+
+	if (idx != std::string::npos)
+	{
+		return fileName.substr(idx + 1);
+	}
+	else
+	{
+		// No extension found
+		LOG("No extension found in %s", fileName.c_str());
+	}
 }
 
 // Called before quitting
