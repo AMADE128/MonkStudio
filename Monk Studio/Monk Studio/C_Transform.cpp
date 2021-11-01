@@ -22,11 +22,11 @@ ComponentTransform::ComponentTransform(GameObject* _gm) : Component(_gm)
 	transform.SetIdentity();
 	scale = { 1, 1, 1 };
 	position = { 0,0,0 };
-	euler = { 0,0,0 };
-	combinedScale = { 1,1,1 };
-	combinedRotation = { 0,0,0 };
-	combinedPosition = { 0,0,0 };
 	rotation = Quat::identity;
+	euler = rotation.ToEulerXYZ();
+	combinedScale = { 1,1,1 };
+	combinedRotation = rotation.ToEulerXYZ();
+	combinedPosition = { 0,0,0 };
 	name = "Transform";
 }
 
@@ -51,18 +51,18 @@ void ComponentTransform::InspectorDraw()
 
 void ComponentTransform::UpdateTransform()
 {
+	combinedRotation = GetCombinedRotate(owner);
 
-	combinedPosition = GetCombinedPosition(owner);
-
-	SetPos(combinedPosition.x, combinedPosition.y, combinedPosition.z);
+	RotateObject(combinedRotation);
 
 	combinedScale = GetCombinedScale(owner);
 
 	Scale(combinedScale.x, combinedScale.y, combinedScale.z);
 
-	combinedRotation = GetCombinedRotate(owner);
+	combinedPosition = GetCombinedPosition(owner);
 
-	RotateObject(combinedRotation);
+	//Position movement doesn't work
+	//transform.SetTranslatePart(combinedPosition.x, combinedPosition.y, combinedPosition.z);
 
 	transform.Transposed();
 }
@@ -156,40 +156,6 @@ float3 ComponentTransform::GetCombinedRotate(GameObject* selected)
 
 void ComponentTransform::RotateObject(float3 _rotation)
 {
-	/*rotation = {rotation.x * (180/ pi), rotation.y * (180 / pi), rotation.z * (180 / pi) };
-	vec3 current_pos = { 0,0,0 };
-	Quat final_pos = { 0,0,0,0 };
-	float3 rot = { rotation.x, rotation.y, rotation.z};
-
-	quat x;
-	quat y;
-	quat z;
-
-	x.rotatex(rotation.x);
-	y.rotatey(rotation.y);
-	z.rotatez(rotation.z);	
-
-	if (object != nullptr) current_pos = object->transform->GetPosition();
-	current_pos = { current_pos.x * (180 / pi), current_pos.y * (180 / pi), current_pos.z * (180 / pi) };
-	float3 current_po = { current_pos.x, current_pos.y, current_pos.z };
-
-	float3 c = Cross(rot, current_po);
-	float d = dot(rotation, current_pos);
-	float angle = cos(d/length(rotation)*length(current_pos));
-
-	Quat q; q.RotateAxisAngle(c,angle);
-
-
-	Quat pos_quat = { current_pos.x, current_pos.y, current_pos.z, 0 };
-
-	final_pos = pos_quat * q;
-
-	final_pos = pos_quat * x;
-	final_pos = pos_quat * y;
-	final_pos = pos_quat * z;
-
-	object->transform->SetPos(final_pos.x, final_pos.y, final_pos.z);*/
-
 	rotation = Quat::FromEulerXYZ(_rotation.x * DEGTORAD, _rotation.y * DEGTORAD, _rotation.z * DEGTORAD);
 
 	if (transform.Trace() == 0)
