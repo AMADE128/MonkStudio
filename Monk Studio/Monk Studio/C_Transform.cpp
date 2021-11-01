@@ -5,7 +5,7 @@
 #include "Globals.h"
 #include "ModuleEditor.h"
 
-#include "External Libraries/MathGeoLib/include/MathGeoLib.h"
+#include "External Libraries/MathGeoLib/include/Math/TransformOps.h"
 
 #include "External Libraries/imgui/imgui.h"
 #include "External Libraries/imgui/imgui_impl_sdl.h"
@@ -13,14 +13,20 @@
 
 ComponentTransform::ComponentTransform() : Component(nullptr)
 {
-	transform = IdentityMatrix;
+	transform = Quat::identity;
 	name = "Transform";
 }
 
 ComponentTransform::ComponentTransform(GameObject* _gm) : Component(_gm)
 {
-	transform = IdentityMatrix;
-	scale = (1, 1, 1);
+	transform.SetIdentity();
+	scale = { 1, 1, 1 };
+	position = { 0,0,0 };
+	euler = { 0,0,0 };
+	combinedScale = { 1,1,1 };
+	combinedRotation = { 0,0,0 };
+	combinedPosition = { 0,0,0 };
+	rotation = Quat::identity;
 	name = "Transform";
 }
 
@@ -30,7 +36,6 @@ ComponentTransform::~ComponentTransform()
 
 void ComponentTransform::Update()
 {
-	//if (updateTransform)
 	UpdateTransform();
 }
 
@@ -38,21 +43,9 @@ void ComponentTransform::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Local Transformation"))
 	{
-		if (ImGui::InputFloat3("Position", &position, 0))
-		{
-			//updateTransform = true;
-		}
-		if (ImGui::SliderFloat3("Rotation", &rotation, -180, 180))
-		{
-			RotateObject(rotation, owner);
-			//updateTransform = true;
-		}
-		if (ImGui::InputFloat3("Scale", &scale, 0))
-		{
-			//updateTransform = true;
-		}
-		ImGui::Text("Bounding Box: -not generated-");
-		ImGui::Text("Velocity: 0.00 0.00 0.00 (0.00 m/s)");
+		if (ImGui::DragFloat3("Position", &position[0], 0.1f));
+		if (ImGui::DragFloat3("Rotation", &euler[0], 0.5f, -360.0f, 360.0f));
+		if (ImGui::DragFloat3("Scale", &scale[0], 0.1f));
 	}
 }
 
@@ -63,40 +56,41 @@ void ComponentTransform::UpdateTransform()
 
 	SetPos(combinedPosition.x, combinedPosition.y, combinedPosition.z);
 
-	SetRotation(rotation.x, vec3(1, 0, 0));
-	SetRotation(rotation.y, vec3(0, 1, 0));
-	SetRotation(rotation.z, vec3(0, 0, 1));
-
 	combinedScale = GetCombinedScale(owner);
 
 	Scale(combinedScale.x, combinedScale.y, combinedScale.z);
 
-	//updateTransform = false;
+	combinedRotation = GetCombinedRotate(owner);
+
+	RotateObject(combinedRotation);
+
+	transform.Transposed();
 }
 
 void ComponentTransform::SetPos(float x, float y, float z)
 {
-	transform.translate(x, y, z);
-}
-
-// ------------------------------------------------------------
-void ComponentTransform::SetRotation(float angle, const vec3& u)
-{
-	transform.rotate(angle, u);
+	transform.SetCol3(3, float3(x, y, z));
 }
 
 // ------------------------------------------------------------
 void ComponentTransform::Scale(float x, float y, float z)
 {
-	transform.scale(x, y, z);
+	if (rotation.Equals(Quat::identity))
+	{
+		transform.Scale(float3(x, y, z));
+	}
+	else
+	{
+		transform.SetRotatePart(float3x3::FromRS(rotation, float3(x, y, z)));
+	}
 }
 
-mat4x4 ComponentTransform::GetTransform()
+float4x4 ComponentTransform::GetTransform()
 {
 	return transform;
 }
 
-vec3 ComponentTransform::GetParentsTransform(vec3 combinedPosition, GameObject* parent)
+float3 ComponentTransform::GetParentsTransform(float3 combinedPosition, GameObject* parent)
 {
 	combinedPosition += parent->transform->position;
 	
@@ -105,20 +99,20 @@ vec3 ComponentTransform::GetParentsTransform(vec3 combinedPosition, GameObject* 
 		combinedPosition = GetParentsTransform(combinedPosition, parent->parent);
 	}
 
-	return vec3(combinedPosition);
+	return float3(combinedPosition);
 }
 
-vec3 ComponentTransform::GetCombinedPosition(GameObject* selected)
+float3 ComponentTransform::GetCombinedPosition(GameObject* selected)
 {
 
 	combinedPosition = selected->transform->position;
 
 	if (selected->parent != nullptr) combinedPosition = GetParentsTransform(combinedPosition, selected->parent);
 
-	return vec3(combinedPosition);
+	return float3(combinedPosition);
 }
 
-vec3 ComponentTransform::GetParentsScale(vec3 combinedScale, GameObject* parent)
+float3 ComponentTransform::GetParentsScale(float3 combinedScale, GameObject* parent)
 {
 	combinedScale += parent->transform->scale;
 
@@ -127,32 +121,53 @@ vec3 ComponentTransform::GetParentsScale(vec3 combinedScale, GameObject* parent)
 		combinedScale = GetParentsScale(combinedScale, parent->parent);
 	}
 
-	return vec3(combinedScale);
+	return float3(combinedScale);
 }
 
-vec3 ComponentTransform::GetCombinedScale(GameObject* selected)
+float3 ComponentTransform::GetCombinedScale(GameObject* selected)
 {
 	combinedScale = selected->transform->scale;
 
 	if (selected->parent != nullptr) combinedScale = GetParentsScale(combinedScale, selected->parent);
 
-	return vec3(combinedScale);
+	return float3(combinedScale);
 }
 
-void ComponentTransform::RotateObject(vec3 rotation, GameObject* object)
+float3 ComponentTransform::GetParentsRotation(float3 combinedRotation, GameObject* parent)
 {
-	rotation = {rotation.x * (180/ pi), rotation.y * (180 / pi), rotation.z * (180 / pi) };
+	combinedRotation += parent->transform->euler;
+
+	if (parent->parent != nullptr)
+	{
+		combinedRotation = GetParentsRotation(combinedRotation, parent->parent);
+	}
+
+	return float3(combinedRotation);
+}
+
+float3 ComponentTransform::GetCombinedRotate(GameObject* selected)
+{
+	combinedRotation = selected->transform->euler;
+
+	if (selected->parent != nullptr) combinedRotation = GetParentsRotation(combinedRotation, selected->parent);
+
+	return float3(combinedRotation);
+}
+
+void ComponentTransform::RotateObject(float3 _rotation)
+{
+	/*rotation = {rotation.x * (180/ pi), rotation.y * (180 / pi), rotation.z * (180 / pi) };
 	vec3 current_pos = { 0,0,0 };
 	Quat final_pos = { 0,0,0,0 };
 	float3 rot = { rotation.x, rotation.y, rotation.z};
 
-	//Quat x;
-	//Quat y;
-	//Quat z;
+	quat x;
+	quat y;
+	quat z;
 
-	//x.RotateX(rotation.x);
-	//y.RotateY(rotation.y);
-	//z.RotateZ(rotation.z);	
+	x.rotatex(rotation.x);
+	y.rotatey(rotation.y);
+	z.rotatez(rotation.z);	
 
 	if (object != nullptr) current_pos = object->transform->GetPosition();
 	current_pos = { current_pos.x * (180 / pi), current_pos.y * (180 / pi), current_pos.z * (180 / pi) };
@@ -169,10 +184,21 @@ void ComponentTransform::RotateObject(vec3 rotation, GameObject* object)
 
 	final_pos = pos_quat * q;
 
-	//final_pos = pos_quat * x;
-	//final_pos = pos_quat * y;
-	//final_pos = pos_quat * z;
+	final_pos = pos_quat * x;
+	final_pos = pos_quat * y;
+	final_pos = pos_quat * z;
 
-	object->transform->SetPos(final_pos.x, final_pos.y, final_pos.z);
+	object->transform->SetPos(final_pos.x, final_pos.y, final_pos.z);*/
+
+	rotation = Quat::FromEulerXYZ(_rotation.x * DEGTORAD, _rotation.y * DEGTORAD, _rotation.z * DEGTORAD);
+
+	if (transform.Trace() == 0)
+	{
+		transform.SetRotatePart(rotation);
+	}
+	else
+	{
+		transform.SetRotatePart(float3x3::FromRS(rotation, combinedScale));
+	}
 
 }

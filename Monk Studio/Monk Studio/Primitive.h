@@ -40,11 +40,11 @@ protected:
 };
 
 // ============================================
-class Plane : public Primitive
+class PrimPlane : public Primitive
 {
 public:
-	Plane();
-	Plane(float x, float y, float z, float d);
+	PrimPlane();
+	PrimPlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
 	vec3 normal;
@@ -52,11 +52,11 @@ public:
 };
 
 // ============================================
-class Line : public Primitive
+class PrimLine : public Primitive
 {
 public:
-	Line();
-	Line(float x, float y, float z);
+	PrimLine();
+	PrimLine(float x, float y, float z);
 	void InnerRender() const;
 public:
 	vec3 origin;

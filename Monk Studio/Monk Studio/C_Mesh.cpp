@@ -30,7 +30,7 @@ void ComponentMesh::Update()
 	cm = dynamic_cast<ComponentMaterial*>(owner->GetComponent(Component::Type::MATERIAL));
 
 	glPushMatrix();
-	if (cf != nullptr && cf->isEnable()) glMultMatrixf(cf->transform.M);
+	if (cf != nullptr && cf->isEnable()) glMultMatrixf(cf->transform.ptr());
 
 	if (cm != nullptr && cm->isEnable())
 	{
@@ -88,7 +88,7 @@ void ComponentMesh::UpdateNormals()
 		float v2y = v1y + ny * normal_length;
 		float v2z = v1z + nz * normal_length;
 
-		Line* line = new Line();
+		PrimLine* line = new PrimLine();
 		line->origin = vec3(v1x, v1y, v1z);
 		line->destination = vec3(v2x, v2y, v2z);
 		normLines.push_back(line);

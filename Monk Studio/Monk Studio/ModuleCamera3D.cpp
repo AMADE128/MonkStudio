@@ -138,7 +138,8 @@ update_status ModuleCamera3D::Update(float dt)
 	if (App->editor->selectedNode)
 	{
 		ComponentTransform* meshPosition = dynamic_cast<ComponentTransform*>(App->editor->selectedNode->GetComponent(Component::Type::TRANSFORM));
-		Reference = meshPosition->GetCombinedPosition(App->editor->selectedNode);
+		float3 cP = meshPosition->GetCombinedPosition(App->editor->selectedNode);
+		Reference = vec3(cP.x, cP.y, cP.z);
 	}
 	else Reference += newPos;
 
@@ -233,9 +234,10 @@ void ModuleCamera3D::FocusObject()
 	}
 	else focusScale = App->editor->selectedNode->transform->scale.x;
 
-	Position = (App->editor->selectedNode->transform->position) + (0, 0, focusDistance * 2 + focusScale);
+	float3 transPos = App->editor->selectedNode->transform->position;
+	Position = vec3(transPos.x, transPos.y, transPos.z) + (0, 0, focusDistance * 2 + focusScale);
 
-	LookAt(App->editor->selectedNode->transform->position);
+	LookAt(vec3(transPos.x, transPos.y, transPos.z));
 }
 
 // -----------------------------------------------------------------
@@ -300,7 +302,8 @@ void ModuleCamera3D::FrontObjectView()
 
 	if (object != nullptr)
 	{
-		destination = object->transform->GetPosition();
+		float3 transPos = object->transform->GetPosition();
+		destination = vec3(transPos.x, transPos.y, transPos.z);
 
 		newPos = vec3(destination.x, destination.y, destination.z);
 

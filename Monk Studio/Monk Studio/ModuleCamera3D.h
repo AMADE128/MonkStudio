@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
+#include"External Libraries/MathGeoLib/include/Math/float3.h"
 
 class ModuleCamera3D : public Module
 {

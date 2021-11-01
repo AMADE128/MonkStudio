@@ -3,7 +3,9 @@
 #include "GameObject.h"
 
 #include "glmath.h"
-
+#include"External Libraries/MathGeoLib/include/Math/float4x4.h"
+#include"External Libraries/MathGeoLib/include/Math/float3.h"
+#include"External Libraries/MathGeoLib/include/Math/Quat.h"
 #include <vector>
 
 class ComponentTransform : public Component
@@ -17,30 +19,33 @@ public:
 	void InspectorDraw() override;
 
 	void UpdateTransform();
-	void RotateObject(vec3 rotation, GameObject* object);
 
 	static inline Type GetType() { return Type::TRANSFORM; };
-	vec3 GetPosition() { return position; };
+	float3 GetPosition() { return position; };
 
 	void SetPos(float x, float y, float z);
-	void SetRotation(float angle, const vec3& u);
 	void Scale(float x, float y, float z);
+	void RotateObject(float3 _rotation);
 
-	mat4x4 GetTransform();
+	float4x4 GetTransform();
 
-	vec3 GetParentsTransform(vec3 combinedPosition, GameObject* parent);
-	vec3 GetCombinedPosition(GameObject* selected);
+	float3 GetParentsTransform(float3 combinedPosition, GameObject* parent);
+	float3 GetCombinedPosition(GameObject* selected);
 
-	vec3 GetParentsScale(vec3 combinedScale, GameObject* parent);
-	vec3 GetCombinedScale(GameObject* selected);
+	float3 GetParentsScale(float3 combinedScale, GameObject* parent);
+	float3 GetCombinedScale(GameObject* selected);
+	
+	float3 GetParentsRotation(float3 combinedRotation, GameObject* parent);
+	float3 GetCombinedRotate(GameObject* selected);
 
 public:
-	bool updateTransform;
 
-	mat4x4 transform;
+	float4x4 transform;
 
-	vec3 position, scale, rotation;
+	float3 position, scale, euler;
+	Quat rotation;
 private:
-	vec3 combinedPosition;
-	vec3 combinedScale;
+	float3 combinedPosition;
+	float3 combinedScale;
+	float3 combinedRotation;
 };

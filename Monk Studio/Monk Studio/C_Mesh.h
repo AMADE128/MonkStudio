@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Mesh.h"
 #include <vector>
+#include "Primitive.h"
 
 class Line;
 
@@ -26,6 +27,6 @@ private:
 
 	Mesh* mesh;
 	bool dispNormal = false;
-	std::vector<Line*>  normLines;
+	std::vector<PrimLine*>  normLines;
 
 };
