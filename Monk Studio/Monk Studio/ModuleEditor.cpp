@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleEditor.h"
+#include "C_Transform.h"
 
 //Constructor
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)

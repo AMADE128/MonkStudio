@@ -39,7 +39,7 @@ public:
 	mat4x4 transform;
 
 	vec3 position, scale, rotation;
-
+private:
 	vec3 combinedPosition;
 	vec3 combinedScale;
 };
