@@ -84,7 +84,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(ProjectDir)\External Libraries\parson;$(ProjectDir)\External Libraries\assimp\include;$(ProjectDir)\External Libraries\Glew\include;$(ProjectDir)\External Libraries\MathGeoLib\include;$(ProjectDir)\External Libraries\SDL\include;$(ProjectDir)\External Libraries\imgui;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\External Libraries\DevIL;$(ProjectDir)\External Libraries\Glew\libx86;$(ProjectDir)\External Libraries\MathGeoLib\libx86\MGDebug;$(ProjectDir)\External Libraries\SDL\libx86;$(ProjectDir)\External Libraries\assimp\libx86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)\External Libraries\DevIL;$(ProjectDir)\External Libraries\Glew\libx86;C:\Users\Tomas\Documents\GitHub\MonkStudio\Monk Studio\Monk Studio\External Libraries\MathGeoLib\libx86\MGRelease;$(ProjectDir)\External Libraries\SDL\libx86;$(ProjectDir)\External Libraries\assimp\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

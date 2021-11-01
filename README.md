@@ -80,6 +80,7 @@ The same can be done with .png .dds and .jpgs to load them as texutre for the se
 - Render menu where the user can enable/disable Depth Test, Cull Face, Lighting, Color Material, Textures and Wireframe mode.
 - User can move around objects playing with the Local Transformation on the inspector, moving, rotating and scaling the object.
 - Docking between the diferent windows displayed on the engine.
+- Aditional moving functions such as: E and R to move up and down, or ALT + pressing mouse wheel to move in a plane the same way that unity does.
 
 
 
