@@ -79,6 +79,7 @@ The same can be done with .png .dds and .jpgs to load them as texutre for the se
 - The option to open all main menu buttons as windows pressing the first option that is (::::::::::::) a line of dots. (Such as Maya 2020 does).
 - Render menu where the user can enable/disable Depth Test, Cull Face, Lighting, Color Material, Textures and Wireframe mode.
 - User can move around objects playing with the Local Transformation on the inspector, moving, rotating and scaling the object.
+- Docking between the diferent windows displayed on the engine.
 
 
 
