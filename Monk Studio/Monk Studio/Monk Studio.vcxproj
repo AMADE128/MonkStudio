@@ -82,6 +82,10 @@
     <LibraryPath>$(ProjectDir)\External Libraries\DevIL;$(ProjectDir)\External Libraries\Glew\libx86;$(ProjectDir)\External Libraries\MathGeoLib\libx86\MGDebug;$(ProjectDir)\External Libraries\SDL\libx86;$(ProjectDir)\External Libraries\assimp\libx86;$(LibraryPath)</LibraryPath>
     <OutDir>..\Project Folder</OutDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)\External Libraries\parson;$(ProjectDir)\External Libraries\assimp\include;$(ProjectDir)\External Libraries\Glew\include;$(ProjectDir)\External Libraries\MathGeoLib\include;$(ProjectDir)\External Libraries\SDL\include;$(ProjectDir)\External Libraries\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\External Libraries\DevIL;$(ProjectDir)\External Libraries\Glew\libx86;$(ProjectDir)\External Libraries\MathGeoLib\libx86\MGDebug;$(ProjectDir)\External Libraries\SDL\libx86;$(ProjectDir)\External Libraries\assimp\libx86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -119,12 +123,13 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Github\MonkStudio\Monk Studio\Monk Studio\External Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External Libraries\DevIL;$(ProjectDir)\External Libraries\parson;$(ProjectDir)\External Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;MathGeoLib.lib;glew32.lib;assimp-vc142-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

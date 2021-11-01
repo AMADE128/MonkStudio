@@ -192,10 +192,15 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 	{
 		if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Right))
 		{
-			ImGui::OpenPopup("A");
+			ImGui::OpenPopup("GameObject Options");
 		}
-		if (ImGui::BeginPopup("A"))
+		if (ImGui::BeginPopup("GameObject Options"))
 		{
+			if (parent->parent != nullptr)
+			{
+				MoveUpHierarchy(parent);
+				MoveDownHierarchy(parent);
+			}
 			if (ImGui::MenuItem("Delete"))
 			{
 				DeleteFromScene(parent);
@@ -233,6 +238,42 @@ void ModuleEditor::HierarchyDraw(GameObject* parent)
 			HierarchyDraw(parent->children.at(i));
 		};
 		ImGui::TreePop();
+	}
+}
+
+void ModuleEditor::MoveDownHierarchy(GameObject* parent)
+{
+	if (parent->parent->children.at(parent->parent->children.size() - 1) != parent)
+	{
+		if (ImGui::MenuItem("Move Down"))
+		{
+			for (unsigned int i = 0; i < parent->parent->children.size(); i++)
+			{
+				if (parent->parent->children[i] == parent)
+				{
+					swap(parent->parent->children[i + 1], parent->parent->children[i]);
+					break;
+				}
+			}
+		}
+	}
+}
+
+void ModuleEditor::MoveUpHierarchy(GameObject* parent)
+{
+	if (parent->parent->children.at(0) != parent)
+	{
+		if (ImGui::MenuItem("Move Up"))
+		{
+			for (unsigned int i = 0; i < parent->parent->children.size(); i++)
+			{
+				if (parent->parent->children[i] == parent)
+				{
+					swap(parent->parent->children[i], parent->parent->children[i - 1]);
+					break;
+				}
+			}
+		}
 	}
 }
 
