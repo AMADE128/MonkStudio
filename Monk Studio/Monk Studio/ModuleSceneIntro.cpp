@@ -31,9 +31,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	App->load->LoadFile("Assets/BakerHouse.fbx");
-	App->editor->selectedNode = sceneObjects->children[0]->children[0];
 	App->load->LoadFile("Assets/Textures/bakeHouse.png");
-	App->editor->selectedNode = sceneObjects->children[0]->children[1];
 	App->load->LoadFile("Assets/Textures/bakeHouse.png");
 
 	return ret;
@@ -49,8 +47,16 @@ bool ModuleSceneIntro::CleanUp()
 
 GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* parent)
 {
-	GameObject* gm = new GameObject(name, parent);
-	return gm;
+	if (parent != nullptr)
+	{
+		GameObject* gm = new GameObject(name, parent);
+		return gm;
+	}
+	else
+	{
+		GameObject* gm = new GameObject(name, App->scene_intro->sceneObjects);
+		return gm;
+	}
 }
 
 void ModuleSceneIntro::UpdateGameObjects(GameObject* parent)

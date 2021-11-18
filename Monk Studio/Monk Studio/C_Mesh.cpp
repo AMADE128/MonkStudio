@@ -30,7 +30,7 @@ void ComponentMesh::Update()
 	cm = dynamic_cast<ComponentMaterial*>(owner->GetComponent(Component::Type::MATERIAL));
 
 	glPushMatrix();
-	if (cf != nullptr && cf->isEnable()) glMultMatrixf(cf->transform.ptr());
+	if (cf != nullptr && cf->isEnable()) glMultMatrixf(cf->transform.Transposed().ptr());
 
 	if (cm != nullptr && cm->isEnable())
 	{
@@ -38,6 +38,14 @@ void ComponentMesh::Update()
 		else mesh->Render(cm->GetTexture()->GetTextureID());
 	}
 	else mesh->Render(NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	if (dispNormal) RenderNormals();
 

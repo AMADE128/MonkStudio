@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Globals.h"
+#include "Application.h"
 
 #include "C_Transform.h"
 #include "C_Mesh.h"

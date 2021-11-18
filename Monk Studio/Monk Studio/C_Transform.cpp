@@ -51,38 +51,30 @@ void ComponentTransform::InspectorDraw()
 
 void ComponentTransform::UpdateTransform()
 {
-	combinedRotation = GetCombinedRotate(owner);
 
-	RotateObject(combinedRotation);
+	RotateObject(euler);
 
-	combinedScale = GetCombinedScale(owner);
+	transform = float4x4::FromTRS(position, rotation, scale);
 
-	Scale(combinedScale.x, combinedScale.y, combinedScale.z);
-
-	combinedPosition = GetCombinedPosition(owner);
-
-	//Position movement doesn't work
-	//transform.SetTranslatePart(combinedPosition.x, combinedPosition.y, combinedPosition.z);
-
-	transform.Transposed();
+	if (owner->parent != nullptr)
+	{
+		transform = owner->parent->transform->transform.Mul(transform);
+	}
 }
 
 void ComponentTransform::SetPos(float x, float y, float z)
 {
-	transform.SetCol3(3, float3(x, y, z));
+	position.x = x;
+	position.y = y;
+	position.z = z;
 }
 
 // ------------------------------------------------------------
 void ComponentTransform::Scale(float x, float y, float z)
 {
-	if (rotation.Equals(Quat::identity))
-	{
-		transform.Scale(float3(x, y, z));
-	}
-	else
-	{
-		transform.SetRotatePart(float3x3::FromRS(rotation, float3(x, y, z)));
-	}
+	scale.x = x;
+	scale.y = y;
+	scale.z = z;
 }
 
 float4x4 ComponentTransform::GetTransform()
@@ -157,14 +149,4 @@ float3 ComponentTransform::GetCombinedRotate(GameObject* selected)
 void ComponentTransform::RotateObject(float3 _rotation)
 {
 	rotation = Quat::FromEulerXYZ(_rotation.x * DEGTORAD, _rotation.y * DEGTORAD, _rotation.z * DEGTORAD);
-
-	if (transform.Trace() == 0)
-	{
-		transform.SetRotatePart(rotation);
-	}
-	else
-	{
-		transform.SetRotatePart(float3x3::FromRS(rotation, combinedScale));
-	}
-
 }

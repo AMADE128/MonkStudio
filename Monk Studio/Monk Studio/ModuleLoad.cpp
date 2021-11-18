@@ -76,10 +76,10 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 
 		if (scene != nullptr && scene->HasMeshes())
 		{
-			GameObject* parentObject = App->scene_intro->sceneObjects;
-			if (scene->mNumMeshes > 1)
+			GameObject* parentObject = new GameObject("", nullptr);
+			if (scene->mNumMeshes > 0)
 			{
-				parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->scene_intro->sceneObjects);
+				parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->editor->selectedNode);
 			}
 
 			std::vector<Mesh*>meshes;
@@ -98,16 +98,10 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 				cm = dynamic_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
 				cm->SetMesh(meshes.at(i));
 				childObject->name = cm->GetMesh()->GetMeshName();
-
-				/*childObject->CreateComponent(Component::Type::MATERIAL);
-				ComponentMaterial* cMat = new ComponentMaterial(nullptr);
-				cMat = dynamic_cast<ComponentMaterial*>(childObject->GetComponent(Component::Type::MATERIAL));
-				Texture* newTex = new Texture();
-				newTex->Load("Assets/Textures/bakeHouse.png");
-				cMat->SetTexture(newTex);*/
 			}
 			LOG("Loaded mesh data from this file: %s", fileName.c_str());
 
+			App->editor->selectedNode = parentObject;
 			meshes.clear();
 			std::vector<Mesh*>().swap(meshes);
 		}
@@ -120,22 +114,28 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	{
 		if (App->editor->selectedNode != nullptr )
 		{
-			if (App->editor->selectedNode->GetComponent(Component::Type::MATERIAL) != nullptr)
+			if (App->editor->selectedNode->children.size() > 0)
 			{
-				ComponentMaterial* cMat = new ComponentMaterial(nullptr);
-				cMat = dynamic_cast<ComponentMaterial*>(App->editor->selectedNode->GetComponent(Component::Type::MATERIAL));
-				Texture* newTex = new Texture();
-				newTex->Load(fileName.c_str());
-				cMat->SetTexture(newTex);
-			}
-			else
-			{
-				App->editor->selectedNode->CreateComponent(Component::Type::MATERIAL);
-				ComponentMaterial* cMat = new ComponentMaterial(nullptr);
-				cMat = dynamic_cast<ComponentMaterial*>(App->editor->selectedNode->GetComponent(Component::Type::MATERIAL));
-				Texture* newTex = new Texture();
-				newTex->Load(fileName.c_str());
-				cMat->SetTexture(newTex);
+				for (unsigned int i = 0; i < App->editor->selectedNode->children.size(); i++)
+				{
+					if (App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL) != nullptr)
+					{
+						ComponentMaterial* cMat = new ComponentMaterial(nullptr);
+						cMat = dynamic_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
+						Texture* newTex = new Texture();
+						newTex->Load(fileName.c_str());
+						cMat->SetTexture(newTex);
+					}
+					else
+					{
+						App->editor->selectedNode->children[i]->CreateComponent(Component::Type::MATERIAL);
+						ComponentMaterial* cMat = new ComponentMaterial(nullptr);
+						cMat = dynamic_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
+						Texture* newTex = new Texture();
+						newTex->Load(fileName.c_str());
+						cMat->SetTexture(newTex);
+					}
+				}
 			}
 		}
 	}
