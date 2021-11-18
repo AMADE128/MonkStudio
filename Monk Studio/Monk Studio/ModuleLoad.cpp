@@ -3,6 +3,7 @@
 #include "Mesh.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
+#include "FileImporter.h"
 
 #include "External Libraries/assimp/include/cimport.h"
 #include "External Libraries/assimp/include/scene.h"
@@ -37,6 +38,7 @@ bool ModuleLoad::Init()
 
 	ILuint devilError;
 
+	FileImporter::Init();
 
 	ilInit();
 
