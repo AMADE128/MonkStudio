@@ -132,10 +132,10 @@
     <ClCompile Include="C_Material.cpp">
       <Filter>Source Files\Helpers\Components</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialImporter.cpp">
+    <ClCompile Include="FileImporter.cpp">
       <Filter>Source Files\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="FileImporter.cpp">
+    <ClCompile Include="TextureImporter.cpp">
       <Filter>Source Files\Importers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -236,10 +236,10 @@
     <ClInclude Include="C_Material.h">
       <Filter>Source Files\Helpers\Components</Filter>
     </ClInclude>
-    <ClInclude Include="MaterialImporter.h">
+    <ClInclude Include="FileImporter.h">
       <Filter>Source Files\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="FileImporter.h">
+    <ClInclude Include="TextureImporter.h">
       <Filter>Source Files\Importers</Filter>
     </ClInclude>
   </ItemGroup>

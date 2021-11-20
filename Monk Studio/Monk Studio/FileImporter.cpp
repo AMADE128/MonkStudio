@@ -19,10 +19,10 @@ void FileImporter::Init()
 
 void FileImporter::CreateLibraryFolders()
 {
-	CreateFolder(LIBRARY_PATH);
-	CreateFolder(MESHES_PATH);
-	CreateFolder(TEXTURES_PATH);
-	CreateFolder(MATERIALS_PATH);
+	CreateFolder("Library/");
+	CreateFolder("Library/Meshes/");
+	CreateFolder("Library/Textures/");
+	CreateFolder("Library/Materials/");
 }
 
 bool FileImporter::CreateFolder(const char* dirName)

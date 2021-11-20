@@ -23,14 +23,12 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Update()
 {
-	ComponentTransform* cf = new ComponentTransform(nullptr);
-	cf = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
 
 	ComponentMaterial* cm = new ComponentMaterial(nullptr);
 	cm = dynamic_cast<ComponentMaterial*>(owner->GetComponent(Component::Type::MATERIAL));
 
 	glPushMatrix();
-	if (cf != nullptr && cf->isEnable()) glMultMatrixf(cf->transform.Transposed().ptr());
+	if (owner->transform != nullptr && owner->transform->isEnable()) glMultMatrixf(owner->transform->transform.Transposed().ptr());
 
 	if (cm != nullptr && cm->isEnable())
 	{

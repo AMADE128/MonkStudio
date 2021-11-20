@@ -1,17 +1,16 @@
-
 #include "Globals.h"
-#include "MaterialImporter.h"
+#include "TextureImporter.h"
 
 #include "il.h"
 #include "ilut.h"
 #include <memory>
 #include <vector>
 
-void MaterialImporter::Import(const aiMaterial* material, ComponentMaterial* ourMaterial)
+void TextureImporter::Import(const aiMaterial* material, ComponentMaterial* ourMaterial)
 {
 }
 
-uint64_t MaterialImporter::Save(const ComponentMaterial* ourMaterial, char** fileBuffer)
+uint64_t TextureImporter::Save(const ComponentMaterial* ourMaterial, char** fileBuffer)
 {
 	ILuint size;
 	ILubyte* data;
@@ -24,13 +23,13 @@ uint64_t MaterialImporter::Save(const ComponentMaterial* ourMaterial, char** fil
 			// Save to buffer with the ilSaveIL function
 			*fileBuffer = (char*)data;
 		}
-			
+
 		RELEASE_ARRAY(data);
 	}
 
 	return uint64_t();
 }
 
-void MaterialImporter::Load(const char* fileBuffer, ComponentMaterial* ourMaterial)
+void TextureImporter::Load(const char* fileBuffer, ComponentMaterial* ourMaterial)
 {
 }
