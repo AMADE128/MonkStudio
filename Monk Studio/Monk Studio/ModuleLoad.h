@@ -2,6 +2,9 @@
 #include "Module.h"
 #include "Globals.h"
 
+struct aiNode;
+class GameObject;
+
 class ModuleLoad : public Module
 {
 public:
@@ -13,6 +16,8 @@ public:
 	update_status PostUpdate(float dt);
 
 	bool LoadFile(const std::string& fileName);
+
+	void SetDefaultMeshTransform(aiNode* node, GameObject* object);
 
 	std::string GetFileExtension(std::string fileName);
 

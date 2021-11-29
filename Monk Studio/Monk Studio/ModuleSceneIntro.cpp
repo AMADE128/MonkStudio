@@ -30,9 +30,9 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	App->load->LoadFile("Assets/BakerHouse.fbx");
-	App->load->LoadFile("Assets/Textures/bakeHouse.png");
-	App->load->LoadFile("Assets/Textures/bakeHouse.png");
+	App->load->LoadFile("Assets/street/Street environment_V01.fbx");
+	//App->load->LoadFile("Assets/Textures/bakeHouse.png");
+	//App->load->LoadFile("Assets/Textures/bakeHouse.png");
 
 	return ret;
 }
