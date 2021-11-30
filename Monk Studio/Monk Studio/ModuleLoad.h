@@ -17,6 +17,8 @@ public:
 
 	bool LoadFile(const std::string& fileName);
 
+	uint GetFileSize(const std::string& fileName, char** buffer);
+
 	void SetDefaultMeshTransform(aiNode* node, GameObject* object);
 
 	std::string GetFileExtension(std::string fileName);

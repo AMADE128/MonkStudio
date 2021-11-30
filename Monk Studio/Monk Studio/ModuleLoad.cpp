@@ -9,6 +9,9 @@
 #include "External Libraries/assimp/include/scene.h"
 #include "External Libraries/assimp/include/postprocess.h"
 
+#include "parson.h"
+#include "External Libraries/Physfs/include/physfs.h"
+
 #include "il.h"
 #include "ilu.h"
 #include "ilut.h"
@@ -118,6 +121,15 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	}
 	else if (fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds")
 	{
+		char* fileBuffer = nullptr;
+
+		//JSON_Value* file = json_value_init_object();
+		//JSON_Object* obj = json_value_get_object(file);
+		//json_object_set_string(obj, "lloros", "muchos");
+		//std::string path = "Library/lloros" + std::string(".dds");
+		//json_serialize_to_file_pretty(file, path.c_str());
+		////Free memory
+		//json_value_free(file);
 		if (App->editor->selectedNode != nullptr )
 		{
 			if (App->editor->selectedNode->children.size() > 0)
@@ -147,6 +159,40 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	}
 
 	return true;
+}
+
+uint ModuleLoad::GetFileSize(const std::string& fileName, char** buffer)
+{
+	uint ret = 0;
+	PHYSFS_file* fs_file = PHYSFS_openRead(fileName.c_str());
+	if (fs_file != nullptr)
+	{
+		PHYSFS_sint64 size = PHYSFS_fileLength(fs_file);
+		//LOG(LogType::L_ERROR, "[%s]", PHYSFS_getLastError())
+
+		if (size > 0)
+		{
+			*buffer = new char[size + 1];
+			uint readed = (uint)PHYSFS_read(fs_file, *buffer, 1, size);
+			if (readed != size)
+			{
+				RELEASE_ARRAY(buffer);
+			}
+			else
+			{
+				ret = readed;
+				//Adding end of file at the end of the buffer. Loading a shader file does not add this for some reason
+				(*buffer)[size] = '\0';
+			}
+		}
+
+		if (PHYSFS_close(fs_file) == 0)
+			LOG("File System error while closing file: %s\n", PHYSFS_getLastError());
+	}
+	else
+		LOG("File System error while opening file: %s\n", PHYSFS_getLastError());
+
+	return ret;
 }
 
 void ModuleLoad::SetDefaultMeshTransform(aiNode* node, GameObject* object)
