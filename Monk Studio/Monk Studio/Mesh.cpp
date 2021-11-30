@@ -79,7 +79,18 @@ bool Mesh::InitFromScene(const aiMesh* paiMesh)
 
 	GenerateBuffers();
 
+	GetAABB();
+
 	return true;
+}
+
+AABB Mesh::GetAABB()
+{
+	// Generate AABB
+	bbox.SetNegativeInfinity();
+	for (int i = 0; i < mPosition.size(); ++i)
+		bbox.Enclose(float3(mPosition[i].x, mPosition[i].y, mPosition[i].z));
+	return bbox;
 }
 
 void Mesh::InitMesh(const aiMesh* paiMesh)

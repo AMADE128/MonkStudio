@@ -3,6 +3,8 @@
 #include "Mesh.h"
 #include <vector>
 #include "Primitive.h"
+#include "External Libraries/MathGeoLib/include/Geometry/AABB.h"
+#include "External Libraries/MathGeoLib/include/Geometry/OBB.h"
 
 class Line;
 
@@ -30,4 +32,6 @@ private:
 	bool dispNormal = false;
 	std::vector<PrimLine*>  normLines;
 
+	AABB aabb;
+	AABB obb;
 };

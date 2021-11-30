@@ -56,7 +56,6 @@ bool ModuleLoad::Init()
 // PreUpdate: clear buffer
 update_status ModuleLoad::PreUpdate(float dt)
 {
-
 	return UPDATE_CONTINUE;
 }
 

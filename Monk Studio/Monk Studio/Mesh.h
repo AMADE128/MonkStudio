@@ -5,6 +5,8 @@
 #include "External Libraries/assimp/include/scene.h"
 #include "External Libraries/assimp/include/postprocess.h"
 
+#include "External Libraries/MathGeoLib/include/Geometry/AABB.h"
+
 #include <vector>
 #include "glmath.h"
 #include "MS_Math.h"
@@ -18,6 +20,7 @@ public:
 	~Mesh();
 
 	bool InitFromScene(const aiMesh* paiMesh);
+	AABB GetAABB();
 	void Render(GLuint texture);
 	std::vector<vec3> GetVecPosition();
 	std::string GetMeshName();
@@ -42,4 +45,5 @@ private:
 	unsigned int MaterialIndex;
 	std::string mName;
 
+	AABB bbox;
 };

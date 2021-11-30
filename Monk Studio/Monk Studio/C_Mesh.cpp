@@ -48,6 +48,13 @@ void ComponentMesh::Update()
 	if (dispNormal) RenderNormals();
 
 	glPopMatrix();
+
+	// Generate global OBB
+	obb = mesh->GetAABB();
+	obb.Transform(owner->transform->GetTransform());
+	// Generate global AABB
+	aabb.SetNegativeInfinity();
+	aabb.Enclose(obb);
 }
 
 void ComponentMesh::InspectorDraw()
