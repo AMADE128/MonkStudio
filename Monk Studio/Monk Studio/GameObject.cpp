@@ -54,6 +54,13 @@ void GameObject::Update()
 	}
 }
 
+/*
+void GameObject::SetColor(GameObject gm)	
+{
+
+}
+*/
+
 Component* GameObject::CreateComponent(Component::Type _type)
 {
 	assert(_type != Component::Type::NONE, "Can't create a NONE component");

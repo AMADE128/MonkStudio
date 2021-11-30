@@ -23,6 +23,7 @@ public:
 	GameObject* CreateGameObject(const char* name, GameObject* parent);
 
 	void UpdateGameObjects(GameObject* parent);
+	void DisableColorProperties();
 
 public:
 	GameObject* sceneObjects;

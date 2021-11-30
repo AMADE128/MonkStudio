@@ -60,6 +60,7 @@ public:
 
 	void Update();
 	Component* CreateComponent(Component::Type _type);
+	void SetColor(GameObject gm);
 	Component* GetComponent(Component::Type _type);
 	void LoadComponents(const char*);
 	void Enable()

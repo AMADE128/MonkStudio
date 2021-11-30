@@ -34,6 +34,9 @@ bool ModuleSceneIntro::Start()
 	//App->load->LoadFile("Assets/Textures/bakeHouse.png");
 	//App->load->LoadFile("Assets/Textures/bakeHouse.png");
 
+	//this is to ensure the final color of the primitives isnt affected
+	//DisableColorProperties();
+
 	return ret;
 }
 
@@ -50,11 +53,13 @@ GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* par
 	if (parent != nullptr)
 	{
 		GameObject* gm = new GameObject(name, parent);
+		//gm->SetColor(gm);
 		return gm;
 	}
 	else
 	{
 		GameObject* gm = new GameObject(name, App->scene_intro->sceneObjects);
+		//gm->SetColor(gm);
 		return gm;
 	}
 }
@@ -128,5 +133,17 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	UpdateGameObjects(sceneObjects);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneIntro::DisableColorProperties()
+{
+	glDisable(GL_BLEND);
+	glDisable(GL_DITHER);
+	glDisable(GL_FOG);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_1D);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_3D);
+	glShadeModel(GL_FLAT);
 }
 
