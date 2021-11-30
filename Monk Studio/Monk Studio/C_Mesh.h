@@ -17,6 +17,12 @@ public:
 
 	void Update() override;
 
+	void DrawOBB();
+
+	void DrawAABB();
+
+	void GenerateGlobalOBBandAABB();
+
 	void InspectorDraw() override;
 
 	Mesh* GetMesh();
@@ -30,8 +36,10 @@ private:
 
 	Mesh* mesh;
 	bool dispNormal = false;
+	bool dispAABB = false;
+	bool dispOBB = false;
 	std::vector<PrimLine*>  normLines;
 
 	AABB aabb;
-	AABB obb;
+	OBB obb;
 };

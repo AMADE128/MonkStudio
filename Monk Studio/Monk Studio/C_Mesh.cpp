@@ -49,6 +49,63 @@ void ComponentMesh::Update()
 
 	glPopMatrix();
 
+	GenerateGlobalOBBandAABB();
+
+	if (dispAABB) DrawAABB();
+	if (dispOBB) DrawOBB();
+
+}
+
+void ComponentMesh::DrawOBB()
+{
+	float3 vertices[8];
+	obb.GetCornerPoints(vertices);
+
+	glColor3f(0, 0, 1);
+	glLineWidth(1.f);
+	glBegin(GL_LINES);
+
+	int indices[24] = {
+		0,1, 1,3, 3,2, 2,0,
+		4,5, 5,7, 7,6, 6,4,
+		0,4, 1,5, 3,7, 2,6
+	};
+
+	for (int i = 0; i < 24; i++)
+	{
+		glVertex3fv(&vertices[indices[i]].x);
+	}
+
+	glColor3f(1, 1, 1);
+	glEnd();
+}
+
+void ComponentMesh::DrawAABB()
+{
+	float3 vertices[8];
+	aabb.GetCornerPoints(vertices);
+
+	glColor3f(0, 1, 0);
+	glLineWidth(1.f);
+	glBegin(GL_LINES);
+
+	int indices[24] = {
+		0,1, 1,3, 3,2, 2,0,
+		4,5, 5,7, 7,6, 6,4,
+		0,4, 1,5, 3,7, 2,6
+	};
+
+	for (int i = 0; i < 24; i++)
+	{
+		glVertex3fv(&vertices[indices[i]].x);
+	}
+
+	glColor3f(1, 1, 1);
+	glEnd();
+}
+
+void ComponentMesh::GenerateGlobalOBBandAABB()
+{
 	// Generate global OBB
 	obb = mesh->GetAABB();
 	obb.Transform(owner->transform->GetTransform());
@@ -64,6 +121,14 @@ void ComponentMesh::InspectorDraw()
 		if (ImGui::Checkbox("Display Vertex Normals", &dispNormal))
 		{
 			UpdateNormals();
+		}
+		if (ImGui::Checkbox("Display AABB", &dispAABB))
+		{
+			
+		}
+		if (ImGui::Checkbox("Display OBB", &dispOBB))
+		{
+			
 		}
 		if (ImGui::Button("Delete Component"))
 		{
