@@ -40,6 +40,9 @@
     <Filter Include="Source Files\Importers">
       <UniqueIdentifier>{9e3209cc-2dfd-40b2-8d28-681a8e39a392}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Containers\imguizmo">
+      <UniqueIdentifier>{e47faa12-bf42-4121-95fc-fe727e40bc59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -137,6 +140,21 @@
     </ClCompile>
     <ClCompile Include="TextureImporter.cpp">
       <Filter>Source Files\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="External Libraries\ImGuizmo\GraphEditor.cpp">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="External Libraries\ImGuizmo\ImCurveEdit.cpp">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="External Libraries\ImGuizmo\ImGradient.cpp">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="External Libraries\ImGuizmo\ImGuizmo.cpp">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="External Libraries\ImGuizmo\ImSequencer.cpp">
+      <Filter>Source Files\Containers\imguizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +259,24 @@
     </ClInclude>
     <ClInclude Include="TextureImporter.h">
       <Filter>Source Files\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\ImGuizmo\GraphEditor.h">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\ImGuizmo\ImCurveEdit.h">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\ImGuizmo\ImGradient.h">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\ImGuizmo\ImGuizmo.h">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\ImGuizmo\ImSequencer.h">
+      <Filter>Source Files\Containers\imguizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\ImGuizmo\ImZoomSlider.h">
+      <Filter>Source Files\Containers\imguizmo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

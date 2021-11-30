@@ -155,6 +155,11 @@
     <ClCompile Include="C_Material.cpp" />
     <ClCompile Include="C_Mesh.cpp" />
     <ClCompile Include="C_Transform.cpp" />
+    <ClCompile Include="External Libraries\ImGuizmo\GraphEditor.cpp" />
+    <ClCompile Include="External Libraries\ImGuizmo\ImCurveEdit.cpp" />
+    <ClCompile Include="External Libraries\ImGuizmo\ImGradient.cpp" />
+    <ClCompile Include="External Libraries\ImGuizmo\ImGuizmo.cpp" />
+    <ClCompile Include="External Libraries\ImGuizmo\ImSequencer.cpp" />
     <ClCompile Include="External Libraries\imgui\imgui.cpp" />
     <ClCompile Include="External Libraries\imgui\imgui_demo.cpp" />
     <ClCompile Include="External Libraries\imgui\imgui_draw.cpp" />
@@ -189,6 +194,12 @@
     <ClInclude Include="C_Material.h" />
     <ClInclude Include="C_Mesh.h" />
     <ClInclude Include="C_Transform.h" />
+    <ClInclude Include="External Libraries\ImGuizmo\GraphEditor.h" />
+    <ClInclude Include="External Libraries\ImGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="External Libraries\ImGuizmo\ImGradient.h" />
+    <ClInclude Include="External Libraries\ImGuizmo\ImGuizmo.h" />
+    <ClInclude Include="External Libraries\ImGuizmo\ImSequencer.h" />
+    <ClInclude Include="External Libraries\ImGuizmo\ImZoomSlider.h" />
     <ClInclude Include="External Libraries\imgui\imconfig.h" />
     <ClInclude Include="External Libraries\imgui\imgui.h" />
     <ClInclude Include="External Libraries\imgui\imgui_impl_opengl2.h" />

@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 #include "C_Transform.h"
+#include "External Libraries/ImGuizmo/ImGuizmo.h"
 
 //Constructor
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -73,6 +74,14 @@ update_status ModuleEditor::Update(float dt)
 		App->input->LogToConsole("ALT + 4");
 	}
 
+	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
+	static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		mCurrentGizmoOperation = ImGuizmo::ROTATE;
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		mCurrentGizmoOperation = ImGuizmo::SCALE;
 
 	return UPDATE_CONTINUE;
 }

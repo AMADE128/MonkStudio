@@ -41,7 +41,6 @@ public:
 	void MoveDownHierarchy(GameObject* parent);
 	void MoveUpHierarchy(GameObject* parent);
 	void CreateDockAPI();
-
 	void LogToConsole(const char* txt);
 
 	void DeleteFromScene(GameObject* parent);
