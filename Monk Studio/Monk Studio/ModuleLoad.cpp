@@ -80,7 +80,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 		{
 			GameObject* parentObject = new GameObject("", nullptr);
 			aiNode* parentNode = scene->mRootNode;
-			SetDefaultMeshTransform(parentNode, parentObject);
+			if (parentNode != nullptr) SetDefaultMeshTransform(parentNode, parentObject);
 			if (scene->mNumMeshes > 0)
 			{
 				parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->editor->selectedNode);
@@ -97,14 +97,14 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 			{
 				GameObject* childObject = App->scene_intro->CreateGameObject("", parentObject);
 				aiNode* childNode = parentNode->FindNode(meshes.at(i)->GetMeshName().c_str());
-
+				childNode->mMeshes;
 				childObject->CreateComponent(Component::Type::MESH);
 				ComponentMesh* cm = new ComponentMesh(nullptr);
 				cm = dynamic_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
 				cm->SetMesh(meshes.at(i));
 				childObject->name = cm->GetMesh()->GetMeshName();
 
-				SetDefaultMeshTransform(childNode, childObject);
+				if (childNode != nullptr) SetDefaultMeshTransform(childNode, childObject);
 			}
 			LOG("Loaded mesh data from this file: %s", fileName.c_str());
 
@@ -152,18 +152,14 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 
 void ModuleLoad::SetDefaultMeshTransform(aiNode* node, GameObject* object)
 {
-	aiMatrix4x4 m = node->mTransformation;
-	object->transform->position = float3(m.a4, m.b4, m.c4);
-	float scalingFactor = sqrt(m.a1 * m.a1 + m.a2 * m.a2 + m.a3 * m.a3);
-	float s = (1.0f / scalingFactor);
-	mat3x3 rM = mat3x3(m.a1 * s, m.a2 * s, m.a3 * s,
-					   m.b1 * s, m.b2 * s, m.b3 * s,
-					   m.c1 * s, m.c2 * s, m.c3 * s);
-	object->transform->euler.x = atan2(rM.M[5], rM.M[8]);
-	object->transform->euler.y = atan2(-rM.M[2], sqrt(pow(rM.M[5], 2) + pow(rM.M[8], 2)));
-	object->transform->euler.z = atan2(rM.M[1], rM.M[0]);
+	aiVector3D p, s;
+	aiQuaternion r;
 
-	object->transform->scale = float3(scalingFactor, scalingFactor, scalingFactor);
+	node->mTransformation.Decompose(s, r, p);
+
+	object->transform->position = float3(p.x, p.y, p.z);
+	object->transform->euler = Quat(r.x, r.y, r.z, r.w).ToEulerXYZ();
+	object->transform->scale = float3(s.x, s.y, s.z);
 }
 
 std::string ModuleLoad::GetFileExtension(std::string fileName)
