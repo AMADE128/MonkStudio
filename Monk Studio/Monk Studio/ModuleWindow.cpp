@@ -91,7 +91,7 @@ bool ModuleWindow::DrawUI()
 
 	if (App->editor->show_resources)
 	{
-		ImGui::Begin("Resource Managment", &App->editor->show_resources);
+		ImGui::Begin("Assets", &App->editor->show_resources);
 		if (ImGui::Button("Create Folder"))
 		{
 			App->editor->new_folder = true;
