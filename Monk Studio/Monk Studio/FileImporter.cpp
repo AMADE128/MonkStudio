@@ -1,5 +1,3 @@
-
-
 #include "FileImporter.h"
 #include "External Libraries/Physfs/include/physfs.h"
 #include "External Libraries/SDL/include/SDL.h"

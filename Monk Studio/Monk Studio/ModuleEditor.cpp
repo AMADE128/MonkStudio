@@ -73,6 +73,11 @@ update_status ModuleEditor::Update(float dt)
 		show_configuration = !show_configuration;
 		App->input->LogToConsole("ALT + 4");
 	}
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	{
+		show_resources = !show_resources;
+		App->input->LogToConsole("ALT + 5");
+	}
 
 	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
 	static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
@@ -164,6 +169,21 @@ bool ModuleEditor::DrawUI()
 
 		MenuHelp();
 
+		ImGui::End();
+	}
+
+	if (new_folder)
+	{
+		ImGui::Begin("New Folder", &new_folder);
+		if (ImGui::InputText("Folder Name", App->editor->fName, 32, 0));
+		if (ImGui::Button("Create"))
+		{
+			std::string name = "Assets/";
+			name.append(fName);
+			const char* c = const_cast<char*>(name.c_str());
+			FileImporter::CreateFolder(c);
+			new_folder = false;
+		}
 		ImGui::End();
 	}
 
@@ -486,6 +506,10 @@ void ModuleEditor::MenuView()
 	if (ImGui::MenuItem("Configuration", "Alt + 4", show_configuration))
 	{
 		show_configuration = !show_configuration;
+	}
+	if (ImGui::MenuItem("Resource Managment", "Alt + 5", show_resources))
+	{
+		show_resources = !show_resources;
 	}
 
 }

@@ -9,6 +9,7 @@
 #include "ModuleWindow.h"
 #include "Globals.h"
 #include "GameObject.h"
+#include "FileImporter.h"
 
 #include <stdio.h>
 #include <Psapi.h>
@@ -77,12 +78,14 @@ public:
 	bool show_hierarchy = true;
 	bool show_console = true;
 	bool show_configuration = true;
+	bool show_resources = true;
 	bool show_about = false;
 	bool show_file = false;
 	bool show_render = false;
 	bool show_gameObject = false;
 	bool show_view = false;
 	bool show_help = false;
+	bool new_folder = false;
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fulldeskscreen = false;
@@ -98,6 +101,7 @@ public:
 	bool wireframe_mode = false;
 
 	char wTitle[32] = "";
+	char fName[32] = "New Folder";
 	char gameObjectName[32] = "";
 	char tTitle[32] = "";
 	char fpsTitle[25] = "";
