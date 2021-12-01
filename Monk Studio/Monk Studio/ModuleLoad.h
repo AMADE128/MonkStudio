@@ -4,6 +4,7 @@
 
 struct aiNode;
 class GameObject;
+struct aiMesh;
 
 class ModuleLoad : public Module
 {
@@ -17,9 +18,11 @@ public:
 
 	bool LoadFile(const std::string& fileName);
 
+	void NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject);
+
 	uint GetFileSize(const std::string& fileName, char** buffer);
 
-	void SetDefaultMeshTransform(aiNode* node, GameObject* object);
+	void SetDefaultMeshTransform(aiNode* node, GameObject* object, aiNode* parentNode);
 
 	std::string GetFileExtension(std::string fileName);
 

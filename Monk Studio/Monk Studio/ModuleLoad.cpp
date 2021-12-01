@@ -9,6 +9,10 @@
 #include "External Libraries/assimp/include/scene.h"
 #include "External Libraries/assimp/include/postprocess.h"
 
+#include "External Libraries/assimp/include/cimport.h"
+#include "External Libraries/assimp/include/scene.h"
+#include "External Libraries/assimp/include/postprocess.h"
+
 #include "parson.h"
 #include "External Libraries/Physfs/include/physfs.h"
 
@@ -74,45 +78,16 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 
 	std::string fileExtension = GetFileExtension(fileName.c_str());
 
-	if (fileExtension == "fbx")
+	if (fileExtension == "fbx" || fileExtension == "DAE")
 	{
 		const aiScene* scene = aiImportFile(fileName.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+		aiNode* parentNode = scene->mRootNode;
+		GameObject* parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->editor->selectedNode);
+		if (parentNode != nullptr) SetDefaultMeshTransform(parentNode, parentObject, nullptr);
 
 		if (scene != nullptr && scene->HasMeshes())
 		{
-			GameObject* parentObject = new GameObject("", nullptr);
-			aiNode* parentNode = scene->mRootNode;
-			if (parentNode != nullptr) SetDefaultMeshTransform(parentNode, parentObject);
-			if (scene->mNumMeshes > 0)
-			{
-				parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->editor->selectedNode);
-			}
-
-			std::vector<Mesh*>meshes;
-			for (unsigned int i = 0; i < scene->mNumMeshes; i++)
-			{
-				Mesh* mesh = new Mesh();
-				mesh->InitFromScene(scene->mMeshes[i]);
-				meshes.push_back(mesh);
-			}
-			for (unsigned int i = 0; i < meshes.size(); i++)
-			{
-				GameObject* childObject = App->scene_intro->CreateGameObject("", parentObject);
-				aiNode* childNode = parentNode->FindNode(meshes.at(i)->GetMeshName().c_str());
-				childNode->mMeshes;
-				childObject->CreateComponent(Component::Type::MESH);
-				ComponentMesh* cm = new ComponentMesh(nullptr);
-				cm = dynamic_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
-				cm->SetMesh(meshes.at(i));
-				childObject->name = cm->GetMesh()->GetMeshName();
-
-				if (childNode != nullptr) SetDefaultMeshTransform(childNode, childObject);
-			}
-			LOG("Loaded mesh data from this file: %s", fileName.c_str());
-
-			App->editor->selectedNode = parentObject;
-			meshes.clear();
-			std::vector<Mesh*>().swap(meshes);
+				NodesToMeshes(parentNode, scene->mMeshes, parentObject);
 		}
 		else
 		{
@@ -123,13 +98,13 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	{
 		char* fileBuffer = nullptr;
 
-		//JSON_Value* file = json_value_init_object();
-		//JSON_Object* obj = json_value_get_object(file);
-		//json_object_set_string(obj, "lloros", "muchos");
-		//std::string path = "Library/lloros" + std::string(".dds");
-		//json_serialize_to_file_pretty(file, path.c_str());
-		////Free memory
-		//json_value_free(file);
+		JSON_Value* file = json_value_init_object();
+		JSON_Object* obj = json_value_get_object(file);
+		json_object_set_string(obj, "lloros", "muchos");
+		std::string path = "Library/lloros" + std::string(".dds");
+		json_serialize_to_file_pretty(file, path.c_str());
+		//Free memory
+		json_value_free(file);
 		if (App->editor->selectedNode != nullptr )
 		{
 			if (App->editor->selectedNode->children.size() > 0)
@@ -159,6 +134,54 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	}
 
 	return true;
+}
+
+void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject)
+{
+	for (size_t i = 0; i < parentNode->mNumChildren; i++)
+	{
+		aiNode* childNode = parentNode->mChildren[i];
+		GameObject* childObject = nullptr;
+		for (size_t j = 0; j < childNode->mNumMeshes; j++)
+		{
+			//Load Meshes
+			std::vector<Mesh*>meshesList;
+
+			Mesh* mesh = new Mesh();
+			mesh->InitFromScene(meshes[childNode->mMeshes[j]]);
+			meshesList.push_back(mesh);
+			for (unsigned int k = 0; k < meshesList.size(); k++)
+			{
+				childObject = App->scene_intro->CreateGameObject(childNode->mName.C_Str(), parentObject);
+				childObject->CreateComponent(Component::Type::MESH);
+				ComponentMesh* cm = new ComponentMesh(nullptr);
+				cm = dynamic_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
+				cm->SetMesh(meshesList.at(k));
+			}
+
+			App->editor->selectedNode = parentObject;
+			meshesList.clear();
+			std::vector<Mesh*>().swap(meshesList);
+		}
+		
+		if (childNode != nullptr)
+		{
+			if (childObject != nullptr)
+			{
+				SetDefaultMeshTransform(childNode, childObject, parentNode);
+			}
+
+			if (childNode->mNumChildren > 0)
+			{
+				if (childObject != nullptr)
+				{
+					NodesToMeshes(childNode, meshes, childObject);
+				}
+				else NodesToMeshes(childNode, meshes, parentObject);
+
+			}
+		}
+	}
 }
 
 uint ModuleLoad::GetFileSize(const std::string& fileName, char** buffer)
@@ -195,16 +218,23 @@ uint ModuleLoad::GetFileSize(const std::string& fileName, char** buffer)
 	return ret;
 }
 
-void ModuleLoad::SetDefaultMeshTransform(aiNode* node, GameObject* object)
+void ModuleLoad::SetDefaultMeshTransform(aiNode* node, GameObject* object, aiNode* parentNode)
 {
-	aiVector3D p, s;
-	aiQuaternion r;
+	aiVector3D p, s, pP, pS;
+	aiQuaternion r, pR;
 
 	node->mTransformation.Decompose(s, r, p);
 
 	object->transform->position = float3(p.x, p.y, p.z);
-	object->transform->euler = Quat(r.x, r.y, r.z, r.w).ToEulerXYZ();
+	object->transform->euler = Quat(r.x, r.y, r.z, r.w).ToEulerXYZ() * RADTODEG;
 	object->transform->scale = float3(s.x, s.y, s.z);
+
+	if (parentNode != nullptr)
+	{
+		parentNode->mTransformation.Decompose(pS, pR, pP);
+		float4x4 pT = float4x4::FromTRS(float3(pP.x, pP.y, pP.z), Quat(pR.x, pR.y, pR.z, pR.w), float3(pS.x, pS.y, pS.z));
+		object->transform->transform = pT.Mul(object->transform->transform);
+	}
 }
 
 std::string ModuleLoad::GetFileExtension(std::string fileName)
