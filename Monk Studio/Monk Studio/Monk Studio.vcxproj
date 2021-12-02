@@ -182,6 +182,7 @@
     <ClCompile Include="ModuleLoad.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
+    <ClCompile Include="ModuleViewPortFrameBuffer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="TextureImporter.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="ModuleLoad.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
+    <ClInclude Include="ModuleViewPortFrameBuffer.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="MS_Math.h" />
     <ClInclude Include="Primitive.h" />
