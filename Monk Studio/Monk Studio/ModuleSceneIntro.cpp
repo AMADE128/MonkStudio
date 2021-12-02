@@ -4,6 +4,7 @@
 #include "ModuleEditor.h"
 #include "Primitive.h"
 #include "C_Material.h"
+#include "C_Transform.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -31,6 +32,9 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	App->load->LoadFile("Assets/street/scene.DAE");
+
+	GameObject* street = GetGameObjectFromHierarchy("scene.DAE", sceneObjects);
+	street->transform->euler.x = -90;
 	//App->load->LoadFile("Assets/Textures/bakeHouse.png");
 
 	//this is to ensure the final color of the primitives isnt affected
@@ -60,6 +64,29 @@ GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* par
 		GameObject* gm = new GameObject(name, App->scene_intro->sceneObjects);
 		//gm->SetColor(gm);
 		return gm;
+	}
+}
+
+GameObject* ModuleSceneIntro::GetGameObjectFromHierarchy(const char* _name, GameObject* parent)
+{
+	if (parent->children.size() > 0)
+	{
+		for (unsigned int i = 0; i < parent->children.size(); i++)
+		{
+			if (parent->children[i]->name == _name)
+			{
+				return parent->children[i];
+			}
+			else if (parent->children[i]->children.size() > 0)
+			{
+				GetGameObjectFromHierarchy(_name, parent->children[i]);
+			}
+		}
+	}
+	else
+	{
+		LOG("Doesn't exist a game object with this name: %s", _name);
+		return nullptr;
 	}
 }
 

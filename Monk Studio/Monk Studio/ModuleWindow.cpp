@@ -1,6 +1,10 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "FileImporter.h"
+
+#include <string>
+#include <vector>
 
 #include "il.h"
 #include "ilu.h"
@@ -92,6 +96,19 @@ bool ModuleWindow::DrawUI()
 	if (App->editor->show_resources)
 	{
 		ImGui::Begin("Assets", &App->editor->show_resources);
+		ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_SpanFullWidth;
+
+		std::vector<std::string> fileNames;
+		std::vector<std::string> filePath;
+		FileImporter::GetDirFiles("Assets", fileNames, filePath);
+
+		if (ImGui::TreeNodeEx("Assets", base_flags))
+		{
+			RecursiveFileDir(fileNames, base_flags, filePath);
+			ImGui::TreePop();
+		}
+
+
 		if (ImGui::Button("Create Folder"))
 		{
 			App->editor->new_folder = true;
@@ -352,6 +369,25 @@ bool ModuleWindow::DrawUI()
 	}
 
 	return true;
+}
+
+void ModuleWindow::RecursiveFileDir(std::vector<std::string>& fileNames, const ImGuiTreeNodeFlags& base_flags, std::vector<std::string>& filePath)
+{
+	for (size_t i = 0; i < fileNames.size(); i++)
+	{
+		bool isDir = FileImporter::IsDirectory(filePath[i].c_str());
+		if (ImGui::TreeNodeEx(fileNames[i].c_str(), base_flags | (!isDir ? ImGuiTreeNodeFlags_Leaf : 0)))
+		{
+			if (isDir)
+			{
+				std::vector<std::string> _fileNames;
+				std::vector<std::string> _filePath;
+				FileImporter::GetDirFiles(filePath[i].c_str(), _fileNames, _filePath);
+				RecursiveFileDir(_fileNames, base_flags, _filePath);
+			}
+			ImGui::TreePop();
+		}
+	}
 }
 
 // Called before quitting

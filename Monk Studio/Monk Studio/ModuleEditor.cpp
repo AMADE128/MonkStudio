@@ -37,7 +37,7 @@ bool ModuleEditor::Init()
 	
 	io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/SF-Pro-Text-Regular.otf", 16);
 
-	SetImGuiStyle();
+	SetDefaultImGuiStyle();
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL2_Init();
@@ -576,7 +576,7 @@ void ModuleEditor::DeleteFromScene(GameObject* parent)
 	parent = nullptr;
 }
 
-void ModuleEditor::SetImGuiStyle()
+void ModuleEditor::SetDefaultImGuiStyle()
 {
 	//Imgui style created by https://github.com/MomoDeve
 	//Found at https://github.com/ocornut/imgui/issues/707

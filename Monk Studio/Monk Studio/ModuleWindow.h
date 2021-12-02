@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "External Libraries/SDL/include/SDL.h"
+#include "imgui.h"
 
 #include <vector>
 #include <string>
@@ -23,6 +24,8 @@ public:
 	bool Init();
 	bool CleanUp();
 	bool DrawUI();
+
+	void RecursiveFileDir(std::vector<std::string>& fileNames, const ImGuiTreeNodeFlags& base_flags, std::vector<std::string>& filePath);
 
 	void SetTitle(const char* title);
 	void SetFullscreen(bool set);

@@ -22,6 +22,8 @@ public:
 
 	GameObject* CreateGameObject(const char* name, GameObject* parent);
 
+	GameObject* GetGameObjectFromHierarchy(const char* _name, GameObject* parent);
+
 	void UpdateGameObjects(GameObject* parent);
 	void DisableColorProperties();
 
