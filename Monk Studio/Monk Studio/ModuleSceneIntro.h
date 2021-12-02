@@ -3,7 +3,6 @@
 #include "Globals.h"
 #include "ModuleLoad.h"
 #include "GameObject.h"
-#include "External Libraries/ImGuizmo/ImGuizmo.h"
 
 #include <vector>
 
@@ -25,9 +24,6 @@ public:
 
 	void UpdateGameObjects(GameObject* parent);
 	void DisableColorProperties();
-
-	ImGuizmo::OPERATION operation;
-	ImGuizmo::MODE mode;
 
 public:
 	GameObject* sceneObjects;
