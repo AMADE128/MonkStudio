@@ -7,6 +7,7 @@ namespace FileImporter
 	void Init();
 	void CreateLibraryFolders();
 	bool CreateFolder(const char* dirName);
+	void RemoveFolder(const char* dirName);
 
 	bool IsDirectory(const char* file);
 

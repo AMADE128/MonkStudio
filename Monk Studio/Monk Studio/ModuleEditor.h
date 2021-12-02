@@ -27,6 +27,8 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool DrawUI();
+	void RemoveFolderPopUp();
+	void CreateFolderPopUp();
 	bool CleanUp();
 
 	void UpdateInspector(GameObject* parent);

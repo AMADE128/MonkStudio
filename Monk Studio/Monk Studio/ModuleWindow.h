@@ -25,7 +25,7 @@ public:
 	bool CleanUp();
 	bool DrawUI();
 
-	void RecursiveFileDir(std::vector<std::string>& fileNames, const ImGuiTreeNodeFlags& base_flags, std::vector<std::string>& filePath);
+	void RecursiveFileDir(std::vector<std::string>& fileNames, std::vector<std::string>& filePath);
 
 	void SetTitle(const char* title);
 	void SetFullscreen(bool set);
@@ -41,6 +41,8 @@ public:
 	SDL_Window* window;
 
 	SDL_GLContext* gl_context = nullptr;
+
+	std::string selectedDirPath;
 
 	bool resizable = true;
 	int w, h;

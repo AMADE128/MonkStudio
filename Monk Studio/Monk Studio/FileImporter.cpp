@@ -41,6 +41,12 @@ bool FileImporter::CreateFolder(const char* dirName)
 	return false;
 }
 
+void FileImporter::RemoveFolder(const char* dirName)
+{
+	PHYSFS_delete(dirName);
+
+}
+
 bool FileImporter::IsDirectory(const char* file)
 {
 	return PHYSFS_isDirectory(file) != 0;

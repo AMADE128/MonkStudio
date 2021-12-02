@@ -167,6 +167,7 @@
     <ClCompile Include="External Libraries\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="External Libraries\imgui\imgui_tables.cpp" />
     <ClCompile Include="External Libraries\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="External Libraries\parson\parson.c" />
     <ClCompile Include="FileImporter.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -208,6 +209,8 @@
     <ClInclude Include="External Libraries\imgui\imstb_rectpack.h" />
     <ClInclude Include="External Libraries\imgui\imstb_textedit.h" />
     <ClInclude Include="External Libraries\imgui\imstb_truetype.h" />
+    <ClInclude Include="External Libraries\mmgr\mmgr.h" />
+    <ClInclude Include="External Libraries\mmgr\nommgr.h" />
     <ClInclude Include="External Libraries\parson\parson.h" />
     <ClInclude Include="FileImporter.h" />
     <ClInclude Include="GameObject.h" />
