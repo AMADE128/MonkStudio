@@ -81,15 +81,6 @@ update_status ModuleEditor::Update(float dt)
 		App->input->LogToConsole("ALT + 5");
 	}
 
-	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
-	static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-		mCurrentGizmoOperation = ImGuizmo::ROTATE;
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-		mCurrentGizmoOperation = ImGuizmo::SCALE;
-
 	return UPDATE_CONTINUE;
 }
 
@@ -101,6 +92,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 
 	DrawMenuBar();
 
