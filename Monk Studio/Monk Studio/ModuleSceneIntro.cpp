@@ -129,26 +129,6 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	p.axis = true;
 	p.Render();
 
-	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
-	static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
-
-	if (!ImGuizmo::IsUsing()) {
-		ImGuizmo::Enable(true);
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-			mCurrentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-			mCurrentGizmoOperation = ImGuizmo::OPERATION::ROTATE;
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-			mCurrentGizmoOperation = ImGuizmo::OPERATION::SCALE;
-		if (mCurrentGizmoOperation == ImGuizmo::OPERATION::SCALE && mode != ImGuizmo::MODE::LOCAL)
-			mode = ImGuizmo::MODE::LOCAL;
-	}
-	else ImGuizmo::Enable(false);
-
-	ImGuizmo::SetDrawlist;
-
-	//ImGuizmo::Manipulate(App->camera->GetViewMatrix(), App->camer, ImGuizmo::OPERATION operation, ImGuizmo::MODE mode, float* matrix, float* deltaMatrix = 0, float* snap = 0);
-
 	UpdateGameObjects(sceneObjects);
 
 	return UPDATE_CONTINUE;
