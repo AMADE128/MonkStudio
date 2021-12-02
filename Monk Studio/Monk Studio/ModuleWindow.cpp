@@ -102,25 +102,12 @@ bool ModuleWindow::DrawUI()
 		std::vector<std::string> filePath;
 		FileImporter::GetDirFiles("Assets", fileNames, filePath);
 
+
 		if (ImGui::TreeNodeEx("Assets", base_flags))
 		{
-			RecursiveFileDir(fileNames, base_flags, filePath);
+			RecursiveFileDir(fileNames, filePath);
+
 			ImGui::TreePop();
-		}
-
-		if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Right))
-		{
-			App->editor->remove_folder = true;
-		}
-
-		if (ImGui::Button("Create Folder"))
-		{
-			App->editor->new_folder = true;
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Remove Folder"))
-		{
-			App->editor->remove_folder = true;
 		}
 		
 
@@ -382,20 +369,48 @@ bool ModuleWindow::DrawUI()
 	return true;
 }
 
-void ModuleWindow::RecursiveFileDir(std::vector<std::string>& fileNames, const ImGuiTreeNodeFlags& base_flags, std::vector<std::string>& filePath)
+void ModuleWindow::RecursiveFileDir(std::vector<std::string>& fileNames, std::vector<std::string>& filePath)
 {
 	for (size_t i = 0; i < fileNames.size(); i++)
 	{
 		bool isDir = FileImporter::IsDirectory(filePath[i].c_str());
-		if (ImGui::TreeNodeEx(fileNames[i].c_str(), base_flags | (!isDir ? ImGuiTreeNodeFlags_Leaf : 0)))
+		ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen | (!isDir ? ImGuiTreeNodeFlags_Leaf : 0);
+		
+		if (filePath[i] == selectedDirPath)
 		{
+			parentFlags |= ImGuiTreeNodeFlags_Selected;
+		}
+		if (ImGui::TreeNodeEx(fileNames[i].c_str(), parentFlags))
+		{
+			if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Left))
+			{
+				selectedDirPath = filePath[i];
+			}
+			if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Right))
+			{
+				ImGui::OpenPopup("DirOptions");
+			}
+			if (ImGui::BeginPopup("DirOptions"))
+			{
+				if (ImGui::MenuItem("Create Folder"))
+				{
+					App->editor->new_folder = true;
+				}
+				if (ImGui::MenuItem("Delete"))
+				{
+					App->editor->remove_folder = true;
+				}
+				ImGui::EndPopup();
+			}
+
 			if (isDir)
 			{
 				std::vector<std::string> _fileNames;
 				std::vector<std::string> _filePath;
 				FileImporter::GetDirFiles(filePath[i].c_str(), _fileNames, _filePath);
-				RecursiveFileDir(_fileNames, base_flags, _filePath);
+				RecursiveFileDir(_fileNames, _filePath);
 			}
+
 			ImGui::TreePop();
 		}
 	}

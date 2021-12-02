@@ -174,58 +174,60 @@ bool ModuleEditor::DrawUI()
 		ImGui::End();
 	}
 
-	if (new_folder)
-	{
-		ImGui::OpenPopup("Create Folder");
-		if (ImGui::BeginPopupModal("Create Folder"))
-		{
-			ImVec2 winpos = { (float)App->window->height / 2, (float)App->window->width / 2};
-			ImGui::SetNextWindowPos(winpos);
-			ImGui::SetNextWindowSize({ 300, 200 });
-			if (ImGui::InputText("Folder Name", App->editor->fName, 32, 0));
-			if (ImGui::Button("Create"))
-			{
-				std::string name = "Assets/";
-				name.append(fName);
-				const char* c = const_cast<char*>(name.c_str());
-				FileImporter::CreateFolder(c);
-				new_folder = false;
-			}
-			ImGui::SameLine();
-			if (ImGui::Button("Cancel"))
-			{
-				new_folder = false;
-			}
-			ImGui::EndPopup();
-		}
-	}
-
+	if (new_folder) CreateFolderPopUp();
 	
-	if (remove_folder)
-	{
-		ImGui::OpenPopup("Remove Folder");
-		if (ImGui::BeginPopupModal("Remove Folder"))
-		{
-			ImVec2 winpos = { (float)App->window->height / 2, (float)App->window->width / 2 };
-			ImGui::SetNextWindowPos(winpos);
-			ImGui::SetNextWindowSize({ 300, 200 });
-			ImGui::Text("Remove File?");
-			if (ImGui::Button("Remove"))
-			{
-				remove_folder = false;
-			}
-			ImGui::SameLine();
-			if (ImGui::Button("Cancel"))
-			{
-				remove_folder = false;
-			}
-			ImGui::EndPopup();
-		}
-	}
-	
-
+	if (remove_folder) RemoveFolderPopUp();
 
 	return true;
+}
+
+void ModuleEditor::RemoveFolderPopUp()
+{
+	ImGui::OpenPopup("Remove Folder");
+	if (ImGui::BeginPopupModal("Remove Folder"))
+	{
+		ImVec2 winpos = { (float)App->window->height / 2, (float)App->window->width / 2 };
+		ImGui::SetNextWindowPos(winpos);
+		ImGui::SetNextWindowSize({ 300, 200 });
+		ImGui::Text("Remove File?");
+		if (ImGui::Button("Remove"))
+		{
+			FileImporter::RemoveFolder(App->window->selectedDirPath.c_str());
+			remove_folder = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel"))
+		{
+			remove_folder = false;
+		}
+		ImGui::EndPopup();
+	}
+}
+
+void ModuleEditor::CreateFolderPopUp()
+{
+	ImGui::OpenPopup("Create Folder");
+	if (ImGui::BeginPopupModal("Create Folder"))
+	{
+		ImVec2 winpos = { (float)App->window->height / 2, (float)App->window->width / 2 };
+		ImGui::SetNextWindowPos(winpos);
+		ImGui::SetNextWindowSize({ 300, 200 });
+		if (ImGui::InputText("Folder Name", App->editor->fName, 32, 0));
+		if (ImGui::Button("Create"))
+		{
+			std::string name = "Assets/";
+			name.append(fName);
+			const char* c = const_cast<char*>(name.c_str());
+			FileImporter::CreateFolder(c);
+			new_folder = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel"))
+		{
+			new_folder = false;
+		}
+		ImGui::EndPopup();
+	}
 }
 
 void ModuleEditor::UpdateInspector(GameObject* parent)

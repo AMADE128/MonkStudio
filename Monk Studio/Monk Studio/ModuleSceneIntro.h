@@ -6,6 +6,7 @@
 
 #include <vector>
 
+class PrimPlane;
 
 class ModuleSceneIntro : public Module
 {
@@ -28,5 +29,6 @@ public:
 	void DisableColorProperties();
 
 public:
-	GameObject* sceneObjects;
+	GameObject* sceneObjects = nullptr;
+	PrimPlane* p = nullptr;
 };

@@ -43,6 +43,9 @@
     <Filter Include="Source Files\Containers\imguizmo">
       <UniqueIdentifier>{e47faa12-bf42-4121-95fc-fe727e40bc59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Containers\mmgr">
+      <UniqueIdentifier>{4f5c56de-d69d-4974-97c7-0dd7604c7bc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="ModuleViewPortFrameBuffer.cpp">
       <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="External Libraries\mmgr\mmgr.cpp">
+      <Filter>Source Files\Containers\mmgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="ModuleViewPortFrameBuffer.h">
       <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\mmgr\mmgr.h">
+      <Filter>Source Files\Containers\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="External Libraries\mmgr\nommgr.h">
+      <Filter>Source Files\Containers\mmgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
