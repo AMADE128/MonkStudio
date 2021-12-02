@@ -92,6 +92,7 @@ public:
 	bool show_view = false;
 	bool show_help = false;
 	bool new_folder = false;
+	bool remove_folder = false;
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fulldeskscreen = false;

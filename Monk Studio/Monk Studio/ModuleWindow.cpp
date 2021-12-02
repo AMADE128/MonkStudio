@@ -108,11 +108,22 @@ bool ModuleWindow::DrawUI()
 			ImGui::TreePop();
 		}
 
+		if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_::ImGuiMouseButton_Right))
+		{
+			App->editor->remove_folder = true;
+		}
 
 		if (ImGui::Button("Create Folder"))
 		{
 			App->editor->new_folder = true;
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("Remove Folder"))
+		{
+			App->editor->remove_folder = true;
+		}
+		
+
 		ImGui::End();
 	}
 

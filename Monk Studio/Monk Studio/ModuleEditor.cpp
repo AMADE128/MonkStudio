@@ -176,18 +176,54 @@ bool ModuleEditor::DrawUI()
 
 	if (new_folder)
 	{
-		ImGui::Begin("New Folder", &new_folder);
-		if (ImGui::InputText("Folder Name", App->editor->fName, 32, 0));
-		if (ImGui::Button("Create"))
+		ImGui::OpenPopup("Create Folder");
+		if (ImGui::BeginPopupModal("Create Folder"))
 		{
-			std::string name = "Assets/";
-			name.append(fName);
-			const char* c = const_cast<char*>(name.c_str());
-			FileImporter::CreateFolder(c);
-			new_folder = false;
+			ImVec2 winpos = { (float)App->window->height / 2, (float)App->window->width / 2};
+			ImGui::SetNextWindowPos(winpos);
+			ImGui::SetNextWindowSize({ 300, 200 });
+			if (ImGui::InputText("Folder Name", App->editor->fName, 32, 0));
+			if (ImGui::Button("Create"))
+			{
+				std::string name = "Assets/";
+				name.append(fName);
+				const char* c = const_cast<char*>(name.c_str());
+				FileImporter::CreateFolder(c);
+				new_folder = false;
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Cancel"))
+			{
+				new_folder = false;
+			}
+			ImGui::EndPopup();
 		}
-		ImGui::End();
 	}
+
+	
+	if (remove_folder)
+	{
+		ImGui::OpenPopup("Remove Folder");
+		if (ImGui::BeginPopupModal("Remove Folder"))
+		{
+			ImVec2 winpos = { (float)App->window->height / 2, (float)App->window->width / 2 };
+			ImGui::SetNextWindowPos(winpos);
+			ImGui::SetNextWindowSize({ 300, 200 });
+			ImGui::Text("Remove File?");
+			if (ImGui::Button("Remove"))
+			{
+				remove_folder = false;
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Cancel"))
+			{
+				remove_folder = false;
+			}
+			ImGui::EndPopup();
+		}
+	}
+	
+
 
 	return true;
 }
