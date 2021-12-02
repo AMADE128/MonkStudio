@@ -159,11 +159,11 @@
     <ClCompile Include="External Libraries\ImGuizmo\ImSequencer.cpp">
       <Filter>Source Files\Containers\imguizmo</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleViewPortFrameBuffer.cpp">
-      <Filter>Source Files\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="External Libraries\mmgr\mmgr.cpp">
       <Filter>Source Files\Containers\mmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleViewPortFrameBuffer.cpp">
+      <Filter>Source Files\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,14 +287,14 @@
     <ClInclude Include="External Libraries\ImGuizmo\ImZoomSlider.h">
       <Filter>Source Files\Containers\imguizmo</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleViewPortFrameBuffer.h">
-      <Filter>Source Files\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="External Libraries\mmgr\mmgr.h">
       <Filter>Source Files\Containers\mmgr</Filter>
     </ClInclude>
     <ClInclude Include="External Libraries\mmgr\nommgr.h">
       <Filter>Source Files\Containers\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleViewPortFrameBuffer.h">
+      <Filter>Source Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

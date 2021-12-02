@@ -10,6 +10,7 @@
 #include "Globals.h"
 #include "GameObject.h"
 #include "FileImporter.h"
+#include "ModuleViewPortFrameBuffer.h"
 
 #include <stdio.h>
 #include <Psapi.h>
@@ -27,12 +28,13 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool DrawUI();
-	void RemoveFolderPopUp();
-	void CreateFolderPopUp();
 	bool CleanUp();
 
 	void UpdateInspector(GameObject* parent);
 	void UpdateProcessInfo(float dt);
+
+	void RemoveFolderPopUp();
+	void CreateFolderPopUp();
 
 	void MenuHelp();
 	void MenuView();
@@ -93,6 +95,7 @@ public:
 	bool show_gameObject = false;
 	bool show_view = false;
 	bool show_help = false;
+	bool show_scene = true;
 	bool new_folder = false;
 	bool remove_folder = false;
 	bool fullscreen = false;
@@ -100,6 +103,10 @@ public:
 	bool fulldeskscreen = false;
 	bool material_active = true;
 	GameObject* selectedNode;
+
+	ImVec2 lastViewportSize;
+
+	ModuleViewportFrameBuffer frameBufferScene;
 
 	//render propieties
 	bool depth_test = true;
