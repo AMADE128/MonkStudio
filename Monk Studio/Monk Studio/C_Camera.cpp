@@ -19,7 +19,7 @@ ComponentCamera::~ComponentCamera()
 {
 }
 
-void ComponentCamera::PreUpdate(float dt)
+void ComponentCamera::DrawBuffer(float dt)
 {
 	appExternal->viewportBufferGame->PreUpdate(dt);
 	glLoadIdentity();

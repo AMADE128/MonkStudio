@@ -9,7 +9,7 @@ public:
 	ComponentCamera(GameObject* _gm);
 	~ComponentCamera();
 
-	void PreUpdate(float dt);
+	void DrawBuffer(float dt);
 	void Update() override;
 
 	void CalculateViewMatrix();

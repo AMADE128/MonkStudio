@@ -168,7 +168,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	if (camera != nullptr)
 	{
 		
-		static_cast<ComponentCamera*>(camera->GetComponent(Component::Type::CAMERA))->PreUpdate(dt);
+		static_cast<ComponentCamera*>(camera->GetComponent(Component::Type::CAMERA))->DrawBuffer(dt);
 		UpdateGameObjects(sceneObjects);
 		App->viewportBufferGame->PostUpdate(dt);
 	}
