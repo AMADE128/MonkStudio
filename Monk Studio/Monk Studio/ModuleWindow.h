@@ -34,7 +34,7 @@ public:
 	void SetFullscreenDesktop(bool set);
 	int GetRefreshRate(SDL_Window* Window);
 
-	int width = 0; int height = 0;
+	int width = 1280; int height = 720;
 
 public:
 	//The window we'll be rendering to
