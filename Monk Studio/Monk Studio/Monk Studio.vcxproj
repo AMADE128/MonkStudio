@@ -233,6 +233,7 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="MS_Math.h" />
     <ClInclude Include="Primitive.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="TextureImporter.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Timer.h" />

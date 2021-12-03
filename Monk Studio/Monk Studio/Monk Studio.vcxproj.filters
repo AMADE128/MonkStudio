@@ -302,5 +302,8 @@
     <ClInclude Include="ModuleResources.h">
       <Filter>Source Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
