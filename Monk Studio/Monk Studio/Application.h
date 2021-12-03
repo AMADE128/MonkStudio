@@ -13,6 +13,7 @@
 #include "ModuleLoad.h"
 #include "ModuleResources.h"
 #include "ModuleViewportFrameBuffer.h"
+#include "External Libraries/MathGeoLib/include/Algorithm/Random/LCG.h"
 
 class Application
 {
@@ -33,6 +34,7 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
+	LCG randomizer;
 
 
 public:
@@ -46,6 +48,8 @@ public:
 
 	void Exit();
 	bool GetExit();
+
+	int GetRandomInt();
 
 	int maxFPS = 60;
 	vector<Module*> list_modules;

@@ -308,5 +308,8 @@
     <ClInclude Include="C_Camera.h">
       <Filter>Source Files\Helpers\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
