@@ -165,6 +165,9 @@
     <ClCompile Include="External Libraries\mmgr\mmgr.cpp">
       <Filter>Source Files\Containers\mmgr</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -295,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="External Libraries\mmgr\nommgr.h">
       <Filter>Source Files\Containers\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Source Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

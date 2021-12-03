@@ -11,6 +11,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 #include "ModuleLoad.h"
+#include "ModuleResources.h"
 
 class Application
 {
@@ -23,6 +24,7 @@ public:
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
 	ModuleLoad* load;
+	ModuleResources* resources;
 private:
 
 	Timer	ms_timer;
