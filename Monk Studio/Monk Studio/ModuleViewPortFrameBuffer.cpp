@@ -8,7 +8,7 @@
 #include "glew.h"
 #include <gl/GL.h>
 
-ModuleViewportFrameBuffer::ModuleViewportFrameBuffer() {
+ModuleViewportFrameBuffer::ModuleViewportFrameBuffer(Application* app, bool start_enabled) : Module(app, start_enabled) {
 
 	show_viewport_window = true;
 }
@@ -29,7 +29,7 @@ bool ModuleViewportFrameBuffer::Start() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, appExternal->window->width, appExternal->window->height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, App->window->width, App->window->height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 

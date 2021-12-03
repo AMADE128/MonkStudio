@@ -5,6 +5,7 @@
 #include "Primitive.h"
 #include "C_Material.h"
 #include "C_Transform.h"
+#include "ModuleCamera3D.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -27,9 +28,6 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
 
 	App->load->LoadFile("Assets/street/scene.DAE");
 
@@ -154,17 +152,19 @@ bool ModuleSceneIntro::DrawUI()
 // Update: draw background
 update_status ModuleSceneIntro::Update(float dt)
 {
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleSceneIntro::PostUpdate(float dt)
-{
 	if (App->editor->wireframe_mode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	p->Render();
 
 	UpdateGameObjects(sceneObjects);
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleSceneIntro::PostUpdate(float dt)
+{
+	
 
 	return UPDATE_CONTINUE;
 }
