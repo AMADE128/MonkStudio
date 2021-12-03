@@ -208,8 +208,9 @@ void ModuleCamera3D::RecalculateProjection()
 
 bool ModuleCamera3D::DrawUI()
 {
-	if (ImGui::CollapsingHeader("Editor Camera"))
+	if (App->editor->show_camera_settings)
 	{
+		ImGui::Begin("Editor Camera");
 		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
 		{
 			projectionIsDirty = true;
@@ -222,6 +223,7 @@ bool ModuleCamera3D::DrawUI()
 		{
 			projectionIsDirty = true;
 		}
+		ImGui::End();
 	}
 	return true;
 }

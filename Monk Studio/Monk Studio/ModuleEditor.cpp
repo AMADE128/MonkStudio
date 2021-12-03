@@ -80,6 +80,11 @@ update_status ModuleEditor::Update(float dt)
 		show_resources = !show_resources;
 		App->input->LogToConsole("ALT + 5");
 	}
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	{
+		show_camera_settings = !show_camera_settings;
+		App->input->LogToConsole("ALT + 6");
+	}
 
 	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
 	static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
@@ -565,6 +570,10 @@ void ModuleEditor::MenuView()
 	if (ImGui::MenuItem("Assets", "Alt + 5", show_resources))
 	{
 		show_resources = !show_resources;
+	}
+	if (ImGui::MenuItem("Camera Settings", "Alt + 6", show_camera_settings))
+	{
+		show_camera_settings = !show_camera_settings;
 	}
 
 }
