@@ -136,16 +136,16 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->viewMatrix.Transposed().ptr());
+	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(App->camera->position.x, App->camera->position.y, App->camera->position.z);
+	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
-	for (uint i = 0; i < MAX_LIGHTS; ++i)
+	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
 	return UPDATE_CONTINUE;
