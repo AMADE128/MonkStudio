@@ -182,7 +182,6 @@
     <ClCompile Include="ModuleEditor.cpp" />
     <ClCompile Include="ModuleLoad.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
-    <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleViewPortFrameBuffer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
@@ -227,7 +226,6 @@
     <ClInclude Include="ModuleEditor.h" />
     <ClInclude Include="ModuleLoad.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
-    <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleViewPortFrameBuffer.h" />
     <ClInclude Include="ModuleWindow.h" />

@@ -165,9 +165,6 @@
     <ClCompile Include="ModuleViewPortFrameBuffer.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleResources.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -297,9 +294,6 @@
       <Filter>Source Files\Containers\mmgr</Filter>
     </ClInclude>
     <ClInclude Include="ModuleViewPortFrameBuffer.h">
-      <Filter>Source Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleResources.h">
       <Filter>Source Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
