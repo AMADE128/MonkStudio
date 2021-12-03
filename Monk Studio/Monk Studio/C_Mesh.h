@@ -34,7 +34,7 @@ public:
 
 private:
 
-	Mesh* mesh;
+	Mesh* mesh = nullptr;
 	bool dispNormal = false;
 	bool dispAABB = false;
 	bool dispOBB = false;

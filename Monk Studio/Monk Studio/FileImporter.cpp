@@ -43,6 +43,21 @@ bool FileImporter::CreateFolder(const char* dirName)
 
 void FileImporter::RemoveFolder(const char* dirName)
 {
+	if (IsDirectory(dirName))
+	{
+		char** files = PHYSFS_enumerateFiles(dirName);
+		for (char** i = files; *i != nullptr; i++)
+		{
+			std::string fP = std::string(dirName) + "/" + std::string(*i);
+			if (IsDirectory(fP.c_str()))
+			{
+				RemoveFolder(fP.c_str());
+			}
+			PHYSFS_delete(fP.c_str());
+		}
+		delete files;
+		files = nullptr;
+	}
 	PHYSFS_delete(dirName);
 
 }

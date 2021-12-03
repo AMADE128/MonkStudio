@@ -1,3 +1,5 @@
+
+
 #include "Application.h"
 #include "ModuleEditor.h"
 #include "C_Transform.h"
@@ -49,7 +51,6 @@ bool ModuleEditor::Init()
 
 update_status ModuleEditor::PreUpdate(float dt)
 {
-
 	return UPDATE_CONTINUE;
 }
 
@@ -598,18 +599,6 @@ void ModuleEditor::LogToConsole(const char* txt)
 
 void ModuleEditor::DeleteFromScene(GameObject* parent)
 {
-	if (parent->parent != nullptr)
-	{
-		for (unsigned int i = 0; i < parent->parent->children.size(); i++)
-		{
-			if (parent->parent->children[i] == parent)
-			{
-				parent->parent->children.erase(parent->parent->children.begin() + i);
-				break;
-			}
-		}
-	}
-	parent->~GameObject();
 	delete parent;
 	parent = nullptr;
 }

@@ -16,16 +16,21 @@ ComponentMesh::ComponentMesh(GameObject* _gm) : Component(_gm), mesh(new Mesh())
 
 ComponentMesh::~ComponentMesh()
 {
-	mesh->Unload();
 	delete mesh;
 	mesh = nullptr;
+
+	for (size_t i = 0; i < normLines.size(); i++)
+	{
+		delete normLines[i];
+		normLines[i] = nullptr;
+	}
 }
 
 void ComponentMesh::Update()
 {
 
 	ComponentMaterial* cm = new ComponentMaterial(nullptr);
-	cm = dynamic_cast<ComponentMaterial*>(owner->GetComponent(Component::Type::MATERIAL));
+	cm = static_cast<ComponentMaterial*>(owner->GetComponent(Component::Type::MATERIAL));
 
 	glPushMatrix();
 	if (owner->transform != nullptr && owner->transform->isEnable()) glMultMatrixf(owner->transform->transform.Transposed().ptr());
@@ -37,14 +42,6 @@ void ComponentMesh::Update()
 	}
 	else mesh->Render(NULL);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
 	if (dispNormal) RenderNormals();
 
 	glPopMatrix();
@@ -54,6 +51,17 @@ void ComponentMesh::Update()
 	if (dispAABB) DrawAABB();
 	if (dispOBB) DrawOBB();
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	cm = NULL;
+	delete cm;
+	cm = nullptr;
 }
 
 void ComponentMesh::DrawOBB()
@@ -159,12 +167,24 @@ void ComponentMesh::Unload()
 	mesh->Unload();
 	delete mesh;
 	mesh = nullptr;
+
+	for (size_t i = 0; i < normLines.size(); i++)
+	{
+		delete normLines[i];
+		normLines[i] = nullptr;
+	}
 }
 
 void ComponentMesh::UpdateNormals()
 {
 	//tweak to your liking
 	float normal_length = 0.1f;
+
+	for (size_t i = 0; i < normLines.size(); i++)
+	{
+		delete normLines[i];
+		normLines[i] = nullptr;
+	}
 
 	//this assumes your mesh has 2 arrays of the same length
 	//containing structs of vertices and normals
@@ -183,11 +203,15 @@ void ComponentMesh::UpdateNormals()
 		float v2x = v1x + nx * normal_length;
 		float v2y = v1y + ny * normal_length;
 		float v2z = v1z + nz * normal_length;
-
+		
 		PrimLine* line = new PrimLine();
 		line->origin = vec3(v1x, v1y, v1z);
 		line->destination = vec3(v2x, v2y, v2z);
 		normLines.push_back(line);
+
+		line = NULL;
+		delete line;
+		line = nullptr;
 	}
 }
 
@@ -195,6 +219,9 @@ void ComponentMesh::RenderNormals()
 {
 	for (unsigned int i = 0; i < normLines.size(); i++)
 	{
-		normLines.at(i)->Render();
+		if (normLines.at(i) != nullptr)
+		{
+			normLines.at(i)->Render();
+		}
 	}
 }

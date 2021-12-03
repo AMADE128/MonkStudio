@@ -113,20 +113,34 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 				{
 					if (App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL) != nullptr)
 					{
-						ComponentMaterial* cMat = new ComponentMaterial(nullptr);
-						cMat = dynamic_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
+						ComponentMaterial* cMat = static_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
 						Texture* newTex = new Texture();
 						newTex->Load(fileName.c_str());
 						cMat->SetTexture(newTex);
+
+						cMat = NULL;
+						delete cMat;
+						cMat = nullptr;
+
+						newTex = NULL;
+						delete newTex;
+						newTex = nullptr;
 					}
 					else
 					{
 						App->editor->selectedNode->children[i]->CreateComponent(Component::Type::MATERIAL);
-						ComponentMaterial* cMat = new ComponentMaterial(nullptr);
-						cMat = dynamic_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
+						ComponentMaterial* cMat = static_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
 						Texture* newTex = new Texture();
 						newTex->Load(fileName.c_str());
 						cMat->SetTexture(newTex);
+
+						cMat = NULL;
+						delete cMat;
+						cMat = nullptr;
+
+						newTex = NULL;
+						delete newTex;
+						newTex = nullptr;
 					}
 				}
 			}
@@ -155,8 +169,12 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 				childObject = App->scene_intro->CreateGameObject(childNode->mName.C_Str(), parentObject);
 				childObject->CreateComponent(Component::Type::MESH);
 				ComponentMesh* cm = new ComponentMesh(nullptr);
-				cm = dynamic_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
+				cm = static_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH));
 				cm->SetMesh(meshesList.at(k));
+
+				cm = NULL;
+				delete cm;
+				cm = nullptr;
 			}
 
 			App->editor->selectedNode = parentObject;

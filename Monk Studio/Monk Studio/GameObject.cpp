@@ -15,29 +15,12 @@ GameObject::GameObject(const char* _name, GameObject* _parent) : name(_name), ac
 		parent->children.push_back(this);
 	}
 
-	transform = dynamic_cast<ComponentTransform*>(CreateComponent(Component::Type::TRANSFORM));
+	transform = static_cast<ComponentTransform*>(CreateComponent(Component::Type::TRANSFORM));
 }
 
 GameObject::~GameObject()
 {
-
-	for (unsigned int i = 0; i < components.size(); i++)
-	{
-		components[i]->~Component();
-		delete components[i];
-		components[i] = nullptr;
-	}
-	components.clear();
-	std::vector<Component*>().swap(components);
-
-	for (unsigned int i = 0; i < children.size(); i++)
-	{
-		children[i]->~GameObject();
-		delete children[i];
-		children[i] = nullptr;
-	}
-	children.clear();
-	std::vector<GameObject*>().swap(children);
+	Unload();
 }
 
 void GameObject::Update()
@@ -52,6 +35,34 @@ void GameObject::Update()
 			}
 		}
 	}
+}
+
+void GameObject::Unload()
+{
+	if (parent != nullptr)
+	{
+		for (size_t i = 0; i < parent->children.size(); i++)
+		{
+			if (parent->children[i] == this)
+			{
+				parent->children.erase(parent->children.begin() + i);
+				break;
+			}
+		}
+	}
+
+	for (unsigned int i = 0; i < components.size(); i++)
+	{
+		delete components[i];
+		components[i] = nullptr;
+	}
+	components.clear();
+
+	for (unsigned int i = 0; i < children.size(); i++)
+	{
+		children[i]->Unload();
+	}
+	children.clear();
 }
 
 /*

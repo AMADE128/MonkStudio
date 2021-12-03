@@ -59,6 +59,7 @@ public:
 	virtual ~GameObject();
 
 	void Update();
+	void Unload();
 	Component* CreateComponent(Component::Type _type);
 	void SetColor(GameObject gm);
 	Component* GetComponent(Component::Type _type);

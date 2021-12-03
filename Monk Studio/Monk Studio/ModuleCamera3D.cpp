@@ -137,9 +137,13 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (App->editor->selectedNode)
 	{
-		ComponentTransform* meshPosition = dynamic_cast<ComponentTransform*>(App->editor->selectedNode->GetComponent(Component::Type::TRANSFORM));
+		ComponentTransform* meshPosition = static_cast<ComponentTransform*>(App->editor->selectedNode->GetComponent(Component::Type::TRANSFORM));
 		float3 cP = meshPosition->GetCombinedPosition(App->editor->selectedNode);
 		Reference = vec3(cP.x, cP.y, cP.z);
+
+		meshPosition = NULL;
+		delete meshPosition;
+		meshPosition = nullptr;
 	}
 	else Reference += newPos;
 
@@ -199,7 +203,7 @@ void ModuleCamera3D::FocusObject()
 	OBBmaxVector = (0, 0, 0);
 	OBBminVector = (0, 0, 0);
 
-	ComponentMesh* meshOBB = dynamic_cast<ComponentMesh*>(App->editor->selectedNode->GetComponent(Component::Type::MESH));
+	ComponentMesh* meshOBB = static_cast<ComponentMesh*>(App->editor->selectedNode->GetComponent(Component::Type::MESH));
 	for (int i = 0; i < meshOBB->GetMesh()->mPosition.size(); i++)
 	{
 		//OBBmaxVector

@@ -39,7 +39,7 @@ bool ModuleSceneIntro::Start()
 
 	GameObject* street = GetGameObjectFromHierarchy("scene.DAE", sceneObjects);
 	street->transform->euler.x = -90;
-	//App->load->LoadFile("Assets/Textures/bakeHouse.png");
+	App->load->LoadFile("Assets/Textures/bakeHouse.png");
 
 	//this is to ensure the final color of the primitives isnt affected
 	//DisableColorProperties();
