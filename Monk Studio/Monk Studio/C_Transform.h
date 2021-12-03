@@ -27,6 +27,9 @@ public:
 	void Scale(float x, float y, float z);
 	void RotateObject(float3 _rotation);
 
+	float3 Front();
+	float3 Upwards();
+
 	float4x4 GetTransform();
 
 	float3 GetParentsTransform(float3 combinedPosition, GameObject* parent);

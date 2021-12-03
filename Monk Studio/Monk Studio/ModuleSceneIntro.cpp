@@ -5,6 +5,7 @@
 #include "Primitive.h"
 #include "C_Material.h"
 #include "C_Transform.h"
+#include "C_Camera.h"
 #include "ModuleCamera3D.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -34,6 +35,9 @@ bool ModuleSceneIntro::Start()
 	p = new PrimPlane(0 , 1, 0, 0);
 
 	p->axis = true;
+
+	camera = CreateGameObject("camera", nullptr);
+	camera->CreateComponent(Component::Type::CAMERA);
 
 	GameObject* street = GetGameObjectFromHierarchy("scene.DAE", sceneObjects);
 	street->transform->euler.x = -90;
@@ -158,6 +162,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	p->Render();
 
 	UpdateGameObjects(sceneObjects);
+
+	App->viewportBufferScene->PostUpdate(dt);
+
+	if (camera != nullptr)
+	{
+		
+		static_cast<ComponentCamera*>(camera->GetComponent(Component::Type::CAMERA))->PreUpdate(dt);
+		UpdateGameObjects(sceneObjects);
+		App->viewportBufferGame->PostUpdate(dt);
+	}
 
 	return UPDATE_CONTINUE;
 }

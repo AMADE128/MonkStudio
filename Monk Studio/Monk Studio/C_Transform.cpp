@@ -150,3 +150,13 @@ void ComponentTransform::RotateObject(float3 _rotation)
 {
 	rotation = Quat::FromEulerXYZ(_rotation.x * DEGTORAD, _rotation.y * DEGTORAD, _rotation.z * DEGTORAD);
 }
+
+float3 ComponentTransform::Front()
+{
+	return float3(transform.RotatePart().Col(2).Normalized());
+}
+
+float3 ComponentTransform::Upwards()
+{
+	return float3(transform.RotatePart().Col(1).Normalized());
+}

@@ -5,6 +5,7 @@
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
+#include "C_Camera.h"
 
 #include <assert.h>
 
@@ -94,6 +95,10 @@ Component* GameObject::CreateComponent(Component::Type _type)
 	case Component::Type::MATERIAL:
 		ret = new ComponentMaterial(this);
 		LOG("Added Material component in %s", this->name.c_str());
+		break;
+	case Component::Type::CAMERA:
+		ret = new ComponentCamera(this);
+		LOG("Added Camera component in %s", this->name.c_str());
 		break;
 	}
 

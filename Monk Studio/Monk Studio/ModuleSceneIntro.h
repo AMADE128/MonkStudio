@@ -30,5 +30,6 @@ public:
 
 public:
 	GameObject* sceneObjects = nullptr;
+	GameObject* camera = nullptr;
 	PrimPlane* p = nullptr;
 };

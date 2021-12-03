@@ -95,6 +95,7 @@ public:
 	bool show_camera_settings = true;
 	bool show_help = false;
 	bool show_scene = true;
+	bool show_game = true;
 	bool new_folder = false;
 	bool remove_folder = false;
 	bool fullscreen = false;

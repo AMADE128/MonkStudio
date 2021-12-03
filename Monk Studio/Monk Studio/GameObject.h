@@ -41,6 +41,7 @@ public:
 		TRANSFORM,
 		MESH,
 		MATERIAL,
+		CAMERA,
 	};
 
 	Type type;

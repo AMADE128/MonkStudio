@@ -26,7 +26,9 @@ public:
 	ModuleEditor* editor;
 	ModuleLoad* load;
 	ModuleResources* resources;
-	ModuleViewportFrameBuffer* viewportBuffer;
+	ModuleViewportFrameBuffer* viewportBufferScene;
+	ModuleViewportFrameBuffer* viewportBufferGame;
+
 private:
 
 	Timer	ms_timer;

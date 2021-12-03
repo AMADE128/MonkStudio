@@ -15,7 +15,8 @@ Application::Application()
 	editor = new ModuleEditor(this);
 	load = new ModuleLoad(this);
 	resources = new ModuleResources(this);
-	viewportBuffer = new ModuleViewportFrameBuffer(this);
+	viewportBufferScene = new ModuleViewportFrameBuffer(this);
+	viewportBufferGame = new ModuleViewportFrameBuffer(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -23,7 +24,8 @@ Application::Application()
 
 	// Main Modules
 	AddModule(window);
-	AddModule(viewportBuffer);
+	AddModule(viewportBufferGame);
+	AddModule(viewportBufferScene);
 	AddModule(camera);
 	AddModule(input);
 	AddModule(audio);

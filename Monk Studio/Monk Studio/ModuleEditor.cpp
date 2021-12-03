@@ -194,7 +194,22 @@ bool ModuleEditor::DrawUI()
 			App->camera->RecalculateProjection();
 		}
 		lastViewportSize = viewportSize;
-		ImGui::Image((ImTextureID)App->viewportBuffer->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)App->viewportBufferScene->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::End();
+	}
+
+	if (show_game)
+	{
+		ImGui::Begin("Game", &show_game, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
+		if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
+		{
+			App->camera->aspectRatio = viewportSize.x / viewportSize.y;
+			App->camera->RecalculateProjection();
+		}
+		lastViewportSize = viewportSize;
+		ImGui::Image((ImTextureID)App->viewportBufferGame->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
 	}
 
