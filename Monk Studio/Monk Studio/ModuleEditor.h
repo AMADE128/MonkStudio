@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Module.h"
 #include <vector>
 #include <iostream>
@@ -93,6 +93,7 @@ public:
 	bool show_gameObject = false;
 	bool show_view = false;
 	bool show_help = false;
+	bool show_scene = true;
 	bool new_folder = false;
 	bool remove_folder = false;
 	bool fullscreen = false;
@@ -100,6 +101,8 @@ public:
 	bool fulldeskscreen = false;
 	bool material_active = true;
 	GameObject* selectedNode;
+
+	ImVec2 lastViewportSize;
 
 	//render propieties
 	bool depth_test = true;

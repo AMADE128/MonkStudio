@@ -1,9 +1,8 @@
-
-
 #include "Application.h"
 #include "ModuleEditor.h"
 #include "C_Transform.h"
 #include "External Libraries/ImGuizmo/ImGuizmo.h"
+#include "External Libraries/imgui/imgui_internal.h"
 
 //Constructor
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -178,6 +177,21 @@ bool ModuleEditor::DrawUI()
 	if (new_folder) CreateFolderPopUp();
 	
 	if (remove_folder) RemoveFolderPopUp();
+
+	if (show_scene)
+	{
+		ImGui::Begin("Scene", &show_scene, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
+		if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
+		{
+			App->camera->aspectRatio = viewportSize.x / viewportSize.y;
+			App->camera->RecalculateProjection();
+		}
+		lastViewportSize = viewportSize;
+		ImGui::Image((ImTextureID)App->viewportBuffer->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::End();
+	}
 
 	return true;
 }

@@ -12,6 +12,7 @@
 #include "ModuleEditor.h"
 #include "ModuleLoad.h"
 #include "ModuleResources.h"
+#include "ModuleViewportFrameBuffer.h"
 
 class Application
 {
@@ -25,6 +26,7 @@ public:
 	ModuleEditor* editor;
 	ModuleLoad* load;
 	ModuleResources* resources;
+	ModuleViewportFrameBuffer* viewportBuffer;
 private:
 
 	Timer	ms_timer;
