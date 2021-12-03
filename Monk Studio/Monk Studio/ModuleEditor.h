@@ -106,7 +106,7 @@ public:
 
 	ImVec2 lastViewportSize;
 
-	ModuleViewportFrameBuffer frameBufferScene;
+	//ModuleViewportFrameBuffer frameBufferScene;
 
 	//render propieties
 	bool depth_test = true;

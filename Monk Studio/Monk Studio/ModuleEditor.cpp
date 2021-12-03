@@ -190,7 +190,7 @@ bool ModuleEditor::DrawUI()
 			App->camera->RecalculateProjection();
 		}
 		lastViewportSize = viewportSize;
-		ImGui::Image((ImTextureID)frameBufferScene.texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)App->viewportBuffer->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
 	}
 

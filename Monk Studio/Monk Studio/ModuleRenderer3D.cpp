@@ -136,6 +136,8 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	App->camera->CalculateViewMatrix();
+
 	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
@@ -188,11 +190,5 @@ void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	App->camera->RecalculateProjection();
 }
