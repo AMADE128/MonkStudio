@@ -203,12 +203,12 @@ bool ModuleEditor::DrawUI()
 		ImGui::Begin("Game", &show_game, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
-		if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
+		if (viewportSize.x != lastViewportSizeGame.x || viewportSize.y != lastViewportSizeGame.y)
 		{
-			App->camera->aspectRatio = viewportSize.x / viewportSize.y;
-			App->camera->RecalculateProjection();
+			static_cast<ComponentCamera*>(App->scene_intro->camera->GetComponent(Component::Type::CAMERA))->aspectRatio = viewportSize.x / viewportSize.y;
+			static_cast<ComponentCamera*>(App->scene_intro->camera->GetComponent(Component::Type::CAMERA))->RecalculateProjection();
 		}
-		lastViewportSize = viewportSize;
+		lastViewportSizeGame = viewportSize;
 		ImGui::Image((ImTextureID)App->viewportBufferGame->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
 	}

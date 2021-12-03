@@ -10,6 +10,7 @@
 #include "Globals.h"
 #include "GameObject.h"
 #include "FileImporter.h"
+#include "C_Camera.h"
 
 #include <stdio.h>
 #include <Psapi.h>
@@ -105,6 +106,7 @@ public:
 	GameObject* selectedNode;
 
 	ImVec2 lastViewportSize;
+	ImVec2 lastViewportSizeGame;
 
 	//render propieties
 	bool depth_test = true;
