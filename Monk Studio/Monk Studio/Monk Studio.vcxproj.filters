@@ -171,6 +171,9 @@
     <ClCompile Include="C_Camera.cpp">
       <Filter>Source Files\Helpers\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">

@@ -74,8 +74,8 @@ Resource* ModuleResources::CreateNewResource(const char* assetsPath, Resource::T
 	if (ret != nullptr)
 	{
 		resources[uid] = ret;
-		// resource->assetsFile = assetsPath; Need a setPath
-		// resource->libraryFile = GenLibraryPath(resource); Same with Library
+		ret->SetAssetsPath(assetsPath); 
+		//resource->libraryFile = GenLibraryPath(resource); 
 	}
 	return ret;
 }

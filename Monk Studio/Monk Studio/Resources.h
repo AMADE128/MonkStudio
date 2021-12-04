@@ -22,7 +22,7 @@ public:
 	Resource::Type GetType() const { return type; }
 	int GetUID() const { return uid; }
 	const char* GetAssetFile() const { return assetsFile.c_str(); };
-	const char* GetLibraryFile() const { return LibraryFile.c_str(); }
+	const char* GetLibraryFile() const { return libraryFile.c_str(); }
 	
 	void SetAssetsPath(const char*);
 	void SetLibraryPath(const char*);
@@ -34,7 +34,6 @@ public:
 	void IncreaseReferenceCount() { referenceCount++; }
 	void DecreaseReferenceCount() { referenceCount--; }
 
-
 	//virtual void Save(Config& config) const;
 	//virtual void Load(const Config& config);
 
@@ -44,8 +43,8 @@ protected:
 
 	int uid;
 	std::string assetsFile;
-	std::string LibraryFile;
+	std::string libraryFile;
 	Type type = Type::UNKNOWN;
-	unsigned int referenceCount = 0;
+	unsigned int referenceCount;
 
 };
