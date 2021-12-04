@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include "TextureImporter.h"
+#include "FileImporter.h"
 
 #include "il.h"
 #include "ilut.h"
@@ -10,21 +11,37 @@ void TextureImporter::Import(const aiMaterial* material, ComponentMaterial* ourM
 {
 }
 
-void TextureImporter::Save(char** fileBuffer)
+void TextureImporter::Save(char* buffer, int size, const char* fileName)
 {
-	ILuint size;
-	ILubyte* data;
-	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
-	size = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
-	if (size > 0)
+	ILuint imageID;
+	ilGenImages(1, &imageID);
+	ilBindImage(imageID);
+
+	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
 	{
-
-		data = new ILubyte[size]; // allocate data buffer
-		
-		ilSaveL(IL_DDS, data, size);
-
-		RELEASE_ARRAY(data);
+		LOG("Image not loaded");
 	}
+
+	//TODO: Move this to function
+	ILuint _size = 0;
+	ILubyte* data = nullptr;
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+	_size = ilSaveL(IL_DDS, nullptr, 0);
+	if (_size > 0)
+	{
+		data = new ILubyte[_size];
+		ilSaveL(IL_DDS, data, _size);
+
+		std::string path(fileName);
+		//path += ".dds";
+
+		FileImporter::Save(path.c_str(), (char*)data, _size, false);
+
+		delete[] data;
+		data = nullptr;
+	}
+
+	ilDeleteImages(1, &imageID);
 }
 
 void TextureImporter::Load(const char* fileBuffer, ComponentMaterial* ourMaterial)

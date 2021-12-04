@@ -1,9 +1,6 @@
 #include "FileImporter.h"
 #include "External Libraries/Physfs/include/physfs.h"
 #include "External Libraries/SDL/include/SDL.h"
-#include "Globals.h"
-#include <string>
-#include <vector>
 
 void FileImporter::Init()
 {
@@ -78,5 +75,109 @@ void FileImporter::GetDirFiles(const char* dir, std::vector<std::string>& fileNa
 		
 		std::string fN = std::string(*i);
 		fileNames.push_back(fN);
+	}
+}
+
+uint FileImporter::Save(const char* file, char* buffer, uint size, bool append)
+{
+	uint objCount = 0;
+
+	std::string fileName;
+
+
+	bool exists = PHYSFS_exists(file);
+
+	PHYSFS_file* filehandle = nullptr;
+	if (append)
+		filehandle = PHYSFS_openAppend(file);
+	else
+		filehandle = PHYSFS_openWrite(file);
+
+	if (filehandle != nullptr)
+	{
+		objCount = PHYSFS_writeBytes(filehandle, (const void*)buffer, size);
+
+		if (objCount == size)
+		{
+			if (exists)
+			{
+				if (append)
+				{
+					LOG("Append %u bytes to file '%s'", objCount, fileName.data());
+				}
+				else
+					LOG("File '%s' overwritten with %u bytes", fileName.data(), objCount);
+			}
+			else
+				LOG( "New file '%s' created with %u bytes", fileName.data(), objCount);
+		}
+		else
+			LOG("Could not write to file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+
+		if (PHYSFS_close(filehandle) == 0)
+			LOG("Could not close file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+	}
+	else
+		LOG("Could not open file '%s' to write. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+
+	return objCount;
+}
+
+uint FileImporter::GetFileSize(const std::string& fileName, char** buffer)
+{
+	uint ret = 0;
+
+	PHYSFS_file* fs_file = PHYSFS_openRead(fileName.c_str());
+
+	int i = PHYSFS_exists(fileName.c_str());
+
+	if (fs_file != nullptr)
+	{
+		PHYSFS_sint64 size = PHYSFS_fileLength(fs_file);
+		//LOG(LogType::L_ERROR, "[%s]", PHYSFS_getLastError())
+
+		if (size > 0)
+		{
+			*buffer = new char[size + 1];
+			uint readed = (uint)PHYSFS_read(fs_file, *buffer, 1, size);
+			if (readed != size)
+			{
+				LOG("File System error while reading from file %s: %s\n", fileName.c_str(), PHYSFS_getLastError());
+				RELEASE_ARRAY(buffer);
+			}
+			else
+			{
+				ret = readed;
+				//Adding end of file at the end of the buffer. Loading a shader file does not add this for some reason
+				(*buffer)[size] = '\0';
+			}
+		}
+
+		if (PHYSFS_close(fs_file) == 0)
+			LOG("File System error while closing file %s: %s\n", fileName.c_str(), PHYSFS_getLastError());
+	}
+	else
+		LOG("File System error while opening file %s: %s\n", fileName.c_str(), PHYSFS_getLastError());
+
+	return ret;
+}
+
+void FileImporter::GetFileName(const char* file, std::string& fileName, bool extension)
+{
+	fileName = file;
+
+	uint found = fileName.find_last_of("\\");
+	if (found != std::string::npos)
+		fileName = fileName.substr(found + 1, fileName.size());
+
+	found = fileName.find_last_of("//");
+	if (found != std::string::npos)
+		fileName = fileName.substr(found + 1, fileName.size());
+
+	if (!extension)
+	{
+		found = fileName.find_last_of(".");
+		if (found != std::string::npos)
+			fileName = fileName.substr(0, found);
 	}
 }

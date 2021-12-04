@@ -4,17 +4,11 @@
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "FileImporter.h"
+#include "TextureImporter.h"
 #include "C_Transform.h"
 #include "External Libraries/assimp/include/cimport.h"
 #include "External Libraries/assimp/include/scene.h"
 #include "External Libraries/assimp/include/postprocess.h"
-
-#include "External Libraries/assimp/include/cimport.h"
-#include "External Libraries/assimp/include/scene.h"
-#include "External Libraries/assimp/include/postprocess.h"
-
-#include "parson.h"
-#include "External Libraries/Physfs/include/physfs.h"
 
 #include "il.h"
 #include "ilu.h"
@@ -94,17 +88,15 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 			LOG("Error loading '%s'", fileName.c_str());
 		}
 	}
-	else if (fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds")
+	else if (fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds" || fileExtension == "tga")
 	{
 		char* fileBuffer = nullptr;
+		unsigned int size = FileImporter::GetFileSize(fileName.c_str(), &fileBuffer);
+		std::string nameFile;
+		FileImporter::GetFileName(fileName.c_str(), nameFile, false);
+		std::string fullPath = "Library/Materials/" + nameFile + ".dds";
+		TextureImporter::Save(fileBuffer, size, fullPath.c_str());
 
-		JSON_Value* file = json_value_init_object();
-		JSON_Object* obj = json_value_get_object(file);
-		json_object_set_string(obj, "lloros", "muchos");
-		std::string path = "Library/lloros" + std::string(".dds");
-		json_serialize_to_file_pretty(file, path.c_str());
-		//Free memory
-		json_value_free(file);
 		if (App->editor->selectedNode != nullptr )
 		{
 			if (App->editor->selectedNode->children.size() > 0)
@@ -200,40 +192,6 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			}
 		}
 	}
-}
-
-uint ModuleLoad::GetFileSize(const std::string& fileName, char** buffer)
-{
-	uint ret = 0;
-	PHYSFS_file* fs_file = PHYSFS_openRead(fileName.c_str());
-	if (fs_file != nullptr)
-	{
-		PHYSFS_sint64 size = PHYSFS_fileLength(fs_file);
-		//LOG(LogType::L_ERROR, "[%s]", PHYSFS_getLastError())
-
-		if (size > 0)
-		{
-			*buffer = new char[size + 1];
-			uint readed = (uint)PHYSFS_read(fs_file, *buffer, 1, size);
-			if (readed != size)
-			{
-				RELEASE_ARRAY(buffer);
-			}
-			else
-			{
-				ret = readed;
-				//Adding end of file at the end of the buffer. Loading a shader file does not add this for some reason
-				(*buffer)[size] = '\0';
-			}
-		}
-
-		if (PHYSFS_close(fs_file) == 0)
-			LOG("File System error while closing file: %s\n", PHYSFS_getLastError());
-	}
-	else
-		LOG("File System error while opening file: %s\n", PHYSFS_getLastError());
-
-	return ret;
 }
 
 void ModuleLoad::SetDefaultMeshTransform(aiNode* node, GameObject* object, aiNode* parentNode)
