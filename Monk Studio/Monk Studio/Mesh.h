@@ -5,6 +5,8 @@
 #include "External Libraries/assimp/include/scene.h"
 #include "External Libraries/assimp/include/postprocess.h"
 
+#include "Globals.h"
+
 #include "External Libraries/MathGeoLib/include/Geometry/AABB.h"
 
 #include <vector>
@@ -24,6 +26,9 @@ public:
 	void Render(GLuint texture);
 	std::vector<vec3> GetVecPosition();
 	std::string GetMeshName();
+
+	const char* SaveMeshData(uint& retSize);
+	void LoadMeshData(const char* fileName);
 
 	void Unload();
 

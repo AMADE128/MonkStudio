@@ -1,3 +1,5 @@
+
+#pragma once
 #include "Module.h"
 #include<map>
 
@@ -10,7 +12,7 @@ class ModuleResources : public Module
 {
 public:
 	ModuleResources(Application* app, bool start_enabled = true);
-	virtual ~ModuleResources();
+	~ModuleResources();
 
 	bool Init();
 	bool Start();

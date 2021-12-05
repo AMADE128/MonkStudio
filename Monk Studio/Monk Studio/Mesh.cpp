@@ -172,3 +172,125 @@ std::string Mesh::GetMeshName()
 	return mName;
 }
 
+const char* Mesh::SaveMeshData(uint& retSize)
+{
+	uint aCounts[4] = { mIndices.size(), mPosition.size(), mNormals.size(), mTexCoords.size() };
+	retSize = sizeof(aCounts) + (sizeof(uint) * mIndices.size()) + (sizeof(float) * mPosition.size() * 3) + (sizeof(float) * mNormals.size() * 3) + (sizeof(float) * mTexCoords.size() * 2);
+
+	char* fileBuffer = new char[retSize];
+	char* cursor = fileBuffer;
+
+	uint bytes = sizeof(aCounts);
+	memcpy(cursor, aCounts, bytes);
+	cursor += bytes;
+
+	uint* indices = new uint[mIndices.size()];
+	for (size_t i = 0; i < mIndices.size(); i++)
+	{
+		indices[i] = mIndices[i];
+	}
+	float* vertices = new float[mPosition.size() * 3];
+	std::vector<float> v;
+	for (size_t i = 0; i < mPosition.size(); i++)
+	{
+		v.push_back(mPosition[i].x);
+		v.push_back(mPosition[i].y);
+		v.push_back(mPosition[i].z);
+	}
+	for (size_t i = 0; i < mPosition.size() * 3; i++)
+	{
+		vertices[i] = v[i];
+	}
+	float* normals = new float[mNormals.size() * 3];
+	std::vector<float> n;
+	for (size_t i = 0; i < mNormals.size(); i++)
+	{
+		n.push_back(mNormals[i].x);
+		n.push_back(mNormals[i].y);
+		n.push_back(mNormals[i].z);
+	}
+	for (size_t i = 0; i < mNormals.size() * 3; i++)
+	{
+		normals[i] = n[i];
+	}
+	float* texCoords = new float[mTexCoords.size() * 2];
+	std::vector<float> t;
+	for (size_t i = 0; i < mTexCoords.size(); i++)
+	{
+		t.push_back(mTexCoords[i].x);
+		t.push_back(mTexCoords[i].y);
+	}
+	for (size_t i = 0; i < mTexCoords.size() * 2; i++)
+	{
+		texCoords[i] = t[i];
+	}
+
+	bytes = sizeof(unsigned int) * mIndices.size();
+	memcpy(cursor, indices, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(float) * mPosition.size() * 3;
+	memcpy(cursor, vertices, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(float) * mNormals.size() * 3;
+	memcpy(cursor, normals, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(float) * mTexCoords.size() * 2;
+	memcpy(cursor, texCoords, bytes);
+	cursor += bytes;
+
+	return fileBuffer;
+}
+
+void Mesh::LoadMeshData(const char* fileName)
+{
+	//char* fileBuffer = nullptr;
+
+	//uint size = FileImporter::GetFileSize(fileName, &fileBuffer);
+
+	//if (size == 0)
+	//	return;
+
+	//char* cursor = fileBuffer;
+	//uint variables[4];
+
+	//uint bytes = sizeof(variables);
+	//memcpy(variables, cursor, bytes);
+	//mIndices. = variables[0];
+	//vertices_count = variables[1];
+	//normals_count = variables[2];
+	//texCoords_count = variables[3];
+	//cursor += bytes;
+
+
+	//bytes = sizeof(uint) * indices_count;
+
+	//indices = new uint[indices_count];
+	//memcpy(indices, cursor, bytes);
+	//cursor += bytes;
+
+	//vertices = new float[vertices_count * 3];
+	//bytes = sizeof(float) * vertices_count * 3;
+	//memcpy(vertices, cursor, bytes);
+	//cursor += bytes;
+
+	//normals = new float[normals_count * 3];
+	//bytes = sizeof(float) * normals_count * 3;
+	//memcpy(normals, cursor, bytes);
+	//cursor += bytes;
+
+	//texCoords = new float[texCoords_count * 2];
+	//bytes = sizeof(float) * texCoords_count * 2;
+	//memcpy(texCoords, cursor, bytes);
+	//cursor += bytes;
+
+	////TODO: Should this be here?
+	//localAABB.SetNegativeInfinity();
+	//localAABB.Enclose((float3*)vertices, vertices_count);
+
+	//delete[] fileBuffer;
+	//fileBuffer = nullptr;
+}
+

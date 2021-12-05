@@ -5,6 +5,7 @@
 #include "C_Material.h"
 #include "FileImporter.h"
 #include "TextureImporter.h"
+#include "MeshImporter.h"
 #include "C_Transform.h"
 #include "External Libraries/assimp/include/cimport.h"
 #include "External Libraries/assimp/include/scene.h"
@@ -81,7 +82,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 
 		if (scene != nullptr && scene->HasMeshes())
 		{
-				NodesToMeshes(parentNode, scene->mMeshes, parentObject);
+			NodesToMeshes(parentNode, scene->mMeshes, parentObject, fileName.c_str());
 		}
 		else
 		{
@@ -94,7 +95,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 		unsigned int size = FileImporter::GetFileSize(fileName.c_str(), &fileBuffer);
 		std::string nameFile;
 		FileImporter::GetFileName(fileName.c_str(), nameFile, false);
-		std::string fullPath = "Library/Materials/" + nameFile + ".dds";
+		std::string fullPath = "Library/Textures/" + nameFile + ".dds";
 		TextureImporter::Save(fileBuffer, size, fullPath.c_str());
 
 		if (App->editor->selectedNode != nullptr )
@@ -142,7 +143,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	return true;
 }
 
-void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject)
+void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject, const char* fileName)
 {
 	for (size_t i = 0; i < parentNode->mNumChildren; i++)
 	{
@@ -169,6 +170,8 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 				cm = nullptr;
 			}
 
+			MeshImporter::Save(static_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH))->GetMesh(), fileName);
+
 			App->editor->selectedNode = parentObject;
 			meshesList.clear();
 			std::vector<Mesh*>().swap(meshesList);
@@ -185,9 +188,9 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			{
 				if (childObject != nullptr)
 				{
-					NodesToMeshes(childNode, meshes, childObject);
+					NodesToMeshes(childNode, meshes, childObject, fileName);
 				}
-				else NodesToMeshes(childNode, meshes, parentObject);
+				else NodesToMeshes(childNode, meshes, parentObject, fileName);
 
 			}
 		}

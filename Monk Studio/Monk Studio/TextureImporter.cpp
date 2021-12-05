@@ -7,10 +7,6 @@
 #include <memory>
 #include <vector>
 
-void TextureImporter::Import(const aiMaterial* material, ComponentMaterial* ourMaterial)
-{
-}
-
 void TextureImporter::Save(char* buffer, int size, const char* fileName)
 {
 	ILuint imageID;

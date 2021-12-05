@@ -24,7 +24,8 @@ void FileImporter::CreateLibraryFolders()
 	CreateFolder("Library/");
 	CreateFolder("Library/Meshes/");
 	CreateFolder("Library/Textures/");
-	CreateFolder("Library/Materials/");
+	CreateFolder("Library/Models/");
+	CreateFolder("Library/Scenes/");
 }
 
 bool FileImporter::CreateFolder(const char* dirName)

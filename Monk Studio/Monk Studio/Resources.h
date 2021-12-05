@@ -17,7 +17,7 @@ public:
 public:
 
 	Resource(int uid, Resource::Type type);
-	virtual ~Resource();
+	~Resource();
 
 	Resource::Type GetType() const { return type; }
 	int GetUID() const { return uid; }

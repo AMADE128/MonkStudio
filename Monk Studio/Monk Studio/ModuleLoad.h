@@ -18,7 +18,7 @@ public:
 
 	bool LoadFile(const std::string& fileName);
 
-	void NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject);
+	void NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject, const char* fileName);
 
 	uint GetFileSize(const std::string& fileName, char** buffer);
 
