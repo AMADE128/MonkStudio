@@ -43,7 +43,7 @@ private:
 	Mesh* mesh = nullptr;
 	bool dispNormal = false;
 	bool dispAABB = false;
-	bool dispOBB = false;
+	bool dispOBB = true;
 	std::vector<PrimLine*>  normLines;
 
 	AABB aabb;

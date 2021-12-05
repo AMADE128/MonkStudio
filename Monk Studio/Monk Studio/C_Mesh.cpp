@@ -36,7 +36,7 @@ void ComponentMesh::Update()
 
 	GenerateGlobalOBBandAABB();
 
-	if (ContainsAaBox(mesh->GetAABB()))
+	if (ContainsAaBox(mesh->GetAABB()) != 0)
 	{
 		if (cm != nullptr && cm->isEnable())
 		{
@@ -46,12 +46,12 @@ void ComponentMesh::Update()
 		else mesh->Render(NULL);
 
 		if (dispNormal) RenderNormals();
-
-		glPopMatrix();
-
-		if (dispAABB) DrawAABB();
-		if (dispOBB) DrawOBB();
 	}
+
+	glPopMatrix();
+
+	if (dispAABB) DrawAABB();
+	if (dispOBB) DrawOBB();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -163,6 +163,7 @@ int ComponentMesh::ContainsAaBox(const AABB& refBox) const
 {
 	float3 vCorner[8];
 	int iTotalIn = 0;
+	refBox.Transform(owner->transform->GetTransform());
 	refBox.GetCornerPoints(vCorner); // get the corners of the box into the vCorner array
 	// test all 8 corners against the 6 sides
 	// if all points are behind 1 specific plane, we are out

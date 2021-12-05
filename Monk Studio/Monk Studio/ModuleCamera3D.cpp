@@ -17,6 +17,14 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	position = float3(0.0f, 5.0f, -15.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
+	cameraFrustum.type = FrustumType::PerspectiveFrustum;
+	cameraFrustum.nearPlaneDistance = 0.1f;
+	cameraFrustum.farPlaneDistance = 1000.f;
+	cameraFrustum.front = float3(0, 0, 1);
+	cameraFrustum.up = float3(0, 1, 0);
+	cameraFrustum.verticalFov = 60.0f * DEGTORAD;
+	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2) * (16.f / 9.f));
+
 	CalculateViewMatrix();
 
 }
