@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Globals.h"
 #include "ModuleLoad.h"
 #include "Mesh.h"
 #include "C_Mesh.h"
@@ -142,7 +143,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	return true;
 }
 
-void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject)
+void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject/*, uint currentUID*/)
 {
 	for (size_t i = 0; i < parentNode->mNumChildren; i++)
 	{
@@ -154,6 +155,13 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			std::vector<Mesh*>meshesList;
 
 			Mesh* mesh = new Mesh();
+
+			/*uint UID = currentUID;
+			if (UID == 0)
+			{
+				UID = App->resources->GenerateNewUID();
+			}
+			mesh = dynamic_cast<Mesh*>(App->resources->CreateNewResource("", UID, Resource::Type::MESH));*/
 			mesh->InitFromScene(meshes[childNode->mMeshes[j]]);
 			meshesList.push_back(mesh);
 			for (unsigned int k = 0; k < meshesList.size(); k++)
@@ -168,7 +176,7 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 				delete cm;
 				cm = nullptr;
 			}
-
+			
 			App->editor->selectedNode = parentObject;
 			meshesList.clear();
 			std::vector<Mesh*>().swap(meshesList);
