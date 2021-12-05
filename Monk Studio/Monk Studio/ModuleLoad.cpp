@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Globals.h"
 #include "ModuleLoad.h"
 #include "Mesh.h"
 #include "C_Mesh.h"
@@ -82,7 +83,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 
 		if (scene != nullptr && scene->HasMeshes())
 		{
-			NodesToMeshes(parentNode, scene->mMeshes, parentObject, fileName.c_str());
+			NodesToMeshes(parentNode, scene->mMeshes, parentObject, fileName.c_str(), 0);
 		}
 		else
 		{
@@ -143,7 +144,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	return true;
 }
 
-void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject, const char* fileName)
+void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject, const char* fileName, uint currentUID)
 {
 	for (size_t i = 0; i < parentNode->mNumChildren; i++)
 	{
@@ -155,6 +156,13 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			std::vector<Mesh*>meshesList;
 
 			Mesh* mesh = new Mesh();
+
+			/*uint UID = currentUID;
+			if (UID == 0)
+			{
+				UID = App->resources->GenerateNewUID();
+			}
+			mesh = dynamic_cast<Mesh*>(App->resources->CreateNewResource("", UID, Resource::Type::MESH));*/
 			mesh->InitFromScene(meshes[childNode->mMeshes[j]]);
 			meshesList.push_back(mesh);
 			for (unsigned int k = 0; k < meshesList.size(); k++)
@@ -171,7 +179,6 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			}
 
 			MeshImporter::Save(static_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH))->GetMesh(), fileName);
-
 			App->editor->selectedNode = parentObject;
 			meshesList.clear();
 			std::vector<Mesh*>().swap(meshesList);
@@ -188,9 +195,9 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			{
 				if (childObject != nullptr)
 				{
-					NodesToMeshes(childNode, meshes, childObject, fileName);
+					NodesToMeshes(childNode, meshes, childObject, fileName, currentUID);
 				}
-				else NodesToMeshes(childNode, meshes, parentObject, fileName);
+				else NodesToMeshes(childNode, meshes, parentObject, fileName, currentUID);
 
 			}
 		}

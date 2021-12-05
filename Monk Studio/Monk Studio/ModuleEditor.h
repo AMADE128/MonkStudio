@@ -93,7 +93,7 @@ public:
 	bool show_render = false;
 	bool show_gameObject = false;
 	bool show_view = false;
-	bool show_camera_settings = true;
+	bool show_camera_settings = false;
 	bool show_help = false;
 	bool show_scene = true;
 	bool show_game = true;

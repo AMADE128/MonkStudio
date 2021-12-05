@@ -5,6 +5,8 @@
 #include "Primitive.h"
 #include "External Libraries/MathGeoLib/include/Geometry/AABB.h"
 #include "External Libraries/MathGeoLib/include/Geometry/OBB.h"
+#include "External Libraries/MathGeoLib/include/Geometry/Frustum.h"
+#include "External Libraries/MathGeoLib/include/Geometry/Plane.h"
 
 class Line;
 
@@ -25,6 +27,10 @@ public:
 
 	void InspectorDraw() override;
 
+	float3 GetCenterOfMesh();
+
+	int ContainsAaBox(const AABB& refBox) const;
+
 	Mesh* GetMesh();
 	void SetMesh(Mesh* _mesh);
 	void Unload();
@@ -37,9 +43,11 @@ private:
 	Mesh* mesh = nullptr;
 	bool dispNormal = false;
 	bool dispAABB = false;
-	bool dispOBB = false;
+	bool dispOBB = true;
 	std::vector<PrimLine*>  normLines;
 
 	AABB aabb;
 	OBB obb;
+
+	Plane frustumPlane;
 };

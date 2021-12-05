@@ -6,8 +6,6 @@
 #include "Resources.h"
 #include "ModuleEditor.h"
 
-
-
 class ModuleResources : public Module
 {
 public:
@@ -26,7 +24,7 @@ public:
 	int FileAlreadyExists(const char* file) const;
 
 	
-	const Resource* RequestResource(int uid) const;
+	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
 	Resource* RequestResource(int uid);
 	void ReleaseResource(int uid);
 

@@ -17,6 +17,14 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	position = float3(0.0f, 5.0f, -15.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
+	cameraFrustum.type = FrustumType::PerspectiveFrustum;
+	cameraFrustum.nearPlaneDistance = 0.1f;
+	cameraFrustum.farPlaneDistance = 1000.f;
+	cameraFrustum.front = float3(0, 0, 1);
+	cameraFrustum.up = float3(0, 1, 0);
+	cameraFrustum.verticalFov = 60.0f * DEGTORAD;
+	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2) * (16.f / 9.f));
+
 	CalculateViewMatrix();
 
 }
@@ -58,26 +66,26 @@ update_status ModuleCamera3D::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
 		newPos.y -= speed;
 
-	////Focus
-	//if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-	//{
-	//	if (App->editor->selectedNode != nullptr)
-	//	{
-	//		if (ComponentMesh * mesh = App->editor->gameobjectSelected->GetComponent<ComponentMesh>())
-	//		{
-	//			const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
-	//			LookAt(meshCenter);
-	//			const float meshRadius = mesh->GetSphereRadius();
-	//			const float currentDistance = meshCenter.Distance(position);
-	//			const float desiredDistance = (meshRadius * 2) / atan(cameraFrustum.horizontalFov);
-	//			position = position + front * (currentDistance - desiredDistance);
-	//		}
-	//		else
-	//		{
-	//			LookAt(App->editor->gameobjectSelected->transform->GetPosition());
-	//		}
-	//	}
-	//}
+	//Focus
+	/*if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		if (App->editor->selectedNode != nullptr)
+		{
+			if (ComponentMesh * mesh = static_cast<ComponentMesh*>(App->editor->selectedNode->GetComponent(Component::Type::MESH)))
+			{
+				const float3 meshCenter = mesh->GetCenterOfMesh();
+				LookAt(meshCenter);
+				const float meshRadius = mesh;
+				const float currentDistance = meshCenter.Distance(position);
+				const float desiredDistance = (meshRadius * 2) / atan(cameraFrustum.horizontalFov);
+				position = position + front * (currentDistance - desiredDistance);
+			}
+			else
+			{
+				LookAt(App->editor->selectedNode->transform->GetPosition());
+			}
+		}
+	}*/
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		newPos += front * speed;
@@ -210,7 +218,7 @@ bool ModuleCamera3D::DrawUI()
 {
 	if (App->editor->show_camera_settings)
 	{
-		ImGui::Begin("Editor Camera");
+		ImGui::Begin("Editor Camera", &App->editor->show_camera_settings);
 		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
 		{
 			projectionIsDirty = true;

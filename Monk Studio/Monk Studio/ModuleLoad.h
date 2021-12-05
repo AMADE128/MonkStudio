@@ -1,6 +1,8 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "Resources.h"
+#include "ModuleResources.h"
 
 struct aiNode;
 class GameObject;
@@ -18,7 +20,7 @@ public:
 
 	bool LoadFile(const std::string& fileName);
 
-	void NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject, const char* fileName);
+	void NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject, const char* fileName, uint currentUID);
 
 	uint GetFileSize(const std::string& fileName, char** buffer);
 

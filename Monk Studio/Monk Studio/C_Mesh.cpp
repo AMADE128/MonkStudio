@@ -8,7 +8,6 @@
 #include <glew.h>
 #include "Primitive.h"
 
-
 ComponentMesh::ComponentMesh(GameObject* _gm) : Component(_gm), mesh(new Mesh())
 {
 	name = "Mesh Renderer";
@@ -35,18 +34,21 @@ void ComponentMesh::Update()
 	glPushMatrix();
 	if (owner->transform != nullptr && owner->transform->isEnable()) glMultMatrixf(owner->transform->transform.Transposed().ptr());
 
-	if (cm != nullptr && cm->isEnable())
-	{
-		if (cm->defaultTex) mesh->Render(appExternal->renderer3D->checkersTexture);
-		else mesh->Render(cm->GetTexture()->GetTextureID());
-	}
-	else mesh->Render(NULL);
+	GenerateGlobalOBBandAABB();
 
-	if (dispNormal) RenderNormals();
+	if (ContainsAaBox(mesh->GetAABB()) != 0)
+	{
+		if (cm != nullptr && cm->isEnable())
+		{
+			if (cm->defaultTex) mesh->Render(appExternal->renderer3D->checkersTexture);
+			else mesh->Render(cm->GetTexture()->GetTextureID());
+		}
+		else mesh->Render(NULL);
+
+		if (dispNormal) RenderNormals();
+	}
 
 	glPopMatrix();
-
-	GenerateGlobalOBBandAABB();
 
 	if (dispAABB) DrawAABB();
 	if (dispOBB) DrawOBB();
@@ -150,6 +152,49 @@ void ComponentMesh::InspectorDraw()
 			Unload();
 		}
 	}
+}
+
+float3 ComponentMesh::GetCenterOfMesh()
+{
+	return owner->transform->GetCombinedPosition(owner);
+}
+
+int ComponentMesh::ContainsAaBox(const AABB& refBox) const
+{
+	float3 vCorner[8];
+	int iTotalIn = 0;
+	refBox.Transform(owner->transform->GetTransform());
+	refBox.GetCornerPoints(vCorner); // get the corners of the box into the vCorner array
+	// test all 8 corners against the 6 sides
+	// if all points are behind 1 specific plane, we are out
+	// if we are in with all points, then we are fully in
+	for (int p = 0; p < 6; ++p) {
+		int iInCount = 8;
+		int iPtIn = 1;
+		for (int i = 0; i < 8; ++i) {
+			// test this point against the planes
+			//if (m_plane[p].SideOfPlane(vCorner[i]) == BEHIND) { //<-- “IsOnPositiveSide” from MathGeoLib
+			//	iPtIn = 0;
+			//	--iInCount;
+			//}
+			if (appExternal->camera->cameraFrustum.GetPlane(p).IsOnPositiveSide(vCorner[i])) { //<-- “IsOnPositiveSide” from MathGeoLib
+				iPtIn = 0;
+				--iInCount;
+			}
+		}
+		// were all the points outside of plane p?
+		if(iInCount == 0)
+			return 0;
+		// check if they were all on the right side of the plane
+		iTotalIn += iPtIn;
+	}
+	// so if iTotalIn is 6, then all are inside the view
+	if (iTotalIn == 6)
+		return 1;
+	// we must be partly in then otherwise
+	return 2;
+
+	return 0;
 }
 
 Mesh* ComponentMesh::GetMesh()
