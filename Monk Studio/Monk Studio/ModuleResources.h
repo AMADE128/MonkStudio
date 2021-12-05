@@ -4,13 +4,11 @@
 #include "Resources.h"
 #include "ModuleEditor.h"
 
-
-
 class ModuleResources : public Module
 {
 public:
 	ModuleResources(Application* app, bool start_enabled = true);
-	virtual ~ModuleResources();
+	 ~ModuleResources();
 
 	bool Init();
 	bool Start();

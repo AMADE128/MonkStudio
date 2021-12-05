@@ -7,6 +7,10 @@ referenceCount(0)
 
 }
 
+Resource::~Resource()
+{
+}
+
 void Resource::SetAssetsPath(const char* assPath)
 {
 	assetsFile = assPath;
