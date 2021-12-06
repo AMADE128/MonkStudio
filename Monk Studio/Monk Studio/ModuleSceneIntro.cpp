@@ -31,6 +31,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	App->load->LoadFile("Assets/street/scene.DAE", 0);
+	App->load->LoadFile("Assets/street/Building_V02_C.png", 0);
 
 	p = new PrimPlane(0 , 1, 0, 0);
 
@@ -43,9 +44,8 @@ bool ModuleSceneIntro::Start()
 	camera->transform->position.z = -115.1;
 
 
-	GameObject* street = GetGameObjectFromHierarchy("scene.DAE", sceneObjects);
+	street = GetGameObjectFromHierarchy("scene.DAE", sceneObjects);
 	street->transform->euler.x = -90;
-	App->load->LoadFile("Assets/street/Building_V02_C.png", 0);
 
 	//this is to ensure the final color of the primitives isnt affected
 	//DisableColorProperties();

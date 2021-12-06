@@ -69,9 +69,9 @@ int ModuleResources::ImportFile(const char* assetsFile, Resource::Type type)
 	{
 	case Resource::Type::TEXTURE: TextureImporter::Save(buff, size, libPath.c_str()); break;
 	//case Resource::Type::MODEL: App->load->LoadFile(); break;
-	case Resource::Type::MESH: 
-		App->load->LoadFile(assetsFile, uid); 
-		break;
+	//case Resource::Type::MESH: 
+		//App->load->LoadFile(assetsFile, uid); 
+		//break;
 	//case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 	}
 

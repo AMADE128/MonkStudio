@@ -53,7 +53,7 @@ void ComponentMesh::Update()
 	if (dispAABB) DrawAABB();
 	if (dispOBB) DrawOBB();
 
-	appExternal->camera->DrawPicking();
+	//appExternal->camera->DrawPicking();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

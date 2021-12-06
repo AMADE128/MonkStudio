@@ -35,4 +35,5 @@ public:
 	GameObject* sceneObjects = nullptr;
 	GameObject* camera = nullptr;
 	PrimPlane* p = nullptr;
+	GameObject* street = nullptr;
 };
