@@ -243,7 +243,7 @@ bool ModuleEditor::DrawUI()
 
 void ModuleEditor::RemoveFolderPopUp()
 {
-	ImGui::OpenPopup("Remove Folder");
+	/*ImGui::OpenPopup("Remove Folder");
 	if (ImGui::BeginPopupModal("Remove Folder"))
 	{
 		ImVec2 winpos = { (float)App->window->height / 2, (float)App->window->width / 2 };
@@ -262,6 +262,7 @@ void ModuleEditor::RemoveFolderPopUp()
 		}
 		ImGui::EndPopup();
 	}
+	*/
 }
 
 void ModuleEditor::CreateFolderPopUp()

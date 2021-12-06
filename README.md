@@ -48,7 +48,7 @@ Hardware: Shows what version of SDL, OpenGl, Glew, and Devil the engine is using
 Input: Shows in real time the mouse: Position, Motion, and wheel. Also logs all user inputs.
 
 - Assets:
-Displays list of all current loaded fbx, and by right-clicking on them the user can create new folders or delete existing ones. (also opens with Alt + 5)
+Displays list of all current loaded fbx, and by right-clicking on them the user can create new folders. (also opens with Alt + 5)
 
 ### Help
 From help the user can open an ImGui Demo, go to our github, releases and report bugs, as well as a window about with information.

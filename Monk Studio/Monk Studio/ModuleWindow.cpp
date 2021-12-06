@@ -396,10 +396,11 @@ void ModuleWindow::RecursiveFileDir(std::vector<std::string>& fileNames, std::ve
 				{
 					App->editor->new_folder = true;
 				}
-				if (ImGui::MenuItem("Delete"))
+				/*if (ImGui::MenuItem("Delete"))
 				{
 					App->editor->remove_folder = true;
 				}
+				*/
 				ImGui::EndPopup();
 			}
 
