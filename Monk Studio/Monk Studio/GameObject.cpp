@@ -196,7 +196,7 @@ void GameObject::LoadComponents(const JSON_Array* _goArray)
 	{
 		jsComponent = json_array_get_object(_goArray, i);
 
-		Component* comp = AddComponent((Component::Type)json_object_get_number(jsComponent, "Type"));
+		Component* comp = AddComponent((Component::Type)(int)json_object_get_number(jsComponent, "Type"));
 		comp->LoadData(jsComponent);
 
 	}	
@@ -250,5 +250,5 @@ void Component::SaveData(JSON_Object* nObj)
 void Component::LoadData(JSON_Object* nObj)
 {
 	active = json_object_get_boolean(nObj, "Active");
-	type = (Type)json_object_get_number(nObj, "Type");
+	type = (Type)(int)json_object_get_number(nObj, "Type");
 }

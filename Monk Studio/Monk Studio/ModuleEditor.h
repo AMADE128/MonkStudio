@@ -47,7 +47,8 @@ public:
 	void MoveUpHierarchy(GameObject* parent);
 	void CreateDockAPI();
 	void LogToConsole(const char* txt);
-
+	void DrawSelectMesh();
+	void DrawSelectTexture();
 	void DeleteFromScene(GameObject* parent);
 
 	void SetDefaultImGuiStyle();
@@ -104,6 +105,9 @@ public:
 	bool borderless = false;
 	bool fulldeskscreen = false;
 	bool material_active = true;
+	bool show_select_mesh = false;
+	bool show_select_texture = false;
+
 	GameObject* selectedNode;
 
 	ImVec2 lastViewportSize;

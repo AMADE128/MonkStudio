@@ -196,6 +196,12 @@ bool ModuleEditor::DrawUI()
 		}
 		lastViewportSize = viewportSize;
 		ImGui::Image((ImTextureID)App->viewportBufferScene->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
+
+		if (ImGui::IsWindowFocused() && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			App->camera->MousePicking();
+		}
+
 		ImGui::End();
 	}
 
@@ -212,6 +218,16 @@ bool ModuleEditor::DrawUI()
 		lastViewportSizeGame = viewportSize;
 		ImGui::Image((ImTextureID)App->viewportBufferGame->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
+	}
+
+	if (show_select_mesh)
+	{
+		DrawSelectMesh();
+	}
+
+	if (show_select_texture)
+	{
+		DrawSelectTexture();
 	}
 
 	return true;
@@ -636,6 +652,73 @@ void ModuleEditor::LogToConsole(const char* txt)
 	appExternal->window->console.push_back(std::string(txt));
 }
 
+void ModuleEditor::DrawSelectMesh()
+{
+	ImGui::OpenPopup("Select Mesh");
+	if (ImGui::BeginPopupModal("Select Mesh"))
+	{
+		ImVec2 winpos = { (float)appExternal->window->height / 2, (float)appExternal->window->width / 2 };
+		ImGui::SetNextWindowPos(winpos);
+		ImGui::SetNextWindowSize({ 300, 200 });
+		std::vector<std::string> names;
+		std::vector<std::string> path;
+
+		ImGui::Text("Select Mesh");
+
+		if (ImGui::Button("Close"))
+		{
+			show_select_mesh = false;
+		}
+
+		FileImporter::GetDirFiles("Library/Meshes", names, path);
+		for (int i = 0; i < names.size(); i++)
+		{
+			if (ImGui::Button(names[i].c_str()))
+			{
+				show_select_mesh = false;
+			}
+		}
+
+		/*ImGui::Text("uwu");*/
+
+		ImGui::EndPopup();
+	}
+}
+
+void ModuleEditor::DrawSelectTexture()
+{
+	ImGui::OpenPopup("Select Texture");
+	if (ImGui::BeginPopupModal("Select Texture"))
+	{
+		ImVec2 winpos = { (float)appExternal->window->height / 2, (float)appExternal->window->width / 2 };
+		ImGui::SetNextWindowPos(winpos);
+		ImGui::SetNextWindowSize({ 300, 200 });
+		std::vector<std::string> names;
+		std::vector<std::string> path;
+
+		ImGui::Text("Select Texture");
+
+
+		if (ImGui::Button("Close"))
+		{
+			show_select_texture = false;
+		}
+
+		FileImporter::GetDirFiles("Library/Textures", names, path);
+		for (int i = 0; i < names.size(); i++)
+		{
+			if (ImGui::Button(names[i].c_str()))
+			{
+				show_select_texture = false;
+			}
+		}
+
+		/*ImGui::Text("uwu");*/
+
+		ImGui::EndPopup();
+	}
+}
+
 void ModuleEditor::DeleteFromScene(GameObject* parent)
 {
 	delete parent;
@@ -731,12 +814,14 @@ void ModuleEditor::DrawTopBar()
 			{
 
 			}
-			ImGui::SameLine();
+			ImGui::SameLine(50);
+			ImGui::Separator();
 			if (ImGui::Button("Pause"))
 			{
 
 			}
-			ImGui::SameLine();
+			ImGui::SameLine(120);
+			ImGui::Separator();
 			if (ImGui::Button("Stop"))
 			{
 
