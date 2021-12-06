@@ -182,3 +182,10 @@ void FileImporter::GetFileName(const char* file, std::string& fileName, bool ext
 			fileName = fileName.substr(0, found);
 	}
 }
+
+bool FileImporter::ExistsMeta(const char* filePath)
+{
+	std::string metaFilePath;
+	metaFilePath += ".meta";
+	return PHYSFS_exists(metaFilePath.c_str()) != 0;
+}

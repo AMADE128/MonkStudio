@@ -17,6 +17,8 @@ namespace FileImporter
 	uint Save(const char* file, char* buffer, uint size, bool append);
 	uint GetFileSize(const std::string& fileName, char** buffer);
 
+	bool ExistsMeta(const char* filePath);
+
 	void GetFileName(const char* file, std::string& fileName, bool extension);
 
 	void GetDirFiles(const char* dir, std::vector<std::string>& fileNames, std::vector<std::string>& filePath);

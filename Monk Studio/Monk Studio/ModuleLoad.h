@@ -15,14 +15,13 @@ public:
 	~ModuleLoad();
 
 	bool Init();
+	bool Start();
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 
 	bool LoadFile(const std::string& fileName);
 
 	void NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject, const char* fileName, uint currentUID);
-
-	uint GetFileSize(const std::string& fileName, char** buffer);
 
 	void GenerateMetaFiles(const char* filePath);
 	void GenerateMeta(const char* filePath);

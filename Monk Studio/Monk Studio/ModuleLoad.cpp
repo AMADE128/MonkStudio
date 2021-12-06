@@ -57,6 +57,15 @@ bool ModuleLoad::Init()
 	return ret;
 }
 
+bool ModuleLoad::Start()
+{
+	bool ret = true;
+
+	GenerateMetaFiles("Assets");
+
+	return ret;
+}
+
 // PreUpdate: clear buffer
 update_status ModuleLoad::PreUpdate(float dt)
 {
@@ -253,26 +262,33 @@ bool ModuleLoad::CleanUp()
 
 void ModuleLoad::GenerateMetaFiles(const char* filePath)
 {
-	if (FileImporter::IsDirectory(filePath))
+	if (!FileImporter::IsDirectory(filePath))
 	{
 		GenerateMeta(filePath);
 	}
-
-	for (size_t i = 0; i < childDirs.size(); i++)
+	else
 	{
-		childDirs[i].GenerateMetaRecursive();
+		std::vector<string> filesNames;
+		std::vector<string> filesPaths;
+		FileImporter::GetDirFiles(filePath, filesNames, filesPaths);
+		for (size_t i = 0; i < filesPaths.size(); i++)
+		{
+			GenerateMetaFiles(filesPaths[i].c_str());
+		}
 	}
 }
 
 void ModuleLoad::GenerateMeta(const char* filePath)
 {
-	GenerateMetaPath();
 
-	if (!HasMeta())
+	if (!FileImporter::ExistsMeta(filePath))
 	{
-		Resource::Type type = EngineExternal->moduleResources->GetTypeFromAssetExtension(importPath.c_str());
-		uint resUID = EngineExternal->moduleResources->GenerateNewUID();
-		metaUID = resUID;
-		EngineExternal->moduleResources->GenerateMeta(importPath.c_str(), EngineExternal->moduleResources->GenLibraryPath(resUID, type).c_str(), resUID, type);
+		Resource::Type type = appExternal->resources->GetExtensionType(filePath);
+		uint resUID = appExternal->resources->GenerateNewUID();
+		//metaUID = resUID;
+		if (type != Resource::Type::UNKNOWN)
+		{
+			appExternal->resources->CreateMeta(filePath, appExternal->resources->CreateLibraryPath(resUID, type).c_str(), resUID, type);
+		}
 	}
 }
