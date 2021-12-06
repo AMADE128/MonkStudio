@@ -17,12 +17,12 @@ public:
 public:
 
 	Resource(int uid, Resource::Type type);
-	~Resource();
+	virtual ~Resource();
 
 	Resource::Type GetType() const { return type; }
 	int GetUID() const { return uid; }
-	const char* GetAssetFile() const { return assetsFile.c_str(); };
-	const char* GetLibraryFile() const { return libraryFile.c_str(); }
+	const char* GetAssetPath() const { return assetsFile.c_str(); };
+	const char* GetLibraryPath() const { return libraryFile.c_str(); }
 	
 	void SetAssetsPath(const char*);
 	void SetLibraryPath(const char*);

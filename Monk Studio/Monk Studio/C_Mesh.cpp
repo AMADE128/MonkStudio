@@ -8,7 +8,7 @@
 #include <glew.h>
 #include "Primitive.h"
 
-ComponentMesh::ComponentMesh(GameObject* _gm) : Component(_gm), mesh(new Mesh())
+ComponentMesh::ComponentMesh(GameObject* _gm) : Component(_gm), mesh(nullptr)
 {
 	name = "Mesh Renderer";
 }
@@ -201,8 +201,8 @@ void ComponentMesh::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
 
-	//json_object_set_string(nObj, "Path", mesh->GetLibraryPath());
-	//json_object_set_number(nObj, "UID", mesh->GetUID());
+	json_object_set_string(nObj, "Path", mesh->GetLibraryPath());
+	json_object_set_number(nObj, "UID", mesh->GetUID());
 }
 
 Mesh* ComponentMesh::GetMesh()

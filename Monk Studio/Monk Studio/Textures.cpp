@@ -9,7 +9,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-Texture::Texture()
+Texture::Texture(unsigned int _uid) : Resource(_uid, Resource::Type::TEXTURE)
 {
 	mTextureID = 0;
 
@@ -43,8 +43,6 @@ bool Texture::Load(const std::string _path)
             //Create texture from file pixels
             ret = Load32((GLuint*)ilGetData(), (GLuint)ilGetInteger(IL_IMAGE_WIDTH), (GLuint)ilGetInteger(IL_IMAGE_HEIGHT));
         }
-
-		path = _path;
 
         //Delete file from memory
         ilDeleteImages(1, &imgID);
@@ -130,9 +128,4 @@ GLuint Texture::GetTextureWidth()
 GLuint Texture::GetTextureHeight()
 {
 	return mTextureHeight;
-}
-
-const std::string Texture::GetTexPath()
-{
-	return path;
 }

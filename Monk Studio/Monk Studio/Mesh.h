@@ -6,6 +6,7 @@
 #include "External Libraries/assimp/include/postprocess.h"
 
 #include "Globals.h"
+#include "Resources.h"
 
 #include "External Libraries/MathGeoLib/include/Geometry/AABB.h"
 
@@ -15,10 +16,10 @@
 
 class Texture;
 
-class Mesh
+class Mesh : public Resource
 {
 public:
-	Mesh();
+	Mesh(unsigned int _uid);
 	~Mesh();
 
 	bool InitFromScene(const aiMesh* paiMesh);

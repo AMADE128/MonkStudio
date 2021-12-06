@@ -1,5 +1,6 @@
 
 #include "C_Material.h"
+#include "Globals.h"
 
 #include "External Libraries/imgui/imgui.h"
 #include "External Libraries/imgui/imgui_impl_sdl.h"
@@ -25,7 +26,7 @@ void ComponentMaterial::InspectorDraw()
 		{
 			active = !active;
 		}
-		ImGui::Text("%s", tex->GetTexPath().c_str());
+		ImGui::Text("%s", tex->GetAssetPath());
 		ImGui::Image((void*)(intptr_t)tex->GetTextureID(), ImVec2(tex->GetTextureWidth()/4, tex->GetTextureHeight()/4));
 		ImGui::Text("Size: %dx%d", tex->GetTextureWidth(), tex->GetTextureHeight());
 		ImGui::Checkbox("Default Texture", &defaultTex);
@@ -67,8 +68,31 @@ void ComponentMaterial::SaveData(JSON_Object* nObj)
 	json_object_set_boolean(nObj, "IsEmpty", (tex == nullptr) ? true : false);
 	if (tex != nullptr)
 	{
-		json_object_set_string(nObj, "AssetPath", tex->GetTexPath().c_str());
-		//json_object_set_string(nObj, "LibraryPath", resource library path);
-		//json_object_set_number(nObj, "UID", tex->uid);
+		json_object_set_string(nObj, "AssetPath", tex->GetAssetPath());
+		json_object_set_string(nObj, "LibraryPath", tex->GetLibraryPath());
+		json_object_set_number(nObj, "UID", tex->GetUID());
 	}
+}
+
+void ComponentMaterial::LoadData(JSON_Object* nObj)
+{
+	Component::LoadData(nObj);
+	//There is no _mesh yet lol
+
+	if (json_object_get_boolean(nObj, "IsEmpty") == true)
+		return;
+
+
+	int w, h;
+	w = h = 0;
+	std::string assPath = json_object_get_string(nObj, "AssetPath");
+	std::string libPath = json_object_get_string(nObj, "LibraryPath");
+
+	if (assPath == "" && libPath == "") {
+		LOG("Empty");
+		return;
+	}
+
+	//Load the texture
+	//matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(jsObj.ReadInt("UID"), texName.c_str()));
 }

@@ -13,6 +13,7 @@ public:
 	void Update() override;
 
 	void SaveData(JSON_Object* nObj) override;
+	void LoadData(JSON_Object* nObj) override;
 
 	void CalculateViewMatrix();
 	void RecalculateProjection();

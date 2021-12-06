@@ -1,15 +1,16 @@
 
 #include "MeshImporter.h"
 #include "Mesh.h"
-#include "FileImporter.h" 
+#include "FileImporter.h"
+#include <string>
 
 void MeshImporter::Save(Mesh* mesh, const char* fileName)
 {
 	std::string nameFile;
 	FileImporter::GetFileName(fileName, nameFile, false);
-	std::string fullPath = "Library/Meshes/" + mesh->GetMeshName() + ".fist";
+	std::string fullPath = "Library/Meshes/" + std::to_string(mesh->GetUID()) + ".fist";
 
-	Mesh* newMesh = new Mesh();
+	Mesh* newMesh = new Mesh(mesh->GetUID());
 	newMesh = mesh;
 
 	uint size = 0;

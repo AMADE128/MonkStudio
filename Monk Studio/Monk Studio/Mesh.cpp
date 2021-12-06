@@ -6,7 +6,7 @@
 #include "Application.h"
 #include "Textures.h"
 
-Mesh::Mesh()
+Mesh::Mesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH)
 {
 }
 

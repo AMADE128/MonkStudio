@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Resources.h"
 #include <string>
 #include "External Libraries/Glew/include/glew.h"
 
-class Texture
+class Texture : public Resource
 {
 public:
-    Texture();
+    Texture(unsigned int _uid);
 
     ~Texture();
 
@@ -24,13 +25,9 @@ public:
 
     GLuint GetTextureHeight();
 
-	const std::string GetTexPath();
-
 private:
 
     GLuint mTextureID;
-
-	std::string path;
 
     GLuint mTextureWidth;
     GLuint mTextureHeight;

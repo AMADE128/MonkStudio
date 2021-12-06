@@ -42,8 +42,6 @@ bool ModuleLoad::Init()
 
 	ILuint devilError;
 
-	FileImporter::Init();
-
 	ilInit();
 
 	devilError = ilGetError();
@@ -53,6 +51,8 @@ bool ModuleLoad::Init()
 		ret = false;
 	}
 	LOG("Loaded DevIL library");
+
+	FileImporter::Init();
 
 	return ret;
 }
@@ -96,9 +96,8 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 	{
 		char* fileBuffer = nullptr;
 		unsigned int size = FileImporter::GetFileSize(fileName.c_str(), &fileBuffer);
-		std::string nameFile;
-		FileImporter::GetFileName(fileName.c_str(), nameFile, false);
-		std::string fullPath = "Library/Textures/" + nameFile + ".dds";
+		unsigned int nameFile = appExternal->GetRandomInt();
+		std::string fullPath = "Library/Textures/" + to_string(nameFile) + ".dds";
 		TextureImporter::Save(fileBuffer, size, fullPath.c_str());
 
 		if (App->editor->selectedNode != nullptr )
@@ -110,7 +109,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 					if (App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL) != nullptr)
 					{
 						ComponentMaterial* cMat = static_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
-						Texture* newTex = new Texture();
+						Texture* newTex = new Texture(nameFile);
 						newTex->Load(fileName.c_str());
 						cMat->SetTexture(newTex);
 
@@ -126,7 +125,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 					{
 						App->editor->selectedNode->children[i]->CreateComponent(Component::Type::MATERIAL);
 						ComponentMaterial* cMat = static_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
-						Texture* newTex = new Texture();
+						Texture* newTex = new Texture(nameFile);
 						newTex->Load(fileName.c_str());
 						cMat->SetTexture(newTex);
 
@@ -157,7 +156,7 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			//Load Meshes
 			std::vector<Mesh*>meshesList;
 
-			Mesh* mesh = new Mesh();
+			Mesh* mesh = new Mesh(appExternal->GetRandomInt());
 
 			/*uint UID = currentUID;
 			if (UID == 0)
@@ -250,4 +249,30 @@ bool ModuleLoad::CleanUp()
 	aiDetachAllLogStreams();
 
 	return true;
+}
+
+void ModuleLoad::GenerateMetaFiles(const char* filePath)
+{
+	if (FileImporter::IsDirectory(filePath))
+	{
+		GenerateMeta(filePath);
+	}
+
+	for (size_t i = 0; i < childDirs.size(); i++)
+	{
+		childDirs[i].GenerateMetaRecursive();
+	}
+}
+
+void ModuleLoad::GenerateMeta(const char* filePath)
+{
+	GenerateMetaPath();
+
+	if (!HasMeta())
+	{
+		Resource::Type type = EngineExternal->moduleResources->GetTypeFromAssetExtension(importPath.c_str());
+		uint resUID = EngineExternal->moduleResources->GenerateNewUID();
+		metaUID = resUID;
+		EngineExternal->moduleResources->GenerateMeta(importPath.c_str(), EngineExternal->moduleResources->GenLibraryPath(resUID, type).c_str(), resUID, type);
+	}
 }

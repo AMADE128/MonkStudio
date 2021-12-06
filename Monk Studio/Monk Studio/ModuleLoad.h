@@ -24,6 +24,9 @@ public:
 
 	uint GetFileSize(const std::string& fileName, char** buffer);
 
+	void GenerateMetaFiles(const char* filePath);
+	void GenerateMeta(const char* filePath);
+
 	void SetDefaultMeshTransform(aiNode* node, GameObject* object, aiNode* parentNode);
 
 	std::string GetFileExtension(std::string fileName);

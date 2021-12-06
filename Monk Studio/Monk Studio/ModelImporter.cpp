@@ -14,7 +14,7 @@ void ModelImporter::Save(GameObject* root)
 	root->SaveObjectData(json_value_get_array(val));
 	json_object_set_value(obj, "Game Objects", val);
 
-	std::string nameLibPath = "Library/Models/" + root->name + ".body";
+	std::string nameLibPath = "Library/Models/" + std::to_string(root->uid) + ".body";
 	json_serialize_to_file_pretty(file, nameLibPath.c_str());
 	//dir.clear();
 

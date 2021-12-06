@@ -16,6 +16,7 @@ public:
 	void Unload();
 
 	void SaveData(JSON_Object* nObj) override;
+	void LoadData(JSON_Object* nObj) override;
 
 	bool defaultTex = false;
 
