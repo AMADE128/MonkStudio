@@ -41,6 +41,19 @@ void ComponentCamera::Update()
 	projectionIsDirty = false;*/
 }
 
+void ComponentCamera::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+
+	json_object_set_number(nObj, "frustumType", (int)FrustumType::PerspectiveFrustum);
+
+	json_object_set_number(nObj, "nearPlaneDist", cameraFrustumGame.nearPlaneDistance);
+	json_object_set_number(nObj, "farPlaneDistance", cameraFrustumGame.farPlaneDistance);
+
+	json_object_set_number(nObj, "verticalFov", cameraFrustumGame.verticalFov);
+	json_object_set_number(nObj, "horizontalFov", cameraFrustumGame.horizontalFov);
+}
+
 void ComponentCamera::RecalculateProjection()
 {
 	cameraFrustumGame.type = FrustumType::PerspectiveFrustum;

@@ -197,6 +197,14 @@ int ComponentMesh::ContainsAaBox(const AABB& refBox) const
 	return 0;
 }
 
+void ComponentMesh::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+
+	//json_object_set_string(nObj, "Path", mesh->GetLibraryPath());
+	//json_object_set_number(nObj, "UID", mesh->GetUID());
+}
+
 Mesh* ComponentMesh::GetMesh()
 {
 	return mesh;

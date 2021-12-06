@@ -15,6 +15,8 @@ public:
 	void SetTexture(Texture* _tex);
 	void Unload();
 
+	void SaveData(JSON_Object* nObj) override;
+
 	bool defaultTex = false;
 
 private:

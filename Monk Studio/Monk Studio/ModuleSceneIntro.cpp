@@ -64,17 +64,17 @@ bool ModuleSceneIntro::CleanUp()
 	return true;
 }
 
-GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* parent)
+GameObject* ModuleSceneIntro::CreateGameObject(const char* name, GameObject* parent, int _uid)
 {
 	if (parent != nullptr)
 	{
-		GameObject* gm = new GameObject(name, parent);
+		GameObject* gm = new GameObject(name, parent, _uid);
 		//gm->SetColor(gm);
 		return gm;
 	}
 	else
 	{
-		GameObject* gm = new GameObject(name, App->scene_intro->sceneObjects);
+		GameObject* gm = new GameObject(name, App->scene_intro->sceneObjects, _uid);
 		//gm->SetColor(gm);
 		return gm;
 	}

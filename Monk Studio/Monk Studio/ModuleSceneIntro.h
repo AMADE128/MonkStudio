@@ -21,7 +21,7 @@ public:
 	bool CleanUp();
 	bool DrawUI();
 
-	GameObject* CreateGameObject(const char* name, GameObject* parent);
+	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 
 	GameObject* GetGameObjectFromHierarchy(const char* _name, GameObject* parent);
 

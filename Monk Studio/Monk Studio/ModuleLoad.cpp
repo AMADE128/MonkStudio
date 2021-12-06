@@ -7,6 +7,7 @@
 #include "FileImporter.h"
 #include "TextureImporter.h"
 #include "MeshImporter.h"
+#include "ModelImporter.h"
 #include "C_Transform.h"
 #include "External Libraries/assimp/include/cimport.h"
 #include "External Libraries/assimp/include/scene.h"
@@ -79,6 +80,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 		const aiScene* scene = aiImportFile(fileName.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 		aiNode* parentNode = scene->mRootNode;
 		GameObject* parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->editor->selectedNode);
+		ModelImporter::Save(parentObject);
 		if (parentNode != nullptr) SetDefaultMeshTransform(parentNode, parentObject, nullptr);
 
 		if (scene != nullptr && scene->HasMeshes())
@@ -189,6 +191,7 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			if (childObject != nullptr)
 			{
 				SetDefaultMeshTransform(childNode, childObject, parentNode);
+				ModelImporter::Save(childObject);
 			}
 
 			if (childNode->mNumChildren > 0)

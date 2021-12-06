@@ -9,11 +9,16 @@
 
 #include <assert.h>
 
-GameObject::GameObject(const char* _name, GameObject* _parent) : name(_name), active(true), parent(_parent)
+GameObject::GameObject(const char* _name, GameObject* _parent, int _uid) : name(_name), active(true), parent(_parent), uid(_uid)
 {
 	if (parent != nullptr)
 	{
 		parent->children.push_back(this);
+	}
+
+	if (uid == -1)
+	{
+		uid = appExternal->GetRandomInt();
 	}
 
 	transform = static_cast<ComponentTransform*>(CreateComponent(Component::Type::TRANSFORM));
@@ -124,10 +129,81 @@ Component* GameObject::GetComponent(Component::Type _type)
 	return nullptr;
 }
 
+void GameObject::SaveObjectData(JSON_Array* _goArray)
+{
+
+	JSON_Value* val = json_value_init_object();
+	JSON_Object* obj = json_value_get_object(val);
+
+	json_object_set_string(obj, "Name", name.c_str());
+
+	JSON_Value* goArray = json_value_init_array();
+	JSON_Array* jsArray = json_value_get_array(goArray);
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		json_array_append_number(jsArray, transform->position[0]);
+	}
+	json_object_set_value(obj, "Position", goArray);
+
+	goArray = json_value_init_array();
+	jsArray = json_value_get_array(goArray);
+	json_array_append_number(jsArray, transform->rotation.x);
+	json_array_append_number(jsArray, transform->rotation.y);
+	json_array_append_number(jsArray, transform->rotation.z);
+	json_array_append_number(jsArray, transform->rotation.w);
+	json_object_set_value(obj, "Rotation", goArray);
+
+	goArray = json_value_init_array();
+	jsArray = json_value_get_array(goArray);
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		json_array_append_number(jsArray, transform->scale[0]);
+	}
+	json_object_set_value(obj, "Scale", goArray);
+
+	json_object_set_number(obj, "UID", uid);
+
+	if (parent)
+		json_object_set_number(obj, "UID", parent->uid);
+
+	json_array_append_value(_goArray, val);
+
+	{
+		JSON_Value* goArray = json_value_init_array();
+		JSON_Array* jsArray = json_value_get_array(goArray);
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			JSON_Value* nVal = json_value_init_object();
+			JSON_Object* nObj = json_value_get_object(nVal);
+
+			components[i]->SaveData(nObj);
+			json_array_append_value(jsArray, nVal);
+		}
+		json_object_set_value(obj, "Components", goArray);
+	}
+
+	for (size_t i = 0; i < children.size(); i++)
+	{
+		children[i]->SaveObjectData(_goArray);
+	}
+
+}
+
 Component::Component(GameObject* _gm) : active(true), owner(_gm), type(Type::NONE)
 {
 }
 
 Component::~Component()
 {
+}
+
+void Component::SaveData(JSON_Object* nObj)
+{
+	json_object_set_number(nObj, "Type", (int)type);
+	json_object_set_boolean(nObj, "Active", active);
+}
+
+void Component::LoadData(JSON_Object* nObj)
+{
+	active = json_object_get_boolean(nObj, "Active");
 }

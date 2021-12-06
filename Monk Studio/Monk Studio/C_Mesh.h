@@ -31,6 +31,8 @@ public:
 
 	int ContainsAaBox(const AABB& refBox) const;
 
+	void SaveData(JSON_Object* nObj) override;
+
 	Mesh* GetMesh();
 	void SetMesh(Mesh* _mesh);
 	void Unload();

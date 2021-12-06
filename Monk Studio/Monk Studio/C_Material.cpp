@@ -59,3 +59,16 @@ void ComponentMaterial::Unload()
 	delete tex;
 	tex = nullptr;
 }
+
+void ComponentMaterial::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+
+	json_object_set_boolean(nObj, "IsEmpty", (tex == nullptr) ? true : false);
+	if (tex != nullptr)
+	{
+		json_object_set_string(nObj, "AssetPath", tex->GetTexPath().c_str());
+		//json_object_set_string(nObj, "LibraryPath", resource library path);
+		//json_object_set_number(nObj, "UID", tex->uid);
+	}
+}

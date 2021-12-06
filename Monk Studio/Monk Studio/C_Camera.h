@@ -12,6 +12,8 @@ public:
 	void DrawBuffer(float dt);
 	void Update() override;
 
+	void SaveData(JSON_Object* nObj) override;
+
 	void CalculateViewMatrix();
 	void RecalculateProjection();
 	void LookAt(const float3& point);
