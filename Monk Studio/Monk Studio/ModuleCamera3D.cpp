@@ -14,16 +14,8 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	up = float3(0.0f, 1.0f, 0.0f);
 	front = float3(0.0f, 0.0f, 1.0f);
 
-	position = float3(0.0f, 5.0f, -15.0f);
+	position = float3(10.0f, 5.0f, -115.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
-
-	cameraFrustum.type = FrustumType::PerspectiveFrustum;
-	cameraFrustum.nearPlaneDistance = 0.1f;
-	cameraFrustum.farPlaneDistance = 1000.f;
-	cameraFrustum.front = float3(0, 0, 1);
-	cameraFrustum.up = float3(0, 1, 0);
-	cameraFrustum.verticalFov = 60.0f * DEGTORAD;
-	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2) * (16.f / 9.f));
 
 	CalculateViewMatrix();
 
@@ -174,6 +166,43 @@ update_status ModuleCamera3D::Update(float dt)
 	!hasRotated ? lastDeltaX = lastDeltaY = 0.f : 0.f;
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleCamera3D::MousePicking()
+{
+	ImVec2 normalized;
+	ImVec2 windowPos = ImGui::GetWindowPos();
+	ImVec2 windowSize = ImGui::GetWindowSize();
+	ImVec2 mousePos = ImGui::GetMousePos();
+	float padding = ImGui::GetFrameHeight();
+
+	normalized.x = ((mousePos.x - windowPos.x) / windowSize.x);
+	normalized.y = ((mousePos.y - (windowPos.y + padding)) / (windowSize.y - padding));
+
+	//normalized.x = (normalized.x - 0.74) / 0.5;
+	//normalized.y = -((normalized.y - 0.36) / 0.5);
+
+	normalized.x = (normalized.x - 0.5) / 0.5;
+	normalized.y = -((normalized.y - 0.5) / 0.5);
+
+	picking = cameraFrustum.UnProjectLineSegment(normalized.x, normalized.y);
+
+	//picking.a = picking.a - float3(-0.00323035032, 4.97216034, -14.9038706);
+	drawPicking = true;
+}
+
+void ModuleCamera3D::DrawPicking()
+{
+	glColor3f(1, 0, 1);
+	glLineWidth(3.f);
+	glBegin(GL_LINES);
+
+	glVertex3fv(&picking.a.x);
+	glVertex3fv(&picking.b.x);
+
+	glColor3f(1, 1, 1);
+	glEnd();
+
 }
 
 

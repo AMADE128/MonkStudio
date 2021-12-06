@@ -38,7 +38,10 @@ bool ModuleSceneIntro::Start()
 
 	camera = CreateGameObject("camera", nullptr);
 	camera->CreateComponent(Component::Type::CAMERA);
+	camera->transform->position.x = 10;
 	camera->transform->position.y = 5;
+	camera->transform->position.z = -115.1;
+
 
 	GameObject* street = GetGameObjectFromHierarchy("scene.DAE", sceneObjects);
 	street->transform->euler.x = -90;

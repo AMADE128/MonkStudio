@@ -43,13 +43,6 @@ bool ModuleResources::CleanUp()
 	return true;
 }
 
-bool ModuleResources::DrawUI()
-{
-	// aqui va lo de ensenyar las meshes y textures
-	return true;
-}
-
-
 int ModuleResources::ImportFile(const char* assetsFile, Resource::Type type)
 {
 	if (type == Resource::Type::UNKNOWN)
@@ -86,7 +79,6 @@ int ModuleResources::ImportFile(const char* assetsFile, Resource::Type type)
 
 	return ret;
 }
-
 
 Resource* ModuleResources::CreateNewResource(const char* assetsPath, Resource::Type type)
 {

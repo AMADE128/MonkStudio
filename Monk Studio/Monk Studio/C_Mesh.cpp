@@ -53,6 +53,8 @@ void ComponentMesh::Update()
 	if (dispAABB) DrawAABB();
 	if (dispOBB) DrawOBB();
 
+	appExternal->camera->DrawPicking();
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
@@ -128,6 +130,10 @@ void ComponentMesh::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Mesh Renderer"))
 	{
+		if (ImGui::Button("Select Mesh"))
+		{
+			appExternal->editor->show_select_mesh = true;
+		}
 		if (ImGui::Checkbox("Display Vertex Normals", &dispNormal))
 		{
 			UpdateNormals();

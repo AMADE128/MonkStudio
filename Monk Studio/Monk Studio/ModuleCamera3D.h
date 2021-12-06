@@ -1,9 +1,10 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "Math/float3.h"
-#include "Math/float4x4.h"
-#include "Geometry/Frustum.h"
+#include "External Libraries/MathGeoLib/include/Math/float3.h"
+#include "External Libraries/MathGeoLib/include/Math/float4x4.h"
+#include "External Libraries/MathGeoLib/include/Geometry/Frustum.h"
+#include "External Libraries/MathGeoLib/include/Geometry/LineSegment.h"
 
 class ModuleCamera3D : public Module
 {
@@ -13,6 +14,8 @@ public:
 
 	bool Start() override;
 	update_status Update(float dt)override;
+	void MousePicking();
+	void DrawPicking();
 	bool CleanUp() override;
 
 	void LookAt(const float3& point);
@@ -32,6 +35,8 @@ public:
 	float cameraSensitivity = .5f;
 	float cameraSpeed = 60.f;
 	bool projectionIsDirty = false;
+	LineSegment picking;
+	bool drawPicking = false;
 
 private:
 

@@ -1,7 +1,7 @@
 
 #include "C_Material.h"
 #include "Globals.h"
-
+#include "Application.h"
 #include "External Libraries/imgui/imgui.h"
 #include "External Libraries/imgui/imgui_impl_sdl.h"
 #include "External Libraries/imgui/imgui_impl_opengl2.h"
@@ -26,6 +26,12 @@ void ComponentMaterial::InspectorDraw()
 		{
 			active = !active;
 		}
+
+		if (ImGui::Button("Select Texture"))
+		{
+			appExternal->editor->show_select_texture = true;
+		}
+
 		ImGui::Text("%s", tex->GetAssetPath());
 		ImGui::Image((void*)(intptr_t)tex->GetTextureID(), ImVec2(tex->GetTextureWidth()/4, tex->GetTextureHeight()/4));
 		ImGui::Text("Size: %dx%d", tex->GetTextureWidth(), tex->GetTextureHeight());

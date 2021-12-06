@@ -3,6 +3,15 @@
 #include "C_Transform.h"
 #include "External Libraries/ImGuizmo/ImGuizmo.h"
 #include "External Libraries/imgui/imgui_internal.h"
+#include "External Libraries/assimp/include/cimport.h"
+#include "External Libraries/assimp/include/scene.h"
+#include "External Libraries/assimp/include/postprocess.h"
+#include "ModelImporter.h"
+
+#include "FileImporter.h"
+#include "TextureImporter.h"
+#include "MeshImporter.h"
+
 
 //Constructor
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -108,7 +117,6 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui::NewFrame();
 
 	DrawMenuBar();
-	DrawTopBar();
 
 	CreateDockAPI();
 
@@ -196,6 +204,12 @@ bool ModuleEditor::DrawUI()
 		}
 		lastViewportSize = viewportSize;
 		ImGui::Image((ImTextureID)App->viewportBufferScene->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
+
+		if (ImGui::IsWindowFocused() && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			App->camera->MousePicking();
+		}
+
 		ImGui::End();
 	}
 
@@ -212,6 +226,16 @@ bool ModuleEditor::DrawUI()
 		lastViewportSizeGame = viewportSize;
 		ImGui::Image((ImTextureID)App->viewportBufferGame->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
+	}
+
+	if (show_select_mesh)
+	{
+		DrawSelectMesh();
+	}
+
+	if (show_select_texture)
+	{
+		DrawSelectTexture();
 	}
 
 	return true;
@@ -560,6 +584,14 @@ void ModuleEditor::DrawMenuBar()
 			MenuHelp();
 			ImGui::EndMenu();
 		}
+		if (ImGui::Button("Play"))
+		{
+
+		}
+		if (ImGui::Button("Stop"))
+		{
+
+		}
 
 		ImGui::EndMainMenuBar();
 	}
@@ -587,11 +619,6 @@ void ModuleEditor::MenuView()
 	{
 		show_resources = !show_resources;
 	}
-	if (ImGui::MenuItem("Camera Settings", "Alt + 6", show_camera_settings))
-	{
-		show_camera_settings = !show_camera_settings;
-	}
-
 }
 
 void ModuleEditor::MenuHelp()
@@ -634,6 +661,73 @@ bool ModuleEditor::CleanUp()
 void ModuleEditor::LogToConsole(const char* txt)
 {
 	appExternal->window->console.push_back(std::string(txt));
+}
+
+void ModuleEditor::DrawSelectMesh()
+{
+	ImGui::OpenPopup("Select Mesh");
+	if (ImGui::BeginPopupModal("Select Mesh"))
+	{
+		ImVec2 winpos = { (float)appExternal->window->height / 2, (float)appExternal->window->width / 2 };
+		ImGui::SetNextWindowPos(winpos);
+		ImGui::SetNextWindowSize({ 300, 200 });
+		std::vector<std::string> names;
+		std::vector<std::string> path;
+
+		ImGui::Text("Select Mesh");
+
+		if (ImGui::Button("Close"))
+		{
+			show_select_mesh = false;
+		}
+
+		FileImporter::GetDirFiles("Library/Meshes", names, path);
+		for (int i = 0; i < names.size(); i++)
+		{
+			if (ImGui::Button(names[i].c_str()))
+			{
+				show_select_mesh = false;
+			}
+		}
+
+		/*ImGui::Text("uwu");*/
+
+		ImGui::EndPopup();
+	}
+}
+
+void ModuleEditor::DrawSelectTexture()
+{
+	ImGui::OpenPopup("Select Texture");
+	if (ImGui::BeginPopupModal("Select Texture"))
+	{
+		ImVec2 winpos = { (float)appExternal->window->height / 2, (float)appExternal->window->width / 2 };
+		ImGui::SetNextWindowPos(winpos);
+		ImGui::SetNextWindowSize({ 300, 200 });
+		std::vector<std::string> names;
+		std::vector<std::string> path;
+
+		ImGui::Text("Select Texture");
+
+
+		if (ImGui::Button("Close"))
+		{
+			show_select_texture = false;
+		}
+
+		FileImporter::GetDirFiles("Library/Textures", names, path);
+		for (int i = 0; i < names.size(); i++)
+		{
+			if (ImGui::Button(names[i].c_str()))
+			{
+				show_select_texture = false;
+			}
+		}
+
+		/*ImGui::Text("uwu");*/
+
+		ImGui::EndPopup();
+	}
 }
 
 void ModuleEditor::DeleteFromScene(GameObject* parent)
@@ -716,33 +810,4 @@ void ModuleEditor::SetDefaultImGuiStyle()
 	style.PopupRounding = 0.0f;
 	style.ScrollbarRounding = 0.0f;
 	style.TabRounding = 0.0f;
-}
-
-void ModuleEditor::DrawTopBar()
-{
-
-	ImGuiViewport* viewport = (ImGuiViewport*)ImGui::GetMainViewport();
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_MenuBar;
-	float height = ImGui::GetFrameHeight();
-
-	if (ImGui::BeginViewportSideBar("##SecondaryMenuBar", viewport, ImGuiDir_Up, height, window_flags)) {
-		if (ImGui::BeginMenuBar()) {
-			if (ImGui::Button("Play"))
-			{
-
-			}
-			ImGui::SameLine();
-			if (ImGui::Button("Pause"))
-			{
-
-			}
-			ImGui::SameLine();
-			if (ImGui::Button("Stop"))
-			{
-
-			}
-			ImGui::EndMenuBar();
-		}
-		ImGui::End();
-	}
 }
