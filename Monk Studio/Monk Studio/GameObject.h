@@ -68,8 +68,9 @@ public:
 	Component* CreateComponent(Component::Type _type);
 	void SetColor(GameObject gm);
 	Component* GetComponent(Component::Type _type);
-	void LoadComponents(const char*);
+	void LoadComponents(const JSON_Array*);
 	void SaveObjectData(JSON_Array* _goArray);
+	Component* AddComponent(Component::Type type);
 
 	void Enable() { active = true; }
 	void Disable() { active = false; }

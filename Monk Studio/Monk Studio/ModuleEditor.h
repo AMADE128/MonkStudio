@@ -40,6 +40,7 @@ public:
 	void MenuRender();
 	void MenuGameObject();
 	void DrawMenuBar();
+	void DrawTopBar();
 	void MenuFile();
 	void HierarchyDraw(GameObject* parent);
 	void MoveDownHierarchy(GameObject* parent);

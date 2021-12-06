@@ -108,6 +108,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui::NewFrame();
 
 	DrawMenuBar();
+	DrawTopBar();
 
 	CreateDockAPI();
 
@@ -715,4 +716,33 @@ void ModuleEditor::SetDefaultImGuiStyle()
 	style.PopupRounding = 0.0f;
 	style.ScrollbarRounding = 0.0f;
 	style.TabRounding = 0.0f;
+}
+
+void ModuleEditor::DrawTopBar()
+{
+
+	ImGuiViewport* viewport = (ImGuiViewport*)ImGui::GetMainViewport();
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_MenuBar;
+	float height = ImGui::GetFrameHeight();
+
+	if (ImGui::BeginViewportSideBar("##SecondaryMenuBar", viewport, ImGuiDir_Up, height, window_flags)) {
+		if (ImGui::BeginMenuBar()) {
+			if (ImGui::Button("Play"))
+			{
+
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Pause"))
+			{
+
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Stop"))
+			{
+
+			}
+			ImGui::EndMenuBar();
+		}
+		ImGui::End();
+	}
 }

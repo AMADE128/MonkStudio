@@ -189,6 +189,50 @@ void GameObject::SaveObjectData(JSON_Array* _goArray)
 
 }
 
+void GameObject::LoadComponents(const JSON_Array* _goArray)
+{
+	JSON_Object* jsComponent = nullptr;
+	for (size_t i = 1; i < json_array_get_count(_goArray); i++)
+	{
+		jsComponent = json_array_get_object(_goArray, i);
+
+		Component* comp = AddComponent((Component::Type)json_object_get_number(jsComponent, "Type"));
+		comp->LoadData(jsComponent);
+
+	}	
+}
+
+Component* GameObject::AddComponent(Component::Type _type)
+{
+
+	Component* ret = nullptr;
+
+	switch (_type)
+	{
+	case Component::Type::TRANSFORM:
+		if (transform == nullptr)
+			ret = new ComponentTransform(this);
+		break;
+	case Component::Type::MESH:
+		ret = new ComponentMesh(this);
+		break;
+	case Component::Type::MATERIAL:
+		ret = new ComponentMaterial(this);
+		break;
+	case Component::Type::CAMERA:
+		ret = new ComponentCamera(this);
+		break;
+	}
+
+	if (ret != nullptr)
+	{
+		ret->type = _type;
+		components.push_back(ret);
+	}
+
+	return ret;
+}
+
 Component::Component(GameObject* _gm) : active(true), owner(_gm), type(Type::NONE)
 {
 }
@@ -206,4 +250,5 @@ void Component::SaveData(JSON_Object* nObj)
 void Component::LoadData(JSON_Object* nObj)
 {
 	active = json_object_get_boolean(nObj, "Active");
+	type = (Type)json_object_get_number(nObj, "Type");
 }
