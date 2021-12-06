@@ -30,7 +30,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->load->LoadFile("Assets/street/scene.DAE");
+	App->load->LoadFile("Assets/street/scene.DAE", 0);
 
 	p = new PrimPlane(0 , 1, 0, 0);
 
@@ -42,7 +42,7 @@ bool ModuleSceneIntro::Start()
 
 	GameObject* street = GetGameObjectFromHierarchy("scene.DAE", sceneObjects);
 	street->transform->euler.x = -90;
-	App->load->LoadFile("Assets/Textures/bakeHouse.png");
+	App->load->LoadFile("Assets/street/Building_V02_C.png", 0);
 
 	//this is to ensure the final color of the primitives isnt affected
 	//DisableColorProperties();
@@ -180,6 +180,10 @@ update_status ModuleSceneIntro::Update(float dt)
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
 	
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		SaveScene("Assets/scene1.monk");
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -194,5 +198,108 @@ void ModuleSceneIntro::DisableColorProperties()
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_3D);
 	glShadeModel(GL_FLAT);
+}
+
+void ModuleSceneIntro::SaveScene(const char* scenePath)
+{
+	JSON_Value* val = json_value_init_object();
+	JSON_Object* rObj = json_value_get_object(val);
+
+	JSON_Value* goArray = json_value_init_array();
+	JSON_Array* jsArray = json_value_get_array(goArray);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.pos.x);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.pos.y);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.pos.z);
+	json_object_set_value(rObj, "Camera Position", goArray);
+
+	goArray = json_value_init_array();
+	jsArray = json_value_get_array(goArray);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.front.x);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.front.y);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.front.z);
+	json_object_set_value(rObj, "Camera Z", goArray);
+
+	goArray = json_value_init_array();
+	jsArray = json_value_get_array(goArray);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.up.x);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.up.y);
+	json_array_append_number(jsArray, App->camera->cameraFrustum.up.z);
+	json_object_set_value(rObj, "Camera Y", goArray);
+
+	goArray = json_value_init_array();
+	sceneObjects->SaveObjectData(json_value_get_array(goArray));
+
+	json_object_set_value(rObj, "Game Objects", goArray);
+
+	json_serialize_to_file_pretty(val, scenePath);
+
+	json_value_free(val);
+}
+
+void ModuleSceneIntro::LoadScene(const char* scenePath)
+{
+
+	//JSON_Value* scene = json_parse_file(scenePath);
+
+	//if (scene == NULL)
+	//	return;
+
+	//delete sceneObjects;
+	//sceneObjects = nullptr;
+	//App->editor->selectedNode = nullptr;
+
+	//JSON_Object* sceneObj = json_value_get_object(scene);
+
+	//JSON_Array* vecArray = json_object_dotget_array(sceneObj, "Camera Position");
+	//App->camera->cameraFrustum.pos.x = json_array_get_number(vecArray, 0);
+	//App->camera->cameraFrustum.pos.y = json_array_get_number(vecArray, 1);
+	//App->camera->cameraFrustum.pos.z = json_array_get_number(vecArray, 2);
+
+	//vecArray = json_object_dotget_array(sceneObj, "Camera Z");
+	//App->camera->cameraFrustum.front.x = json_array_get_number(vecArray, 0);
+	//App->camera->cameraFrustum.front.y = json_array_get_number(vecArray, 1);
+	//App->camera->cameraFrustum.front.z = json_array_get_number(vecArray, 2);
+
+	//vecArray = json_object_dotget_array(sceneObj, "Camera Y");
+	//App->camera->cameraFrustum.up.x = json_array_get_number(vecArray, 0);
+	//App->camera->cameraFrustum.up.y = json_array_get_number(vecArray, 1);
+	//App->camera->cameraFrustum.up.z = json_array_get_number(vecArray, 2);
+
+	//JSON_Array* sceneArr = json_object_get_array(sceneObj, "Game Objects");
+
+	//JSON_Object* obj = json_array_get_object(sceneArr, 0);
+	//sceneObjects = CreateGameObject(json_object_get_string(obj, "Name"), nullptr, json_object_get_number(obj, "UID"));
+
+	//GameObject* parent = sceneObjects;
+	//for (size_t i = 1; i < json_array_get_count(sceneArr); i++)
+	//{
+	//	obj = json_array_get_object(sceneArr, i);
+	//	GameObject* originalParent = parent;
+
+	//	while (parent != nullptr && json_object_get_number(obj, "Parent UID") != parent->uid)
+	//		parent = parent->parent;
+
+	//	if (parent == nullptr)
+	//		parent = originalParent;
+
+	//	parent = CreateGameObject(json_object_get_string(obj, "Name"), parent, json_object_get_number(obj, "UID"));
+
+	//	vecArray = json_object_dotget_array(obj, "Position");
+	//	parent->transform->SetPos(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2));
+
+	//	vecArray = json_object_dotget_array(obj, "Rotation");
+	//	parent->transform->rotation.x = json_array_get_number(vecArray, 0);
+	//	parent->transform->rotation.y = json_array_get_number(vecArray, 1);
+	//	parent->transform->rotation.z = json_array_get_number(vecArray, 2);
+	//	parent->transform->rotation.w = json_array_get_number(vecArray, 3);
+
+	//	vecArray = json_object_dotget_array(obj, "Scale");
+	//	parent->transform->Scale(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2));
+	//	parent->LoadComponents(json_object_get_array(obj, "Components"));
+
+	//}
+
+	////Free memory
+	//json_value_free(scene);
 }
 

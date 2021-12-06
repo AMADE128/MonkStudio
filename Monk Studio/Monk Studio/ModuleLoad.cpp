@@ -63,6 +63,8 @@ bool ModuleLoad::Start()
 
 	GenerateMetaFiles("Assets");
 
+	GenerateLibraryFiles("Assets");
+
 	return ret;
 }
 
@@ -78,36 +80,39 @@ update_status ModuleLoad::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-bool ModuleLoad::LoadFile(const std::string& fileName)
+bool ModuleLoad::LoadFile(const std::string& fileName, unsigned int _uid)
 {
 	bool ret = false;
 
 	std::string fileExtension = GetFileExtension(fileName.c_str());
 
-	if (fileExtension == "fbx" || fileExtension == "DAE")
+	if (fileExtension == "fbx" || fileExtension == "dae" || fileExtension == "FBX" || fileExtension == "DAE")
 	{
 		const aiScene* scene = aiImportFile(fileName.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 		aiNode* parentNode = scene->mRootNode;
 		GameObject* parentObject = App->scene_intro->CreateGameObject(scene->GetShortFilename(fileName.c_str()), App->editor->selectedNode);
-		ModelImporter::Save(parentObject);
 		if (parentNode != nullptr) SetDefaultMeshTransform(parentNode, parentObject, nullptr);
 
 		if (scene != nullptr && scene->HasMeshes())
 		{
 			NodesToMeshes(parentNode, scene->mMeshes, parentObject, fileName.c_str(), 0);
+
+			for (size_t i = 0; i < scene->mNumMeshes; i++)
+			{
+				Mesh* m = new Mesh(App->GetRandomInt());
+				m->InitFromScene(scene->mMeshes[i]);
+				//MeshImporter::Save(m);
+			}
 		}
 		else
 		{
 			LOG("Error loading '%s'", fileName.c_str());
 		}
+		parentObject->uid = _uid;
+		ModelImporter::Save(parentObject);
 	}
 	else if (fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds" || fileExtension == "tga")
 	{
-		char* fileBuffer = nullptr;
-		unsigned int size = FileImporter::GetFileSize(fileName.c_str(), &fileBuffer);
-		unsigned int nameFile = appExternal->GetRandomInt();
-		std::string fullPath = "Library/Textures/" + to_string(nameFile) + ".dds";
-		TextureImporter::Save(fileBuffer, size, fullPath.c_str());
 
 		if (App->editor->selectedNode != nullptr )
 		{
@@ -118,7 +123,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 					if (App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL) != nullptr)
 					{
 						ComponentMaterial* cMat = static_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
-						Texture* newTex = new Texture(nameFile);
+						Texture* newTex = new Texture(3);
 						newTex->Load(fileName.c_str());
 						cMat->SetTexture(newTex);
 
@@ -134,7 +139,7 @@ bool ModuleLoad::LoadFile(const std::string& fileName)
 					{
 						App->editor->selectedNode->children[i]->CreateComponent(Component::Type::MATERIAL);
 						ComponentMaterial* cMat = static_cast<ComponentMaterial*>(App->editor->selectedNode->children[i]->GetComponent(Component::Type::MATERIAL));
-						Texture* newTex = new Texture(nameFile);
+						Texture* newTex = new Texture(3);
 						newTex->Load(fileName.c_str());
 						cMat->SetTexture(newTex);
 
@@ -167,12 +172,6 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 
 			Mesh* mesh = new Mesh(appExternal->GetRandomInt());
 
-			/*uint UID = currentUID;
-			if (UID == 0)
-			{
-				UID = App->resources->GenerateNewUID();
-			}
-			mesh = dynamic_cast<Mesh*>(App->resources->CreateNewResource("", UID, Resource::Type::MESH));*/
 			mesh->InitFromScene(meshes[childNode->mMeshes[j]]);
 			meshesList.push_back(mesh);
 			for (unsigned int k = 0; k < meshesList.size(); k++)
@@ -187,8 +186,6 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 				delete cm;
 				cm = nullptr;
 			}
-
-			MeshImporter::Save(static_cast<ComponentMesh*>(childObject->GetComponent(Component::Type::MESH))->GetMesh(), fileName);
 			App->editor->selectedNode = parentObject;
 			meshesList.clear();
 			std::vector<Mesh*>().swap(meshesList);
@@ -199,7 +196,6 @@ void ModuleLoad::NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* 
 			if (childObject != nullptr)
 			{
 				SetDefaultMeshTransform(childNode, childObject, parentNode);
-				ModelImporter::Save(childObject);
 			}
 
 			if (childNode->mNumChildren > 0)
@@ -289,6 +285,25 @@ void ModuleLoad::GenerateMeta(const char* filePath)
 		if (type != Resource::Type::UNKNOWN)
 		{
 			appExternal->resources->CreateMeta(filePath, appExternal->resources->CreateLibraryPath(resUID, type).c_str(), resUID, type);
+		}
+	}
+}
+
+void ModuleLoad::GenerateLibraryFiles(const char* filePath)
+{
+	if (!FileImporter::IsDirectory(filePath) && !FileImporter::IsOnLibrary(filePath))
+	{
+		unsigned int id = App->resources->ImportFile(filePath, App->resources->GetExtensionType(filePath));
+	}
+	
+	if (FileImporter::IsDirectory(filePath))
+	{
+		std::vector<string> filesNames;
+		std::vector<string> filesPaths;
+		FileImporter::GetDirFiles(filePath, filesNames, filesPaths);
+		for (size_t i = 0; i < filesPaths.size(); i++)
+		{
+			GenerateLibraryFiles(filesPaths[i].c_str());
 		}
 	}
 }

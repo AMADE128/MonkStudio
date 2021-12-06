@@ -487,23 +487,23 @@ void ModuleEditor::MenuGameObject()
 {
 	if (ImGui::MenuItem("Cube"))
 	{
-		App->load->LoadFile("Assets/Primitives/Cube.fbx");
+		App->load->LoadFile("Assets/Primitives/Cube.fbx", 0);
 	}
 	if (ImGui::MenuItem("Sphere"))
 	{
-		App->load->LoadFile("Assets/Primitives/Sphere.fbx");
+		App->load->LoadFile("Assets/Primitives/Sphere.fbx", 0);
 	}
 	if (ImGui::MenuItem("Pyramid"))
 	{
-		App->load->LoadFile("Assets/Primitives/Pyramid.fbx");
+		App->load->LoadFile("Assets/Primitives/Pyramid.fbx", 0);
 	}
 	if (ImGui::MenuItem("Cylinder"))
 	{
-		App->load->LoadFile("Assets/Primitives/Cylinder.fbx");
+		App->load->LoadFile("Assets/Primitives/Cylinder.fbx", 0);
 	}
 	if (ImGui::MenuItem("Plane"))
 	{
-		App->load->LoadFile("Assets/Primitives/Plane.fbx");
+		App->load->LoadFile("Assets/Primitives/Plane.fbx", 0);
 	}
 }
 

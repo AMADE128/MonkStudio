@@ -28,10 +28,7 @@ void TextureImporter::Save(char* buffer, int size, const char* fileName)
 		data = new ILubyte[_size];
 		ilSaveL(IL_DDS, data, _size);
 
-		std::string path(fileName);
-		//path += ".dds";
-
-		FileImporter::Save(path.c_str(), (char*)data, _size, false);
+		FileImporter::Save(fileName, (char*)data, _size, false);
 
 		delete[] data;
 		data = nullptr;

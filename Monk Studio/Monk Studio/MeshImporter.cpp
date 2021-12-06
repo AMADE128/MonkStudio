@@ -4,10 +4,8 @@
 #include "FileImporter.h"
 #include <string>
 
-void MeshImporter::Save(Mesh* mesh, const char* fileName)
+void MeshImporter::Save(Mesh* mesh)
 {
-	std::string nameFile;
-	FileImporter::GetFileName(fileName, nameFile, false);
 	std::string fullPath = "Library/Meshes/" + std::to_string(mesh->GetUID()) + ".fist";
 
 	Mesh* newMesh = new Mesh(mesh->GetUID());

@@ -2,6 +2,11 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleLoad.h"
+
+#include "TextureImporter.h"
+#include "MeshImporter.h"
+#include "ModelImporter.h"
+
 #include <string>
 
 ModuleResources::ModuleResources(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -47,20 +52,38 @@ bool ModuleResources::DrawUI()
 
 int ModuleResources::ImportFile(const char* assetsFile, Resource::Type type)
 {
+	if (type == Resource::Type::UNKNOWN)
+		return 0;
+
 	int ret = 0;
-	/*
-	Resource* resource CreateNewResource(assetsFile, type); //Save ID, assetsFile path, libraryFile path
-	char* fileBuffer = Engine->fileSystem->Load(assetsFile); //<-- pseudocode, load from File System
-	switch (resource->Type) {
-	case Resource::Type::TEXTURE: // App->tex->Import(fileBuffer, resource); break;
-	case Resource::Type::SCENE: // App->scene->Import(fileBuffer, resource); break;
-	case Resource::Type::MESH: // App->meshes > Import(fileBuffer, resource); break;
+	
+	//Generate meta
+	std::string metaPath;
+	metaPath = std::string(assetsFile) + ".meta";
+
+	JSON_Value* val = json_parse_file(metaPath.c_str());
+	JSON_Object* nObj = json_value_get_object(val);
+
+	uint uid = json_object_get_number(nObj, "UID");
+	std::string libPath = json_object_get_string(nObj, "Library Path");
+
+	json_value_free(val);
+
+	char* buff = nullptr;
+	unsigned int size = FileImporter::GetFileSize(assetsFile, &buff);
+
+	switch (type)
+	{
+	case Resource::Type::TEXTURE: TextureImporter::Save(buff, size, libPath.c_str()); break;
+	//case Resource::Type::MODEL: App->load->LoadFile(); break;
+	case Resource::Type::MESH: 
+		App->load->LoadFile(assetsFile, uid); 
+		break;
+	//case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 	}
-	SaveResource(resource);
-	ret = resource->GetID();
-	RELEASE_ARRAY(buffer);
-	UnloadResource(resource); //<-- unload the resource after importing, we should only use the ID
-	*/
+
+	RELEASE_ARRAY(buff);
+
 	return ret;
 }
 
@@ -105,8 +128,8 @@ Resource::Type ModuleResources::GetExtensionType(const char* filePath)
 {
 	std::string ext = appExternal->load->GetFileExtension(filePath);
 
-	if (ext == "fbx" || ext == "dae")
-		return Resource::Type::MODEL;
+	if (ext == "fbx" || ext == "dae" || ext == "FBX" || ext == "DAE")
+		return Resource::Type::MESH;
 	else if (ext == "tga" || ext == "png" || ext == "jpg" || ext == "dds")
 		return Resource::Type::TEXTURE;
 	else if (ext == "monk")
@@ -121,7 +144,7 @@ void ModuleResources::CreateMeta(const char* assPath, const char* libPath, unsig
 {
 	//TODO: Move all json usage to own structure ASAP
 	JSON_Value* file = json_value_init_object();
-	JSON_Object* nObj(json_value_get_object(file));
+	JSON_Object* nObj = json_value_get_object(file);
 
 	json_object_set_string(nObj, "Assets Path", assPath);
 	json_object_set_string(nObj, "Library Path", libPath);

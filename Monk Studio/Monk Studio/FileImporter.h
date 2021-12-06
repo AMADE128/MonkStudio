@@ -18,6 +18,7 @@ namespace FileImporter
 	uint GetFileSize(const std::string& fileName, char** buffer);
 
 	bool ExistsMeta(const char* filePath);
+	bool IsOnLibrary(const char* filePath);
 
 	void GetFileName(const char* file, std::string& fileName, bool extension);
 

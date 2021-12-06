@@ -19,12 +19,13 @@ public:
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 
-	bool LoadFile(const std::string& fileName);
+	bool LoadFile(const std::string& fileName, unsigned int _uid);
 
 	void NodesToMeshes(aiNode* parentNode, aiMesh** meshes, GameObject* parentObject, const char* fileName, uint currentUID);
 
 	void GenerateMetaFiles(const char* filePath);
 	void GenerateMeta(const char* filePath);
+	void GenerateLibraryFiles(const char* filePath);
 
 	void SetDefaultMeshTransform(aiNode* node, GameObject* object, aiNode* parentNode);
 

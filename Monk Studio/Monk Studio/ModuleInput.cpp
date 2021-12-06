@@ -117,7 +117,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			case (SDL_DROPFILE):
 			{
 				LOG("Dropped file %c", e.drop.file);
-				App->load->LoadFile(e.drop.file);
+				App->load->LoadFile(e.drop.file, 0);
 				SDL_free(e.drop.file);
 				break;
 			}

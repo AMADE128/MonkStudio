@@ -4,7 +4,7 @@ class Mesh;
 
 namespace MeshImporter
 {
-	void Save(Mesh* mesh, const char* fileNames);
+	void Save(Mesh* mesh);
 	void Load();
 
 }

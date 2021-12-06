@@ -23,6 +23,9 @@ public:
 
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 
+	void SaveScene(const char* scenePath);
+	void LoadScene(const char* scenePath);
+
 	GameObject* GetGameObjectFromHierarchy(const char* _name, GameObject* parent);
 
 	void UpdateGameObjects(GameObject* parent);

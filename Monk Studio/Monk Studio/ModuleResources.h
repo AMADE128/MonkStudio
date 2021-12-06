@@ -26,7 +26,7 @@ public:
 	Resource::Type GetExtensionType(const char* filePath);
 	void CreateMeta(const char* assPath, const char* libPath, unsigned int _uid, Resource::Type type);
 	std::string CreateLibraryPath(unsigned int _uid, Resource::Type _type);
-	
+
 	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
 	Resource* RequestResource(int uid);
 	void ReleaseResource(int uid);

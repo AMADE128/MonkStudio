@@ -1,6 +1,7 @@
 #include "FileImporter.h"
 #include "External Libraries/Physfs/include/physfs.h"
 #include "External Libraries/SDL/include/SDL.h"
+#include "parson.h"
 
 void FileImporter::Init()
 {
@@ -185,7 +186,29 @@ void FileImporter::GetFileName(const char* file, std::string& fileName, bool ext
 
 bool FileImporter::ExistsMeta(const char* filePath)
 {
-	std::string metaFilePath;
+	std::string metaFilePath = filePath;
 	metaFilePath += ".meta";
 	return PHYSFS_exists(metaFilePath.c_str()) != 0;
+}
+
+bool FileImporter::IsOnLibrary(const char* filePath)
+{
+	std::string metaFile(filePath);
+	metaFile += ".meta";
+
+	if (PHYSFS_exists(metaFile.c_str()) != 0)
+	{
+		JSON_Value* metaVal = json_parse_file(metaFile.c_str());
+		JSON_Object* nObj = json_value_get_object(metaVal);
+
+		std::string libPath = json_object_get_string(nObj, "Library Path");
+
+		if (PHYSFS_exists(libPath.c_str()) != 0)
+			return true;
+
+		json_value_free(metaVal);
+	}
+
+
+	return false;
 }
