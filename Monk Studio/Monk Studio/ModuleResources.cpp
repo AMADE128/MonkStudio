@@ -40,30 +40,9 @@ bool ModuleResources::CleanUp()
 
 bool ModuleResources::DrawUI()
 {
-	// aqui va lo de ensenyar las meshes y textures
+
 	return true;
 }
-
-
-int ModuleResources::ImportFile(const char* assetsFile, Resource::Type type)
-{
-	int ret = 0;
-	/*
-	Resource* resource CreateNewResource(assetsFile, type); //Save ID, assetsFile path, libraryFile path
-	char* fileBuffer = Engine->fileSystem->Load(assetsFile); //<-- pseudocode, load from File System
-	switch (resource->Type) {
-	case Resource::Type::TEXTURE: // App->tex->Import(fileBuffer, resource); break;
-	case Resource::Type::SCENE: // App->scene->Import(fileBuffer, resource); break;
-	case Resource::Type::MESH: // App->meshes > Import(fileBuffer, resource); break;
-	}
-	SaveResource(resource);
-	ret = resource->GetID();
-	RELEASE_ARRAY(buffer);
-	UnloadResource(resource); //<-- unload the resource after importing, we should only use the ID
-	*/
-	return ret;
-}
-
 
 Resource* ModuleResources::CreateNewResource(const char* assetsPath, Resource::Type type)
 {
