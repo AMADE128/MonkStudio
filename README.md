@@ -1,115 +1,102 @@
-# MonkStudio
-MonkStudio is a 3D game engine developed by students at CITM. 
-https://github.com/AMADE128/MonkStudio
+# Ragnar Engine
 
-## Developers
-- Himar Bravo González (https://github.com/himar33)
-- Marc Pavon Llop (https://github.com/Marckitus)
-- Pol Vázquez Porcar (https://github.com/AMADE128)
+Ragnar Engine is a Video Game Engine created by [Lucas Pérez](https://github.com/LucasPG14). and [Oriol Bernal](https://github.com/UriKurae)., two students from the university Universitat Politècnica de Catalunya (CITM). 
 
-## How to use
-The user can move through the menus by clicking on them.
-On the main menu bar at the top of the screen: (each main menu button has an option :::::::::: that opens that menu as a windows, so the user won't have to enter multiple times).
-### File:
- Quit: Exit the game. (can also be done pressing ESC).
+## Planning
 
-### Render:
- Buttons to enable/disable: Depth Test, Cull Face, Lighting, Color Material, Textures and Wireframe mode. 
+The purpose of this project is to create a friendly-user, well optimized Game Engine for the subject "VideoGame Engines" from the 3rd year. The short term plan is to implement the basic features of a Game Engine, such as loading models, working in a 3D environment, etc...
 
-### Game Object:
- Creates some basic objects like: Cube, Sphere, Pyramid, Cylinder, Plane.
+For the long term, we would love to create a game with this Video Game Engine
 
-### View:
- Buttons to open windows:
-- Console:
-User can see the logs in engine. (also opens with Alt + 1).
+## Installation
 
-- Hierarchy:
-User can select and move objects by clicking in them and droping over others, right clicking on objects opens a submenu to delete, create an empty child or move it up and right on the child list. (also opens with Alt + 2).
+The installation is pretty straight-forward and easy, just go into the [releases tab](https://github.com/UriKurae/Ragnar-Engine/releases), and download the latest version.
+The download files include an exe and you just have to execute it to test our engine.
 
-- Inspector:
-Shows the properties from the selected object, those can be: (also opens with Alt + 3)
-Changing the name of the object.
-Local Transformation: The user can see and change the Position, Rotation and scale of the selected object by scrolling or writing the variables.
-Mesh Renderer: Checkbox to display Vertex Normals, AABB and OOBB, of the selected mesh, drop any imported mesh. Also can delete the component.
-Material: User can activate/desactivate the texture, see the path and size of the image, and set a default texure over it, drop any imported texture. Also can delete the component.
+**Carefull**: You can edit the config file to modify some properties like the window and everything, but they come with an optimal configuration already.
 
-- Configuartion:
-Accses to Application, Window, File System, Hardware and Input options. (also opens with Alt + 4)
+## Features
 
-Application: The user can change te App name (Monk Studio by default) Cap the FPS to anything between 60 and 1 FPS, and 3 charts with the Framerate, Miliseconds in between, and Process Memory.
+v0.8
 
-Window: User can change the Brightness of the monitor, Width and Height of the engine, enable Fullscreen, making the window resizable or not, Borderless or full desktop.
+- Stencil border for the selected GameObject.
+- Raycasting objects to select them (MousePicking).
+- MousePicking detects the closest target that is hit.
+- Resource manager that manages all kinds of resources, with a cool design.
+  - All files are shown in the resource manager.
+  - You can import any asset you need in it.
+  - For better user experience, the resource has icons for models, folders, textures...
+- Play/Stop/Pause and Advance next frame for game mode.
+- Own file formats, hidden in the Engine's background.
+  - They are saved as .rgtexture, .rgmesh and .rgmodel.
+  - The scenes are saved as .ragnar.
+  - The user will see the file formats as the ones he/she imported (png, jpg...).
+- Selected GameObjects have Guizmos for better user experience.
+- Imported texture and model options and filters (Alienify, flip UVs, Gaussian Blur...)
+- Game clock and Engine clock.
+- Quadtree implementation for better optimization.
+- Camera system (Camera component, FOV, planes, etc...).
+- Mini viewer to see what the game camera is looking at in the editor view.
+  - Must have the camera selected, and it will be show in the bottom right corner of the editor viewport. 
+- Different viewports (Editor View and Game View).
+- Correct serialization and load methods for the engine.
+- Frustum Culling for the cameras.
+- AABB system for all the GameObjects.
+- Shortcuts and explorer viewer for save, load and open files for better user experience.
 
-File System: Shows the base path where the engine is located.
+v0.5
 
-Hardware: Shows what version of SDL, OpenGl, Glew, and Devil the engine is using, the computer CPU, Ram, Caps, GPU and its brand.
+- Camera movement (Rotate, Move, Orbit, Focus).
+- Drag and drop textures and models.
+- Load and save the configuration.
+- GameObject and components system (Transform component, Mesh Renderer and Material Component).
+- GameObject options (Rename, activate, move in the hierarchy, delete).
+- Inspector information (Transform, mesh renderer, material).
+- Own basic shapes (Pyramid, Sphere, Cube and Cylinder).
+- Saving images to DDS for lower size.
+- Beautiful and usable UX (provided by ImGui).
+- Debug options for GameObjects (Normals, Normal length, Normal color, etc...).
+- System information (Console, Hardware, Software, etc...).
+- Opengl options (Wireframe Mode, Texture2D, Vsync, Stencil, etc...).
+- Ability to close and reopen menus from the editor.
 
-Input: Shows in real time the mouse: Position, Motion, and wheel. Also logs all user inputs.
+## Controls
 
-- Assets:
-Displays list of all current loaded fbx, and by right-clicking on them the user can create new folders. (also opens with Alt + 5)
+- Right click + WASD: Move the camera in it's own axis.
+- Right click + Q/E: Move the camera up or down in it's own axis.
+- Mouse scroll wheel: Move the camera forward and backwards in it's own axis.
+- While selecting a GameObject and holding Alt + left click: Orbit the camera around the GameObject.
+- While selecting a GameObject and pressing F: Focus the GameObject.
+- Key T: Reset the camera (World axis reset).
+- Right click GameObject in the hierarchy: Open GameObject options.
+- Supr while a GameObject is selected: Delete the GameObject.
+- Supr while a resource is selected: Delete the resource.
+- Hold left click in the hierarchy menu: Move GameObjects in the hierarchy (Reparenting).
+- W,E,R buttons: show Move, Scale, Rotate guizmos. 
+- Ctrl + N: Generate a new scene (You will be warned to save your current project).
+- Ctrl + O: Opens the explorer window to search for a file and open it.
+- Ctrl + S: Saves the current Scene.
+- Ctrl + Shift + S: Opens the explorer window to save the scene in a desired location.
+- Ctrl + D: Duplicates the selected game object.
 
-### Help
-From help the user can open an ImGui Demo, go to our github, releases and report bugs, as well as a window about with information.
+- Play/Stop/Pause and Advance frame: To start a game preview, hit the play button, when you hit the play button, the preview will start, and the play button will be swapped by
+the stop button. Hitting the stop button will stop the game preview.
+Pause button will pause the game preview until you hit it again. When having the game in pause, you can advance one frame if you want. Also, the buttons and the whole engine will have different UI colors to let the user know that he is in game preview mode.
 
-### Movement and Shortcuts
-User can move with WASD and look arround freely when pressing rightclick, also go verticaly UP or DOWN with E and R
+## User Interface
 
-- Mouse + right Click: free look.
-- W: forward.
-- A: left.
-- S: backward.
-- D: right.
-- Q: UP on Y axis.
-- E: DOWN on Y axis.
-
-Alt + right click: Orbit arround the selected object.
-
-Mouse Wheel: Zoom in and out.
-
-Shift: Duplicates movement.
-
-## Loading FBX and textures
-User can drag and drop .fbx files onto the engine to load them.
-The same can be done with .png .dds and .jpgs to load them as texutre for the selected object.
-
-## Camera
-The editor has 2 windows one with the scene and another captured from a
-gameobject with a camera component, each one has its own
-framebuffer and the user can visualize both at the same time.
-Camera is a component.
-All meshes use a bounding volume (AABB) and can be discarted using Frustum Culling.
-User can activate AABB and OBB on the inspector.
-
-## Custome File Format
-Models, meshes and textures are saved to our own format under “Library” folder.
-
-## Resource Manager
-
-- There is an “Assets” window that shows all user assets * it can be a simple tree
-viewer
-- The user can drop/import new files. Assets window reacts properly
-- Asset files can be deleted through the window and /Library entries are removed
-- Upon start, all resources not managed inside Assets are generated in Library *
-/Library folder should be regenerated from /Assets + meta content
-- All resources use reference counting (e.g. a texture / mesh is only once in memory
-regardless of how many gameobject use it). This requires this process to be
-visualized in the editor.
+The menus are also very straight-forward, you can navigate through them and have multiple options for the engine itself, there are many options, so it's highly encouraged to test everything to understand the interface, **but keep in mind the following**:
+- You can close any tab from the user interface, but don't worry, as you can re-open any window at any time.
+- You can click and hold any tab to reallocate it anywhere you want.
 
 
-# Additional Funcionalities
-- The option to open all main menu buttons as windows pressing the first option that is (::::::::::::) a line of dots. (Such as Maya 2020 does).
-- Render menu where the user can enable/disable Depth Test, Cull Face, Lighting, Color Material, Textures and Wireframe mode.
-- Changed style.
+## Game Engine Developers
 
+- [Lucas Pérez García](https://github.com/LucasPG14).
+- [Oriol Bernal Martínez](https://github.com/UriKurae).
 
-## Fork
-ModuleViewPortFrameBuffer.cpp, ModuleViewPortFrameBuffer.h, ModuleCamera3D.cpp, ModuleCamera3D.h forked from our teachers GitHub project Engine3D: https://github.com/solidajenjo/Engine3D
+## License
 
+**Copyright (c) Lucas Pérez and Oriol Bernal. License Under the MIT License.**
 
-
-
-
-
- 
+- [MIT License link to check more details about it.](https://opensource.org/licenses/MIT)
