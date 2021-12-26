@@ -8,6 +8,7 @@
 #include "ModuleEditor.h"
 #include "FileSystem.h"
 #include "ResourceManager.h"
+#include "ModuleAudio.h"
 
 #include "Profiling.h"
 
@@ -19,6 +20,7 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D();
 	camera = new ModuleCamera3D();
 	editor = new ModuleEditor();
+	audio = new ModuleAudio();
 
 	fs = new FileSystem(RESOURCES_FOLDER);
 
@@ -35,6 +37,7 @@ Application::Application()
 	AddModule(scene);
 	AddModule(editor);
 
+	AddModule(audio);
 	AddModule(renderer3D);
 
 	loadRequested = false;
