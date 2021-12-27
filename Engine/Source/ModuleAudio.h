@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include "JsonParsing.h"
+#include <AudioFile/AudioFile.h>
 
 #include <Win32/AkFilePackageLowLevelIOBlocking.h>
 
@@ -15,6 +16,9 @@ public:
 	bool Start() override;
 	bool Update(float dt) override;
 	bool CleanUp() override;
+	char LoadAudio(const std::string path);
+
+	AudioFile<double> AudioFile;
 
 private:
 

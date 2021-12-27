@@ -184,3 +184,11 @@ bool ModuleAudio::CleanUp()
 
 	return ret;
 }
+
+char ModuleAudio::LoadAudio(const std::string path)
+{
+	if (!path.empty())
+	{
+		AudioFile.load(path);
+	}
+}
