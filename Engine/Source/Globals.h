@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <stdio.h>
+#include <assert.h>
 
 #define DEBUG_LOG(format, ...) Log(__FILE__, __LINE__, format, __VA_ARGS__)
 
@@ -11,6 +12,15 @@ void Log(const char file[], int line, const char* format, ...);
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
+
+//Wwise defines
+#ifdef _DEBUG
+#else
+#define AK_OPTIMIZED
+#endif //_DEBUG
+
+#define AKSOUNDENGINE_DLL
+
 
 // Deletes a buffer
 #define RELEASE( x )\

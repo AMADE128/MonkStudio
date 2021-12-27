@@ -3,6 +3,8 @@
 #include "Module.h"
 #include "JsonParsing.h"
 
+#include <Win32/AkFilePackageLowLevelIOBlocking.h>
+
 class ModuleAudio : public Module
 {
 public:
@@ -16,4 +18,16 @@ public:
 
 private:
 
+	//CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
+
 };
+
+namespace AK
+{
+#ifdef WIN32
+	void* AllocHook(size_t in_size);
+	void FreeHook(void* in_ptr);
+	void* VirtualAllocHook(void* in_pMemAddress, size_t in_size, DWORD in_dwAllocationType, DWORD in_dwProtect);
+	void VirtualFreeHook(void* in_pMemAddress, size_t in_size, DWORD in_dwFreeType);
+#endif
+}
