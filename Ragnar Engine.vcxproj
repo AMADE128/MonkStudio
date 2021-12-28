@@ -63,7 +63,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Wwise\External;$(SolutionDir)Dependencies\Wwise\Debug\lib;$(SolutionDir)Dependencies\glew\lib;$(SolutionDir)Dependencies\SDL\libx86;$(SolutionDir)Dependencies\MathGeoLib\lib\Deb;$(SolutionDir)Dependencies\Assimp\lib;$(SolutionDir)Dependencies\PhysFS\lib;$(SolutionDir)Dependencies\Optick\lib;$(SolutionDir)Dependencies\DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Wwise\External;$(SolutionDir)Dependencies\Wwise\wwiseDebug;$(SolutionDir)Dependencies\glew\lib;$(SolutionDir)Dependencies\SDL\libx86;$(SolutionDir)Dependencies\MathGeoLib\lib\Deb;$(SolutionDir)Dependencies\Assimp\lib;$(SolutionDir)Dependencies\PhysFS\lib;$(SolutionDir)Dependencies\Optick\lib;$(SolutionDir)Dependencies\DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ILU.lib;ILUT.lib;DevIL.lib;OptickCore.lib;physfs.lib;assimp-vc142-mt.lib;glew32s.lib;MathGeoLib.lib;opengl32.lib;SDL2main.lib;SDL2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;AkMemoryMgr.lib;AkMusicEngine.lib;AkSoundEngine.lib;AkStreamMgr.lib;CommunicationCentral.lib;dinput8.lib;dsound.lib;dxguid.lib;ws2_32.LIB;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -85,7 +85,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Wwise\External;$(SolutionDir)Dependencies\Wwise\Release\lib;$(SolutionDir)Dependencies\glew\lib;$(SolutionDir)Dependencies\SDL\libx86;$(SolutionDir)Dependencies\MathGeoLib\lib\Release;$(SolutionDir)Dependencies\Assimp\lib;$(SolutionDir)Dependencies\PhysFS\lib;$(SolutionDir)Dependencies\Optick\lib;$(SolutionDir)Dependencies\DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Wwise\External;$(SolutionDir)Dependencies\Wwise\wwiseRelease;$(SolutionDir)Dependencies\glew\lib;$(SolutionDir)Dependencies\SDL\libx86;$(SolutionDir)Dependencies\MathGeoLib\lib\Release;$(SolutionDir)Dependencies\Assimp\lib;$(SolutionDir)Dependencies\PhysFS\lib;$(SolutionDir)Dependencies\Optick\lib;$(SolutionDir)Dependencies\DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ILU.lib;ILUT.lib;DevIL.lib;OptickCore.lib;physfs.lib;assimp-vc142-mt.lib;glew32s.lib;MathGeoLib.lib;opengl32.lib;SDL2main.lib;SDL2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;AkMemoryMgr.lib;AkMusicEngine.lib;AkSoundEngine.lib;AkStreamMgr.lib;dinput8.lib;dsound.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
