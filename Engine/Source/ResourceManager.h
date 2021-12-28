@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <memory>
+#include <AudioFile/AudioFile.h>
 
 class Texture;
 class Mesh;
@@ -30,6 +31,8 @@ public:
 	void ImportResourcesFromLibrary();
 	void ImportAllResources();
 
+	void LoadAudio(const std::string path);
+
 	std::shared_ptr<Resource> GetResource(uint uid);
 	std::shared_ptr<Resource> GetResource(std::string path);
 
@@ -51,4 +54,5 @@ private:
 	std::map<uint, std::shared_ptr<Resource>> map;
 	std::vector<Texture*> textures;
 	std::vector<Mesh*> meshes;
+	AudioFile<double> audioFile;
 };

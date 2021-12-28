@@ -271,6 +271,12 @@
     <ClInclude Include="Engine\Source\AudioSourceComponent.h">
       <Filter>Sources\GameObject\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Source\Audio.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\AudioImporter.h">
+      <Filter>Sources\Resources\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Source\ModuleCamera3D.cpp">
@@ -446,6 +452,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Source\AudioSourceComponent.cpp">
       <Filter>Sources\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Audio.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\AudioImporter.cpp">
+      <Filter>Sources\Resources\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
