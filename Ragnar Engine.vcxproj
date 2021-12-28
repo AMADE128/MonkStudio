@@ -112,6 +112,8 @@
     <ClInclude Include="Engine\Source\AboutMenu.h" />
     <ClInclude Include="Engine\Source\Application.h" />
     <ClInclude Include="Engine\Source\AssimpDefs.h" />
+    <ClInclude Include="Engine\Source\Audio.h" />
+    <ClInclude Include="Engine\Source\AudioImporter.h" />
     <ClInclude Include="Engine\Source\AudioListenerComponent.h" />
     <ClInclude Include="Engine\Source\AudioSourceComponent.h" />
     <ClInclude Include="Engine\Source\CameraComponent.h" />
@@ -179,6 +181,8 @@
     <ClCompile Include="Engine\Source\AboutMenu.cpp" />
     <ClCompile Include="Engine\Source\Application.cpp" />
     <ClCompile Include="Engine\Source\AssimpDefs.cpp" />
+    <ClCompile Include="Engine\Source\Audio.cpp" />
+    <ClCompile Include="Engine\Source\AudioImporter.cpp" />
     <ClCompile Include="Engine\Source\AudioListenerComponent.cpp" />
     <ClCompile Include="Engine\Source\AudioSourceComponent.cpp" />
     <ClCompile Include="Engine\Source\CameraComponent.cpp" />

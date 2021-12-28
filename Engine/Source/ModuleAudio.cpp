@@ -185,16 +185,6 @@ bool ModuleAudio::CleanUp()
 	return ret;
 }
 
-char ModuleAudio::LoadAudio(const std::string path)
-{
-	char f= {};
-	if (!path.empty())
-	{
-		AudioFile.load(path);
-	}
-
-	return f;
-}
 
 void ModuleAudio::LoadSounBank(const char* path)
 {
