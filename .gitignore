@@ -48,6 +48,9 @@
 !Dependencies/OpenAL/debug/common.lib
 !Dependencies/OpenAL/debug/ex-common.lib
 !Dependencies/OpenAL/debug/OpenAL32.lib
+!Dependencies/OpenAL/release/common.lib
+!Dependencies/OpenAL/release/ex-common.lib
+!Dependencies/OpenAL/release/OpenAL32.lib
 
 # Executables
 *.exe
