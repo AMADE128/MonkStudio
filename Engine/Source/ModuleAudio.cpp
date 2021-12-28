@@ -187,8 +187,19 @@ bool ModuleAudio::CleanUp()
 
 char ModuleAudio::LoadAudio(const std::string path)
 {
+	char f= {};
 	if (!path.empty())
 	{
 		AudioFile.load(path);
 	}
+
+	return f;
+}
+
+void ModuleAudio::LoadSounBank(const char* path)
+{
+	AkBankID bankID; // Not used. These banks can be unloaded with their file name.
+
+	AKRESULT eResult = AK::SoundEngine::LoadBank(path, bankID);
+	assert(eResult == AK_Success);
 }

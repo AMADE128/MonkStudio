@@ -18,6 +18,8 @@ public:
 	bool CleanUp() override;
 	char LoadAudio(const std::string path);
 
+	void LoadSounBank(const char* path);
+
 	AudioFile<double> AudioFile;
 
 private:
