@@ -16,7 +16,6 @@ public:
 	bool Start() override;
 	bool Update(float dt) override;
 	bool CleanUp() override;
-	char LoadAudio(const std::string path);
 
 	void LoadSounBank(const char* path);
 
