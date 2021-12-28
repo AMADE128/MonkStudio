@@ -49,6 +49,9 @@
     <Filter Include="Sources\Resources\Importers">
       <UniqueIdentifier>{3c644c45-199c-460f-9c95-bb1da2fa630e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AK">
+      <UniqueIdentifier>{fd3fb183-218c-4cf7-8b46-641ba39c97c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\Module.h">
@@ -271,6 +274,21 @@
     <ClInclude Include="Engine\Source\AudioSourceComponent.h">
       <Filter>Sources\GameObject\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Win32\AkDefaultIOHookBlocking.h">
+      <Filter>AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFileLocationBase.h">
+      <Filter>AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFilePackage.h">
+      <Filter>AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFilePackageLUT.h">
+      <Filter>AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkMultipleFileLocation.h">
+      <Filter>AK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Source\ModuleCamera3D.cpp">
@@ -446,6 +464,21 @@
     </ClCompile>
     <ClCompile Include="Engine\Source\AudioSourceComponent.cpp">
       <Filter>Sources\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Win32\AkDefaultIOHookBlocking.cpp">
+      <Filter>AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkFileLocationBase.cpp">
+      <Filter>AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkFilePackage.cpp">
+      <Filter>AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkFilePackageLUT.cpp">
+      <Filter>AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkMultipleFileLocation.cpp">
+      <Filter>AK</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -89,13 +89,13 @@ bool ModuleAudio::Init(JsonParsing& node)
 
 	AK::StreamMgr::GetDefaultDeviceSettings(deviceSettings);
 
-	//if (g_lowLevelIO.Init(deviceSettings) != AK_Success)
-	//{
-		//assert(!"Could not create the streaming device and Low-Level I/O system");
-		//ret = false;
-	//}
-	// Setup banks path
-	//g_lowLevelIO.SetBasePath(AKTEXT("."));
+	if (g_lowLevelIO.Init(deviceSettings) != AK_Success)
+	{
+		assert(!"Could not create the streaming device and Low-Level I/O system");
+		ret = false;
+	}
+	//Setup banks path
+	g_lowLevelIO.SetBasePath(AKTEXT("."));
 	AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 	DEBUG_LOG("Streaming device created");
 
@@ -140,6 +140,8 @@ bool ModuleAudio::Init(JsonParsing& node)
 	DEBUG_LOG("Communication initialized");
 
 	#endif // AK_OPTIMIZED
+
+	LoadSounBank("Init.bnk");
 
 	return ret;
 }

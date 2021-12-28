@@ -24,7 +24,7 @@ public:
 
 private:
 
-	//CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
+	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 };
 
