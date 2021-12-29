@@ -41,8 +41,8 @@ void Log(const char file[], int line, const char* format, ...);
 #define MESHES_FOLDER "Library/Meshes/"
 #define TEXTURES_FOLDER "Library/Textures/"
 #define MATERIALS_FOLDER "Library/Materials/"
+#define AUDIO_FOLDER "Library/Audio/"
 #define SCENES_FOLDER "Assets/Scenes/"
-#define AUDIO_FOLDER "Assets/Resources/Audio/"
 
 // Deletes an array of buffers
 #define RELEASE_ARRAY( x )\
