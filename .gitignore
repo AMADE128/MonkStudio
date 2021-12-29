@@ -45,9 +45,9 @@
 !Dependencies/Wwise/wwiseRelease/AkMusicEngine.lib
 !Dependencies/Wwise/wwiseRelease/AkSoundEngine.lib
 !Dependencies/Wwise/wwiseRelease/AkStreamMgr.lib
-!Dependencies/OpenAL/debug/common.lib
-!Dependencies/OpenAL/debug/ex-common.lib
-!Dependencies/OpenAL/debug/OpenAL32.lib
+!Dependencies/OpenAL/ALdebug/common.lib
+!Dependencies/OpenAL/ALdebug/ex-common.lib
+!Dependencies/OpenAL/ALdebug/OpenAL32.lib
 !Dependencies/OpenAL/release/common.lib
 !Dependencies/OpenAL/release/ex-common.lib
 !Dependencies/OpenAL/release/OpenAL32.lib
