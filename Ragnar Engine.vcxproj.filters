@@ -49,6 +49,9 @@
     <Filter Include="Sources\Resources\Importers">
       <UniqueIdentifier>{3c644c45-199c-460f-9c95-bb1da2fa630e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Libraries\AK">
+      <UniqueIdentifier>{e42e6fba-5fe5-473f-beff-09678b230cdb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\Module.h">
@@ -277,6 +280,21 @@
     <ClInclude Include="Engine\Source\AudioImporter.h">
       <Filter>Sources\Resources\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Win32\AkDefaultIOHookBlocking.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFilePackage.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkMultipleFileLocation.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFilePackageLUT.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Win32\stdafx.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Source\ModuleCamera3D.cpp">
@@ -458,6 +476,21 @@
     </ClCompile>
     <ClCompile Include="Engine\Source\AudioImporter.cpp">
       <Filter>Sources\Resources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Win32\AkDefaultIOHookBlocking.cpp">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkFilePackage.cpp">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkMultipleFileLocation.cpp">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkFilePackageLUT.cpp">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Win32\stdafx.cpp">
+      <Filter>Sources\Libraries\AK</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
