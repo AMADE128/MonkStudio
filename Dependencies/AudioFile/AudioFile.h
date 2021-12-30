@@ -616,7 +616,7 @@ bool AudioFile<T>::decodeWaveFile (std::vector<uint8_t>& fileData)
                 if (audioFormat == WavAudioFormat::IEEEFloat)
                     sample = (T)reinterpret_cast<float&> (sampleAsInt);
                 else // assume PCM
-                    sample = (T) sampleAsInt / static_cast<float> (std::numeric_limits<std::int32_t>::max());
+                    sample = (T) sampleAsInt / static_cast<float> ((std::numeric_limits<std::int32_t>::max)());
                 
                 samples[channel].push_back (sample);
             }
@@ -761,7 +761,7 @@ bool AudioFile<T>::decodeAiffFile (std::vector<uint8_t>& fileData)
                 if (audioFormat == AIFFAudioFormat::Compressed)
                     sample = (T)reinterpret_cast<float&> (sampleAsInt);
                 else // assume uncompressed
-                    sample = (T) sampleAsInt / static_cast<float> (std::numeric_limits<std::int32_t>::max());
+                    sample = (T) sampleAsInt / static_cast<float> ((std::numeric_limits<std::int32_t>::max)());
                     
                 samples[channel].push_back (sample);
             }

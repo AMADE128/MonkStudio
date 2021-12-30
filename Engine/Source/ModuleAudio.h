@@ -5,6 +5,7 @@
 #include <AudioFile/AudioFile.h>
 
 #include <Win32/AkFilePackageLowLevelIOBlocking.h>
+#include "OpenAL/AL/alc.h"
 
 class ModuleAudio : public Module
 {
@@ -17,6 +18,12 @@ public:
 	bool Update(float dt) override;
 	bool CleanUp() override;
 
+	void InitializeWwise(bool& ret);
+	void CleanUpWwise();
+
+	void InitializeOpenAl(bool& ret);
+	void CleanUpOpenAl();
+
 	void LoadSounBank(const char* path);
 
 	AudioFile<double> AudioFile;
@@ -24,6 +31,8 @@ public:
 private:
 
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
+	ALCdevice* device = nullptr;
+	ALCcontext* context = nullptr;
 
 };
 

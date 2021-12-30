@@ -10,6 +10,8 @@
 #include <AK/SoundEngine/Common/AkTypes.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h> 
 
+#include "OpenAL/AL/al.h"
+
 #ifndef AK_OPTIMIZED
 #include <AK/Comm/AkCommunication.h>
 #endif // AK_OPTIMIZED
@@ -25,10 +27,6 @@ namespace AK
 	{
 		free(in_ptr);
 	}
-	// Note: VirtualAllocHook() may be used by I/O pools of the default implementation
-	// of the Stream Manager, to allow "true" unbuffered I/O (using FILE_FLAG_NO_BUFFERING
-	// - refer to the Windows SDK documentation for more details). This is NOT mandatory;
-	// you may implement it with a simple malloc().
 	void* VirtualAllocHook(
 		void* in_pMemAddress,
 		size_t in_size,
@@ -61,6 +59,28 @@ bool ModuleAudio::Init(JsonParsing& node)
 {
 	bool ret = true;
 
+	InitializeWwise(ret);
+
+	InitializeOpenAl(ret);
+
+	return ret;
+}
+
+void ModuleAudio::InitializeOpenAl(bool& ret)
+{
+	// Initialization
+	device = alcOpenDevice(NULL); // select the "preferred device"
+
+	if (device) {
+		context = alcCreateContext(device, NULL);
+		alcMakeContextCurrent(context);
+	}
+	// Check for EAX 2.0 support
+	ret = alIsExtensionPresent("EAX2.0");
+}
+
+void ModuleAudio::InitializeWwise(bool& ret)
+{
 	//Initializing the Memory Manager
 	AkMemSettings memSettings;
 
@@ -125,7 +145,7 @@ bool ModuleAudio::Init(JsonParsing& node)
 	}
 	DEBUG_LOG("Music Engine initialized");
 
-	#ifndef AK_OPTIMIZED
+#ifndef AK_OPTIMIZED
 
 	// Initializing communications
 	AkCommSettings commSettings;
@@ -139,11 +159,7 @@ bool ModuleAudio::Init(JsonParsing& node)
 	}
 	DEBUG_LOG("Communication initialized");
 
-	#endif // AK_OPTIMIZED
-
-	LoadSounBank("Init.bnk");
-
-	return ret;
+#endif // AK_OPTIMIZED
 }
 
 bool ModuleAudio::Start()
@@ -168,10 +184,28 @@ bool ModuleAudio::CleanUp()
 {
 	bool ret = true;
 
-	#ifndef AK_OPTIMIZED
+	CleanUpWwise();
+
+	CleanUpOpenAl();
+
+	return ret;
+}
+
+void ModuleAudio::CleanUpOpenAl()
+{
+	context = alcGetCurrentContext();
+	device = alcGetContextsDevice(context);
+	alcMakeContextCurrent(NULL);
+	alcDestroyContext(context);
+	alcCloseDevice(device);
+}
+
+void ModuleAudio::CleanUpWwise()
+{
+#ifndef AK_OPTIMIZED
 	//Cleaning Communication
 	AK::Comm::Term();
-	#endif // AK_OPTIMIZED
+#endif // AK_OPTIMIZED
 
 	AK::MusicEngine::Term();
 
@@ -183,8 +217,6 @@ bool ModuleAudio::CleanUp()
 		AK::IAkStreamMgr::Get()->Destroy();
 
 	AK::MemoryMgr::Term();
-
-	return ret;
 }
 
 

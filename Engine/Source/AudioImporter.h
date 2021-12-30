@@ -2,6 +2,7 @@
 
 #include <string>
 #include "JsonParsing.h"
+#include "AudioFile.h"
 
 
 typedef unsigned char GLubyte;
@@ -14,6 +15,6 @@ namespace AudioImporter
 	void ImportAudio(const char* typeName, JsonParsing& json, std::string& path);
 	void ImportTAudio(std::string& fileName);
 	void SaveAudio(std::string& fileName);
-	void LoadAudio(const char* path, unsigned int& id, int& width, int& height, GLubyte* data, AudioParameters& parameterData);
+	void LoadAudio(const char* path, AudioFile<double>& audioFile, unsigned int& id, AudioParameters& parameterData);
 	void CreateMetaAudio(std::string& path, AudioParameters& data, std::string& assets, uint uid);
 }

@@ -21,6 +21,9 @@ void Log(const char file[], int line, const char* format, ...);
 
 #define AKSOUNDENGINE_DLL
 
+//Math defines
+#define _USE_MATH_DEFINES
+
 
 // Deletes a buffer
 #define RELEASE( x )\

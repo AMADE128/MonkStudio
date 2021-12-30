@@ -7,7 +7,7 @@
 #include "Globals.h"
 
 Audio::Audio(uint uid, std::string& assets, std::string& library)
-	: data(nullptr), id(0), Resource(uid, ResourceType::AUDIO, assets, library), parameters({})
+	: id(0), Resource(uid, ResourceType::AUDIO, assets, library), parameters({})
 {
 	std::string metaConfig = AUDIO_FOLDER + std::string("audio_") + std::to_string(uid) + ".meta";
 	AudioImporter::CreateMetaAudio(metaConfig, parameters, assets, uid);
@@ -16,7 +16,7 @@ Audio::Audio(uint uid, std::string& assets, std::string& library)
 }
 
 Audio::Audio(uint uid, std::string& library)
-	: data(nullptr), id(0), Resource(uid, ResourceType::AUDIO, std::string(""), library), parameters({})
+	: id(0), Resource(uid, ResourceType::AUDIO, std::string(""), library), parameters({})
 {
 }
 
@@ -26,6 +26,10 @@ Audio::~Audio()
 
 void Audio::Load()
 {
+	if (id == 0)
+	{
+		AudioImporter::LoadAudio(libraryPath.c_str(), audioFile, id, parameters);
+	}
 }
 
 void Audio::UnLoad()
