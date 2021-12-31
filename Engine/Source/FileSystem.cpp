@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Globals.h"
 #include "ModelImporter.h"
+#include "AudioImporter.h"
 #include "ResourceManager.h"
 #include "ModuleEditor.h"
 #include "GameObject.h"
@@ -55,6 +56,7 @@ FileSystem::FileSystem(const char* assetsPath) : name("FileSystem")
 	
 	texExtension = { ".png", ".jpg", ".dds", ".tga"};
 	modelExtension = { ".obj", ".fbx", ".3DS", ".FBX"};
+	audioExtension = { ".ogg", ".aiff", ".OGG", ".AIFF"};
 }
 
 FileSystem::~FileSystem()
@@ -206,6 +208,18 @@ void FileSystem::LoadFile(std::string& path)
 			return;
 		}
 	}
+
+	end = audioExtension.end();
+
+	for (s = audioExtension.begin(); s != end; ++s)
+	{
+		if (*s == extension)
+		{
+			RG_PROFILING_FUNCTION("Loading Audio");
+			AudioImporter::ImportTAudio(path);
+			return;
+		}
+	}
 }
 
 void FileSystem::ImportFiles(std::string& path)
@@ -328,6 +342,17 @@ ResourceType FileSystem::CheckExtension(std::string& path)
 		{
 			RG_PROFILING_FUNCTION("Importing Texture");
 			return ResourceType::TEXTURE;
+		}
+	}
+
+	end = audioExtension.end();
+
+	for (s = audioExtension.begin(); s != end; ++s)
+	{
+		if (*s == extension)
+		{
+			RG_PROFILING_FUNCTION("Importing Audio");
+			return ResourceType::AUDIO;
 		}
 	}
 

@@ -6,6 +6,7 @@
 #include "Resource.h"
 #include "Component.h"
 #include "Audio.h"
+#include "ResourceManager.h"
 
 #include <math.h>
 
@@ -16,6 +17,25 @@ void AudioImporter::ImportAudio(const char* typeName, JsonParsing& json, std::st
 
 void AudioImporter::ImportTAudio(std::string& fileName)
 {
+	if (ResourceManager::GetInstance()->CheckResource(fileName))
+	{
+		return;
+	}
+	else
+	{
+		//TODO: Import audio if doesn't exist
+		/*ILuint image;
+		ilGenImages(1, &image);
+		ilBindImage(image);
+		ilLoadImage(fileName.c_str());
+		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);*/
+		std::string libraryPath;
+
+		ResourceManager::GetInstance()->CreateResource(ResourceType::TEXTURE, fileName, libraryPath);
+
+		/*SaveTexture(libraryPath);
+		ilDeleteImages(1, &image);*/
+	}
 }
 
 void AudioImporter::SaveAudio(std::string& fileName)

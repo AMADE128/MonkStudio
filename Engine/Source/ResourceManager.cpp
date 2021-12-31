@@ -6,12 +6,14 @@
 #include "TextureImporter.h"
 #include "MeshImporter.h"
 #include "ModelImporter.h"
+#include "AudioImporter.h"
 
 #include "MathGeoLib/src/Algorithm/Random/LCG.h"
 
 #include "Texture.h"
 #include "Mesh.h"
 #include "Model.h"
+#include "Audio.h"
 
 #include <stack>
 
@@ -90,6 +92,10 @@ uint ResourceManager::CreateResource(ResourceType type, std::string& assets, std
 	case ResourceType::MODEL:
 		library = MODELS_FOLDER + std::string("model_") + std::to_string(uid) + ".rgmodel";
 		resource = std::make_shared<Model>(uid, assets, library);
+		break;
+	case ResourceType::AUDIO:
+		library = AUDIO_FOLDER + std::string("audio_") + std::to_string(uid) + ".rgaudio";
+		resource = std::make_shared<Audio>(uid, assets, library);
 		break;
 	}
 
@@ -199,6 +205,7 @@ void ResourceManager::ImportResourcesFromLibrary()
 					if (files[i].find(".rgmodel") != std::string::npos) CreateResourceCreated(ResourceType::MODEL, uid, assets, dir + files[i]);
 					else if (files[i].find(".rgtexture") != std::string::npos) CreateResourceCreated(ResourceType::TEXTURE, uid, assets, dir + files[i]);
 					else if (files[i].find(".rgmesh") != std::string::npos) CreateResourceCreated(ResourceType::MESH, uid, assets, dir + files[i]);
+					else if (files[i].find(".rgaudio") != std::string::npos) CreateResourceCreated(ResourceType::AUDIO, uid, assets, dir + files[i]);
 
 					RELEASE_ARRAY(buffer);
 				}
@@ -237,6 +244,9 @@ void ResourceManager::ImportAllResources()
 				break;
 			case ResourceType::TEXTURE:
 				TextureImporter::ImportTexture(*it);
+				break;
+			case ResourceType::AUDIO:
+				AudioImporter::ImportTAudio(*it);
 				break;
 			}
 		}
