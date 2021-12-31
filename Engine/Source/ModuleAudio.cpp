@@ -77,6 +77,8 @@ void ModuleAudio::InitializeOpenAl(bool& ret)
 	}
 	// Check for EAX 2.0 support
 	ret = alIsExtensionPresent("EAX2.0");
+
+	DEBUG_LOG("OpenAl initialized");
 }
 
 void ModuleAudio::InitializeWwise(bool& ret)
@@ -198,14 +200,16 @@ void ModuleAudio::CleanUpOpenAl()
 	alcMakeContextCurrent(NULL);
 	alcDestroyContext(context);
 	alcCloseDevice(device);
+
+	DEBUG_LOG("OpenAl terminated");
 }
 
 void ModuleAudio::CleanUpWwise()
 {
-#ifndef AK_OPTIMIZED
-	//Cleaning Communication
-	AK::Comm::Term();
-#endif // AK_OPTIMIZED
+	#ifndef AK_OPTIMIZED
+		//Cleaning Communication
+		AK::Comm::Term();
+	#endif // AK_OPTIMIZED
 
 	AK::MusicEngine::Term();
 
@@ -217,6 +221,8 @@ void ModuleAudio::CleanUpWwise()
 		AK::IAkStreamMgr::Get()->Destroy();
 
 	AK::MemoryMgr::Term();
+
+	DEBUG_LOG("Wwise terminated");
 }
 
 
