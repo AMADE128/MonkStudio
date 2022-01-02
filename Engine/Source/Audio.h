@@ -2,6 +2,7 @@
 
 #include "Resource.h"
 #include "AudioFile.h"
+#include "OpenAL/AL/al.h"
 
 #include <string>
 
@@ -9,7 +10,6 @@ typedef unsigned char GLubyte;
 
 struct AudioParameters
 {
-	AudioFile<double>::AudioBuffer buffer;
 	int sampleRate;
 	int bitDepth;
 	int numSamples;
@@ -30,12 +30,14 @@ public:
 	void Load() override;
 	void UnLoad() override;
 
+	ALuint GetBuffer();
 
 private: 
 	unsigned int id;
 
 	AudioParameters parameters;
-	AudioFile<double> audioFile;
+	AudioFile<float> audioFile;
+	ALuint buffer;
 
 	std::string path;
 

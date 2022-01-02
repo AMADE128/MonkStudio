@@ -155,6 +155,8 @@ public:
     /** An optional iXML chunk that can be added to the AudioFile. 
      */
     std::string iXMLChunk;
+
+	bool WritePCMToBuffer(std::vector<uint8_t>& fileData);
     
 private:
     
@@ -1144,6 +1146,62 @@ void AudioFile<T>::clearAudioBuffer()
     }
     
     samples.clear();
+}
+
+template<class T>
+inline bool AudioFile<T>::WritePCMToBuffer(std::vector<uint8_t>& fileData)
+{
+	fileData.clear();
+
+	int16_t audioFormat = bitDepth == 32 ? WavAudioFormat::IEEEFloat : WavAudioFormat::PCM;
+
+	for (int i = 0; i < getNumSamplesPerChannel(); i++)
+	{
+		for (int channel = 0; channel < getNumChannels(); channel++)
+		{
+			if (bitDepth == 8)
+			{
+				uint8_t byte = sampleToSingleByte(samples[channel][i]);
+				fileData.push_back(byte);
+			}
+			else if (bitDepth == 16)
+			{
+				int16_t sampleAsInt = sampleToSixteenBitInt(samples[channel][i]);
+				addInt16ToFileData(fileData, sampleAsInt);
+			}
+			else if (bitDepth == 24)
+			{
+				int32_t sampleAsIntAgain = (int32_t)(samples[channel][i] * (T)8388608.);
+
+				uint8_t bytes[3];
+				bytes[2] = (uint8_t)(sampleAsIntAgain >> 16) & 0xFF;
+				bytes[1] = (uint8_t)(sampleAsIntAgain >> 8) & 0xFF;
+				bytes[0] = (uint8_t)sampleAsIntAgain & 0xFF;
+
+				fileData.push_back(bytes[0]);
+				fileData.push_back(bytes[1]);
+				fileData.push_back(bytes[2]);
+			}
+			else if (bitDepth == 32)
+			{
+				int32_t sampleAsInt;
+
+				if (audioFormat == WavAudioFormat::IEEEFloat)
+					sampleAsInt = (int32_t) reinterpret_cast<int32_t&> (samples[channel][i]);
+				else // assume PCM
+					sampleAsInt = (int32_t)(samples[channel][i] * std::numeric_limits<int32_t>::max());
+
+				addInt32ToFileData(fileData, sampleAsInt, Endianness::LittleEndian);
+			}
+			else
+			{
+				assert(false && "Trying to write a file with unsupported bit depth");
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 //=============================================================

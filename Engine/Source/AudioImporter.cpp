@@ -8,6 +8,8 @@
 #include "Audio.h"
 #include "ResourceManager.h"
 
+#include "OpenAL/AL/al.h"
+
 #include <math.h>
 
 
@@ -42,13 +44,14 @@ void AudioImporter::SaveAudio(std::string& fileName)
 {
 }
 
-void AudioImporter::LoadAudio(const char* path, AudioFile<double>& audioFile, unsigned int& id, AudioParameters& parameterData)
+void AudioImporter::LoadAudio(const char* path, AudioFile<float>& audioFile, ALuint& buffer, unsigned int& id, AudioParameters& parameterData)
 {
 	//Load an audio file
 	bool loaded = audioFile.load(path);
 	//Check if loaded is donde right
 	assert(loaded);
 
+	//Set audio parameters
 	parameterData.sampleRate = audioFile.getSampleRate();
 	parameterData.bitDepth = audioFile.getBitDepth();
 	parameterData.numSamples = audioFile.getNumSamplesPerChannel();
@@ -57,19 +60,21 @@ void AudioImporter::LoadAudio(const char* path, AudioFile<double>& audioFile, un
 	parameterData.isMono = audioFile.isMono();
 	parameterData.isStereo = audioFile.isStereo();
 
-	//Set buffer to two channels
-	parameterData.buffer.resize(2);
+	//Generate buffers
+	std::vector<uint8_t> data;
+	audioFile.WritePCMToBuffer(data);
+	auto convertFileToOpenALFormat = [](const AudioFile<float>& audioFile) {
+		int bitDepth = audioFile.getBitDepth();
+		if (bitDepth == 16)
+			return audioFile.isStereo() ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+		else if (bitDepth == 8)
+			return audioFile.isStereo() ? AL_FORMAT_STEREO8 : AL_FORMAT_MONO8;
+		else
+			return -1;
+	};
 
-	//Set number of samples per channel
-	parameterData.buffer[0].resize(100000);
-	parameterData.buffer[1].resize(100000);
-
-	//Set buffer data with new samples
-	for (int i = 0; i < parameterData.numSamples; i++)
-	{
-		for (int channel = 0; channel < parameterData.numChannels; channel++)
-			parameterData.buffer[channel][i] = audioFile.samples[channel][i];
-	}
+	alGenBuffers(1, &buffer);
+	alBufferData(buffer, convertFileToOpenALFormat(audioFile), data.data(), data.size(), audioFile.getSampleRate());
 }
 
 void AudioImporter::CreateMetaAudio(std::string& path, AudioParameters& data, std::string& assets, uint uid)

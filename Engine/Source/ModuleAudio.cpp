@@ -10,7 +10,18 @@
 #include <AK/SoundEngine/Common/AkTypes.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h> 
 
+#include <iostream>
+
 #include "OpenAL/AL/al.h"
+
+#define OpenAl_ErrorCheck(message)\
+{\
+	ALenum error = alGetError();\
+	if ( error != AL_NO_ERROR)\
+	{\
+		std::cerr << "OpenAl Error: " << error << "with call for" << message << std::endl;\
+	}\
+}
 
 #ifndef AK_OPTIMIZED
 #include <AK/Comm/AkCommunication.h>
@@ -77,6 +88,7 @@ void ModuleAudio::InitializeOpenAl(bool& ret)
 	}
 	// Check for EAX 2.0 support
 	ret = alIsExtensionPresent("EAX2.0");
+	alGetError();
 
 	DEBUG_LOG("OpenAl initialized");
 }

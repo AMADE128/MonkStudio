@@ -4,6 +4,10 @@ AudioListenerComponent::AudioListenerComponent(GameObject* own)
 {
 	type = ComponentType::AUDIO_LISTENER;
 	owner = own;
+
+	SetListenerPosition(0.0f, 0.0f, 0.0f);
+	SetListenerVelocity(0.0f, 0.0f, 0.0f);
+	SetListenerOrientation(float3(1.0f, 0.0f, 0.0f), float3(0.0f, 1.0f, 0.0f));
 }
 
 AudioListenerComponent::~AudioListenerComponent()
@@ -26,4 +30,23 @@ bool AudioListenerComponent::Update(float dt)
 {
 	bool ret = true;
 	return ret;
+}
+
+void AudioListenerComponent::SetListenerPosition(float x, float y, float z)
+{
+	alListener3f(AL_POSITION, x, y, z);
+}
+
+void AudioListenerComponent::SetListenerVelocity(float x, float y, float z)
+{
+	alListener3f(AL_VELOCITY, x, y, z);
+}
+
+void AudioListenerComponent::SetListenerOrientation(float3 forward, float3 up)
+{
+	ALfloat forwardAndUpVectors[] = {
+		forward.x, forward.y, forward.z,
+		up.x, up.y, up.z
+	};
+	alListenerfv(AL_ORIENTATION, forwardAndUpVectors);
 }

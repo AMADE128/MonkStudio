@@ -28,10 +28,15 @@ void Audio::Load()
 {
 	if (id == 0)
 	{
-		AudioImporter::LoadAudio(libraryPath.c_str(), audioFile, id, parameters);
+		AudioImporter::LoadAudio(libraryPath.c_str(), audioFile, buffer, id, parameters);
 	}
 }
 
 void Audio::UnLoad()
 {
+}
+
+ALuint Audio::GetBuffer()
+{
+	return buffer;
 }
