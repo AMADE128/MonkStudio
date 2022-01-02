@@ -85,6 +85,16 @@ void AudioImporter::CreateMetaAudio(std::string& path, AudioParameters& data, st
 {
 	JsonParsing metaAudio;
 
+
+
+	metaAudio.SetNewJsonNumber(metaAudio.ValueToObject(metaAudio.GetRootValue()), "SampleRate", data.sampleRate);
+	metaAudio.SetNewJsonNumber(metaAudio.ValueToObject(metaAudio.GetRootValue()), "BitDepth", data.bitDepth);
+	metaAudio.SetNewJsonNumber(metaAudio.ValueToObject(metaAudio.GetRootValue()), "NumSamples", data.numSamples);
+	metaAudio.SetNewJsonNumber(metaAudio.ValueToObject(metaAudio.GetRootValue()), "LengthInSeconds", data.lengthInSeconds);
+	metaAudio.SetNewJsonNumber(metaAudio.ValueToObject(metaAudio.GetRootValue()), "NumChannels", data.numChannels);
+	metaAudio.SetNewJsonBool(metaAudio.ValueToObject(metaAudio.GetRootValue()), "IsMono", data.isMono);
+	metaAudio.SetNewJsonBool(metaAudio.ValueToObject(metaAudio.GetRootValue()), "IsStereo", data.isStereo);
+
 	metaAudio.SetNewJsonBool(metaAudio.ValueToObject(metaAudio.GetRootValue()), "Test", true);
 
 	metaAudio.SetNewJsonNumber(metaAudio.ValueToObject(metaAudio.GetRootValue()), "Uuid", uid);
