@@ -1,8 +1,10 @@
 
 #include "AudioSourceComponent.h"
 
-AudioSourceComponent::AudioSourceComponent()
+AudioSourceComponent::AudioSourceComponent(GameObject* _owner)
 {
+	owner = _owner;
+	type = ComponentType::AUDIO_SOURCE;
 }
 
 AudioSourceComponent::~AudioSourceComponent()

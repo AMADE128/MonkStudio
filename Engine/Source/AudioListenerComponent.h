@@ -6,7 +6,7 @@ class AudioListenerComponent : public Component
 {
 public:
 
-	AudioListenerComponent();
+	AudioListenerComponent(GameObject* _owner);
 	~AudioListenerComponent();
 
 	void OnEditor() override;

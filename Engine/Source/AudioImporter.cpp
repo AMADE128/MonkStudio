@@ -15,7 +15,7 @@ void AudioImporter::ImportAudio(const char* typeName, JsonParsing& json, std::st
 {
 }
 
-void AudioImporter::ImportTAudio(std::string& fileName)
+void AudioImporter::ImportAudio(std::string& fileName)
 {
 	if (ResourceManager::GetInstance()->CheckResource(fileName))
 	{
@@ -49,7 +49,6 @@ void AudioImporter::LoadAudio(const char* path, AudioFile<double>& audioFile, un
 	//Check if loaded is donde right
 	assert(loaded);
 
-	//Get some information about the loaded audio
 	parameterData.sampleRate = audioFile.getSampleRate();
 	parameterData.bitDepth = audioFile.getBitDepth();
 	parameterData.numSamples = audioFile.getNumSamplesPerChannel();
@@ -57,14 +56,6 @@ void AudioImporter::LoadAudio(const char* path, AudioFile<double>& audioFile, un
 	parameterData.numChannels = audioFile.getNumChannels();
 	parameterData.isMono = audioFile.isMono();
 	parameterData.isStereo = audioFile.isStereo();
-
-	//Access the samples directly
-	int channel = 0;
-	int numSamples = parameterData.numSamples;
-	for (int i = 0; i < numSamples; i++)
-	{
-		double currentSample = audioFile.samples[channel][i];
-	}
 
 	//Set buffer to two channels
 	parameterData.buffer.resize(2);
@@ -84,8 +75,6 @@ void AudioImporter::LoadAudio(const char* path, AudioFile<double>& audioFile, un
 void AudioImporter::CreateMetaAudio(std::string& path, AudioParameters& data, std::string& assets, uint uid)
 {
 	JsonParsing metaAudio;
-
-
 
 	metaAudio.SetNewJsonNumber(metaAudio.ValueToObject(metaAudio.GetRootValue()), "SampleRate", data.sampleRate);
 	metaAudio.SetNewJsonNumber(metaAudio.ValueToObject(metaAudio.GetRootValue()), "BitDepth", data.bitDepth);

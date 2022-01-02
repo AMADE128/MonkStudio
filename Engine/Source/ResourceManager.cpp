@@ -118,6 +118,9 @@ void ResourceManager::CreateResourceCreated(ResourceType type, uint uid, std::st
 	case ResourceType::MODEL:
 		resource = std::make_shared<Model>(uid, assets, library);
 		break;
+	case ResourceType::AUDIO:
+		resource = std::make_shared<Audio>(uid, assets, library);
+		break;
 	default:
 		break;
 	}
@@ -246,7 +249,7 @@ void ResourceManager::ImportAllResources()
 				TextureImporter::ImportTexture(*it);
 				break;
 			case ResourceType::AUDIO:
-				AudioImporter::ImportTAudio(*it);
+				AudioImporter::ImportAudio(*it);
 				break;
 			}
 		}

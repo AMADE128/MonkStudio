@@ -1,7 +1,9 @@
 #include "AudioListenerComponent.h"
 
-AudioListenerComponent::AudioListenerComponent()
+AudioListenerComponent::AudioListenerComponent(GameObject* own)
 {
+	type = ComponentType::AUDIO_LISTENER;
+	owner = own;
 }
 
 AudioListenerComponent::~AudioListenerComponent()

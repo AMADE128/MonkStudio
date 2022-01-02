@@ -216,7 +216,7 @@ void FileSystem::LoadFile(std::string& path)
 		if (*s == extension)
 		{
 			RG_PROFILING_FUNCTION("Loading Audio");
-			AudioImporter::ImportTAudio(path);
+			AudioImporter::ImportAudio(path);
 			return;
 		}
 	}

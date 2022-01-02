@@ -7,7 +7,7 @@ class AudioSourceComponent : public Component
 {
 public:
 
-	AudioSourceComponent();
+	AudioSourceComponent(GameObject* _owner);
 	~AudioSourceComponent();
 
 	void OnEditor() override;
@@ -16,7 +16,7 @@ public:
 private:
 
 	//AudioFile audioClip;
-	AudioListenerComponent output;
+	AudioListenerComponent* output = nullptr;
 
 	bool mute = false;
 	bool playOnAwake = true;
