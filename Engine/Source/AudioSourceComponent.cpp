@@ -55,24 +55,34 @@ bool AudioSourceComponent::Update(float dt)
 
 void AudioSourceComponent::Play(float delay)
 {
-	alSourcePlay(source);
-	ALint sourceState;
-	alGetSourcei(source, AL_SOURCE_STATE, &sourceState);
-	while (sourceState == AL_PLAYING)
+	if (GetClipState() != AL_PLAYING)
 	{
-		//basically loop until we're done playing the mono sound source
-		alGetSourcei(source, AL_SOURCE_STATE, &sourceState);
+		alSourcePlay(source);
 	}
 }
 
 void AudioSourceComponent::Pause()
 {
+	alSourcePause(source);
 }
 
 void AudioSourceComponent::Stop()
 {
+	alSourceStop(source);
 }
 
-void AudioSourceComponent::UnPause()
+ALint AudioSourceComponent::GetClipState()
 {
+	alGetSourcei(source, AL_SOURCE_STATE, &clipState);
+	return clipState;
+}
+
+void AudioSourceComponent::SetLoop(bool loop)
+{
+	alSourcei(source, AL_LOOPING, loop);
+}
+
+void AudioSourceComponent::SetPitch(float pitch)
+{
+	alSourcef(source, AL_PITCH, pitch);
 }

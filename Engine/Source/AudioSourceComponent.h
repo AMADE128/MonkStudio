@@ -18,14 +18,17 @@ public:
 	void Play(float delay = 0);
 	void Pause();
 	void Stop();
-	void UnPause();
+
+	ALint GetClipState();
+	void SetLoop(bool loop);
+	void SetPitch(float pitch);
 
 private:
 
-	//AudioFile audioClip;
 	AudioListenerComponent* output = nullptr;
 	Audio* clip = nullptr;
 	ALuint source;
+	ALint clipState;
 
 	bool mute = false;
 	bool playOnAwake = true;
