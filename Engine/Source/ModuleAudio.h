@@ -6,6 +6,7 @@
 
 #include <Win32/AkFilePackageLowLevelIOBlocking.h>
 #include "OpenAL/AL/alc.h"
+#include "OpenAL/AL/al.h"
 
 class ModuleAudio : public Module
 {
@@ -15,6 +16,7 @@ public:
 
 	bool Init(JsonParsing& node) override;
 	bool Start() override;
+	void SetDefaultListener();
 	bool Update(float dt) override;
 	bool CleanUp() override;
 
@@ -23,16 +25,19 @@ public:
 
 	void InitializeOpenAl(bool& ret);
 	void CleanUpOpenAl();
+	void CreateConfigSource();
+	void SetClipConfigSource(ALuint buffer);
+	ALuint GetConfigSource();
 
 	void LoadSounBank(const char* path);
-
-	AudioFile<double> AudioFile;
 
 private:
 
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 	ALCdevice* device = nullptr;
 	ALCcontext* context = nullptr;
+
+	ALuint configSource;
 
 };
 

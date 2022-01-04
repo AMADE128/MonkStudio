@@ -29,10 +29,14 @@ public:
 
 	void Load() override;
 	void UnLoad() override;
+	void DrawOnEditor() override;
 
 	ALuint GetBuffer();
 
 private: 
+
+	void Reimport();
+
 	unsigned int id;
 
 	AudioParameters parameters;

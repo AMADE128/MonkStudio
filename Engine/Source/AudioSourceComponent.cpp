@@ -39,11 +39,6 @@ void AudioSourceComponent::OnEditor()
 		ImGui::DragFloat("Doppler Level", &dopplerLevel, 0.1f, 0.0f, 5.0f, "%.2f");
 		ImGui::DragInt("Min Distance", &minDis, 0.1f, 0.0f, 500.0f);
 		ImGui::DragInt("Max Distance", &maxDis, 0.1f, 0.0f, 500.0f);
-
-		if (ImGui::Button("Test Play"))
-		{
-			//Audio test = new Audio();
-		}
 	}
 
 	ImGui::PopID();

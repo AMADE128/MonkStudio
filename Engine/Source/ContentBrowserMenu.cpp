@@ -15,7 +15,7 @@
 
 #include "Profiling.h"
 
-ContentBrowserMenu::ContentBrowserMenu() : sceneIcon(nullptr), dirIcon(nullptr), modelIcon(nullptr), picIcon(nullptr), Menu(true)
+ContentBrowserMenu::ContentBrowserMenu() : sceneIcon(nullptr), dirIcon(nullptr), modelIcon(nullptr), picIcon(nullptr), Menu(true), audioIcon(nullptr)
 {
 	mainDirectory = "Assets/";
 	currentDirectory = mainDirectory;
@@ -27,6 +27,7 @@ ContentBrowserMenu::~ContentBrowserMenu()
 	RELEASE(picIcon);
 	RELEASE(modelIcon);
 	RELEASE(sceneIcon);
+	RELEASE(audioIcon);
 }
 
 bool ContentBrowserMenu::Start()
@@ -42,6 +43,10 @@ bool ContentBrowserMenu::Start()
 
 	sceneIcon = new Texture(-4, std::string("Settings/EngineResources/logo.rgtexture"));
 	sceneIcon->Load();
+	
+	//TODO: Load audio icon texture
+	//audioIcon = new Texture(-5, std::string("Settings/EngineResources/logo.rgtexture"));
+	//audioIcon->Load();
 
 	return true;
 }
@@ -162,7 +167,7 @@ bool ContentBrowserMenu::Update(float dt)
 			ImGui::ImageButton(sceneIcon ? (ImTextureID)sceneIcon->GetId() : "", { cell, cell });
 			break;
 		case ResourceType::AUDIO:
-			//ImGui::ImageButton(sceneIcon ? (ImTextureID)sceneIcon->GetId() : "", { cell, cell });
+			ImGui::ImageButton(modelIcon ? (ImTextureID)sceneIcon->GetId() : "", { cell, cell });
 			break;
 		}
 		if (ImGui::IsItemClicked())

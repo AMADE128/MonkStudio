@@ -180,9 +180,42 @@ bool ModuleAudio::Start()
 {
 	bool ret = true;
 
+	SetDefaultListener();
 
+	CreateConfigSource();
 
 	return ret;
+}
+
+void ModuleAudio::SetDefaultListener()
+{
+	alListener3f(AL_POSITION, 0.f, 0.f, 0.f);
+	alListener3f(AL_VELOCITY, 0.f, 0.f, 0.f);
+	ALfloat forwardAndUpVectors[] = {
+		/*forward = */ 1.f, 0.f, 0.f,
+		/* up = */ 0.f, 1.f, 0.f
+	};
+	alListenerfv(AL_ORIENTATION, forwardAndUpVectors);
+}
+
+void ModuleAudio::CreateConfigSource()
+{
+	alGenSources(1, &configSource);
+	alSource3f(configSource, AL_POSITION, 1.f, 0.f, 0.f);
+	alSource3f(configSource, AL_VELOCITY, 0.f, 0.f, 0.f);
+	alSourcef(configSource, AL_PITCH, 1.f);
+	alSourcef(configSource, AL_GAIN, 1.f);
+	alSourcei(configSource, AL_LOOPING, AL_FALSE);
+}
+
+void ModuleAudio::SetClipConfigSource(ALuint buffer)
+{
+	alSourcei(configSource, AL_BUFFER, buffer);
+}
+
+ALuint ModuleAudio::GetConfigSource()
+{
+	return configSource;
 }
 
 bool ModuleAudio::Update(float dt)

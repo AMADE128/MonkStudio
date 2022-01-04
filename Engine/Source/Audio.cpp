@@ -1,8 +1,12 @@
 #include "Audio.h"
 
 #include "Application.h"
+#include "ModuleAudio.h"
 #include "FileSystem.h"
 #include "AudioImporter.h"
+
+#include "Imgui/imgui.h"
+#include "OpenAL/AL/al.h"
 
 #include "Globals.h"
 
@@ -36,7 +40,29 @@ void Audio::UnLoad()
 {
 }
 
+void Audio::DrawOnEditor()
+{
+	ImGui::PushID(this);
+
+	if (ImGui::CollapsingHeader("Audio Import Settings"))
+	{
+		ImGui::DragInt("Bit Depth", &parameters.bitDepth);
+		ImGui::DragInt("Sample Rate", &parameters.sampleRate);
+		if (ImGui::Button("Play"))
+		{
+			Load();
+			app->audio->SetClipConfigSource(buffer);
+			alSourcePlay(app->audio->GetConfigSource());
+		}
+	}
+	ImGui::PopID();
+}
+
 ALuint Audio::GetBuffer()
 {
 	return buffer;
+}
+
+void Audio::Reimport()
+{
 }
