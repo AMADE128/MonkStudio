@@ -41,7 +41,7 @@ void AudioImporter::SaveAudio(std::string& fileName)
 {
 }
 
-void AudioImporter::LoadAudio(const char* path, AudioFile<float>& audioFile, ALuint& buffer, unsigned int& id, AudioParameters& parameterData)
+void AudioImporter::LoadAudio(const char* path, AudioFile<float>& audioFile, ALuint& buffer, AudioParameters& parameterData)
 {
 	//Load an audio file
 	bool loaded = audioFile.load(path);

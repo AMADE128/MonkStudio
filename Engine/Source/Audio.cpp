@@ -32,7 +32,7 @@ void Audio::Load()
 {
 	if (id == 0)
 	{
-		AudioImporter::LoadAudio(libraryPath.c_str(), audioFile, buffer, id, parameters);
+		AudioImporter::LoadAudio(libraryPath.c_str(), audioFile, buffer, parameters);
 	}
 }
 
