@@ -22,6 +22,7 @@ public:
 	ALint GetClipState();
 	void SetLoop(bool loop);
 	void SetPitch(float pitch);
+	void SetClipBuffer(ALuint buffer);
 
 private:
 

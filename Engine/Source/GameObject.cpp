@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
 #include "Globals.h"
+#include "AudioSourceComponent.h"
 
 #include "JsonParsing.h"
 #include "VertexBuffer.h"
@@ -124,6 +125,11 @@ void GameObject::DrawEditor()
 			CreateComponent(ComponentType::MATERIAL);
 			newComponent = false;
 		}
+		if (ImGui::Selectable("Audio Souce Component"))
+		{
+			CreateComponent(ComponentType::AUDIO_SOURCE);
+			newComponent = false;
+		}
 		else if (!ImGui::IsAnyItemHovered() && ((ImGui::GetIO().MouseClicked[0] || ImGui::GetIO().MouseClicked[1])))
 		{
 			newComponent = false;
@@ -145,6 +151,11 @@ void GameObject::DrawEditor()
 			if (ImGui::Button("Material Component"))
 			{
 				CreateComponent(ComponentType::MATERIAL);
+				newComponent = false;
+			}
+			if (ImGui::Button("Audio Source Component"))
+			{
+				CreateComponent(ComponentType::AUDIO_SOURCE);
 				newComponent = false;
 			}
 			else if (!ImGui::IsAnyItemHovered() && ((ImGui::GetIO().MouseClicked[0] || ImGui::GetIO().MouseClicked[1])))
@@ -225,6 +236,9 @@ Component* GameObject::CreateComponent(ComponentType type)
 	case ComponentType::CAMERA:
 		component = new CameraComponent(this, GetComponent<TransformComponent>());
 		app->scene->SetMainCamera((CameraComponent*)component);
+		break;
+	case ComponentType::AUDIO_SOURCE:
+		component = new AudioSourceComponent(this);
 		break;
 	case ComponentType::MATERIAL:
 		component = new MaterialComponent(this);

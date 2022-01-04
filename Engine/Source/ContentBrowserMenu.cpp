@@ -161,6 +161,9 @@ bool ContentBrowserMenu::Update(float dt)
 		case ResourceType::SCENE:
 			ImGui::ImageButton(sceneIcon ? (ImTextureID)sceneIcon->GetId() : "", { cell, cell });
 			break;
+		case ResourceType::AUDIO:
+			//ImGui::ImageButton(sceneIcon ? (ImTextureID)sceneIcon->GetId() : "", { cell, cell });
+			break;
 		}
 		if (ImGui::IsItemClicked())
 		{

@@ -56,7 +56,7 @@ FileSystem::FileSystem(const char* assetsPath) : name("FileSystem")
 	
 	texExtension = { ".png", ".jpg", ".dds", ".tga"};
 	modelExtension = { ".obj", ".fbx", ".3DS", ".FBX"};
-	audioExtension = { ".ogg", ".aiff", ".OGG", ".AIFF"};
+	audioExtension = { ".wav", ".aiff", ".WAV", ".AIFF"};
 }
 
 FileSystem::~FileSystem()

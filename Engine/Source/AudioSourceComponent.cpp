@@ -13,7 +13,7 @@ AudioSourceComponent::AudioSourceComponent(GameObject* _owner)
 	alSourcef(source, AL_PITCH, 1.f);
 	alSourcef(source, AL_GAIN, 1.f);
 	alSourcei(source, AL_LOOPING, AL_FALSE);
-	alSourcei(source, AL_BUFFER, clip->GetBuffer());
+	//alSourcei(source, AL_BUFFER, clip->GetBuffer());
 }
 
 AudioSourceComponent::~AudioSourceComponent()
@@ -39,6 +39,11 @@ void AudioSourceComponent::OnEditor()
 		ImGui::DragFloat("Doppler Level", &dopplerLevel, 0.1f, 0.0f, 5.0f, "%.2f");
 		ImGui::DragInt("Min Distance", &minDis, 0.1f, 0.0f, 500.0f);
 		ImGui::DragInt("Max Distance", &maxDis, 0.1f, 0.0f, 500.0f);
+
+		if (ImGui::Button("Test Play"))
+		{
+			//Audio test = new Audio();
+		}
 	}
 
 	ImGui::PopID();
@@ -85,4 +90,9 @@ void AudioSourceComponent::SetLoop(bool loop)
 void AudioSourceComponent::SetPitch(float pitch)
 {
 	alSourcef(source, AL_PITCH, pitch);
+}
+
+void AudioSourceComponent::SetClipBuffer(ALuint buffer)
+{
+	alSourcei(source, AL_BUFFER, buffer);
 }

@@ -26,17 +26,14 @@ void AudioImporter::ImportAudio(std::string& fileName)
 	else
 	{
 		//TODO: Import audio if doesn't exist
-		/*ILuint image;
-		ilGenImages(1, &image);
-		ilBindImage(image);
-		ilLoadImage(fileName.c_str());
-		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);*/
+		AudioFile<float> audioFile;
+		audioFile.load(fileName);
+
 		std::string libraryPath;
 
-		ResourceManager::GetInstance()->CreateResource(ResourceType::TEXTURE, fileName, libraryPath);
+		ResourceManager::GetInstance()->CreateResource(ResourceType::AUDIO, fileName, libraryPath);
 
-		/*SaveTexture(libraryPath);
-		ilDeleteImages(1, &image);*/
+		audioFile.save(libraryPath, AudioFileFormat::Wave);
 	}
 }
 
