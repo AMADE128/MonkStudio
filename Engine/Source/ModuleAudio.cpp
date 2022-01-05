@@ -184,6 +184,18 @@ bool ModuleAudio::Start()
 
 	CreateConfigSource();
 
+	buttonPlay = new Texture(-5, std::string("Settings/EngineResources/PlayButton.rgtexture"));
+	buttonPlay->Load();
+
+	buttonStop = new Texture(-6, std::string("Settings/EngineResources/StopButton.rgtexture"));
+	buttonStop->Load();
+
+	buttonMute = new Texture(-7, std::string("Settings/EngineResources/MuteButton.rgtexture"));
+	buttonMute->Load();
+
+	buttonLoop = new Texture(-7, std::string("Settings/EngineResources/LoopButton.rgtexture"));
+	buttonLoop->Load();
+
 	return ret;
 }
 
@@ -234,6 +246,11 @@ bool ModuleAudio::CleanUp()
 	CleanUpWwise();
 
 	CleanUpOpenAl();
+
+	RELEASE(buttonPlay);
+	RELEASE(buttonStop);
+	RELEASE(buttonMute);
+	RELEASE(buttonLoop);
 
 	return ret;
 }

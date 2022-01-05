@@ -4,6 +4,7 @@
 #include "ModuleAudio.h"
 #include "FileSystem.h"
 #include "AudioImporter.h"
+#include "MainMenuBar.h"
 
 #include "Imgui/imgui.h"
 #include "OpenAL/AL/al.h"
@@ -11,7 +12,7 @@
 #include "Globals.h"
 
 Audio::Audio(uint uid, std::string& assets, std::string& library)
-	: id(0), Resource(uid, ResourceType::AUDIO, assets, library), parameters({})
+	: Resource(uid, ResourceType::AUDIO, assets, library), parameters({}), buffer(0)
 {
 	std::string metaConfig = AUDIO_FOLDER + std::string("audio_") + std::to_string(uid) + ".meta";
 	AudioImporter::CreateMetaAudio(metaConfig, parameters, assets, uid);
@@ -20,7 +21,7 @@ Audio::Audio(uint uid, std::string& assets, std::string& library)
 }
 
 Audio::Audio(uint uid, std::string& library)
-	: id(0), Resource(uid, ResourceType::AUDIO, std::string(""), library), parameters({})
+	: Resource(uid, ResourceType::AUDIO, std::string(""), library), parameters({}), buffer(0)
 {
 }
 
@@ -30,7 +31,7 @@ Audio::~Audio()
 
 void Audio::Load()
 {
-	if (id == 0)
+	if (buffer == 0)
 	{
 		AudioImporter::LoadAudio(libraryPath.c_str(), audioFile, buffer, parameters);
 	}
@@ -48,11 +49,30 @@ void Audio::DrawOnEditor()
 	{
 		ImGui::DragInt("Bit Depth", &parameters.bitDepth);
 		ImGui::DragInt("Sample Rate", &parameters.sampleRate);
-		if (ImGui::Button("Play"))
+		if (ImGui::ImageButton((ImTextureID)app->audio->buttonPlay->GetId(), { 27,18 }))
 		{
 			Load();
 			app->audio->SetClipConfigSource(buffer);
 			alSourcePlay(app->audio->GetConfigSource());
+		}
+		ImGui::SameLine();
+		if (ImGui::ImageButton((ImTextureID)app->audio->buttonStop->GetId(), { 27,18 }))
+		{
+			alSourceStop(app->audio->GetConfigSource());
+		}
+		ImGui::SameLine();
+		if (ImGui::ImageButton((ImTextureID)app->audio->buttonMute->GetId(), { 27,18 }))
+		{
+			if (muted) alListenerf(AL_GAIN, 1.0f);
+			else alListenerf(AL_GAIN, 0.0f);
+
+			muted = !muted;
+		}
+		ImGui::SameLine();
+		if (ImGui::ImageButton((ImTextureID)app->audio->buttonLoop->GetId(), { 27,18 }))
+		{
+			loop = !loop;
+			alSourcei(app->audio->GetConfigSource(), AL_LOOPING, loop);
 		}
 	}
 	ImGui::PopID();

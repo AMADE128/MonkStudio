@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "JsonParsing.h"
 #include <AudioFile/AudioFile.h>
+#include "Texture.h"
 
 #include <Win32/AkFilePackageLowLevelIOBlocking.h>
 #include "OpenAL/AL/alc.h"
@@ -30,6 +31,11 @@ public:
 	ALuint GetConfigSource();
 
 	void LoadSounBank(const char* path);
+
+	Texture* buttonPlay = nullptr;
+	Texture* buttonStop = nullptr;
+	Texture* buttonMute = nullptr;
+	Texture* buttonLoop = nullptr;
 
 private:
 

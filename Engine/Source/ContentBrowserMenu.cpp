@@ -44,9 +44,8 @@ bool ContentBrowserMenu::Start()
 	sceneIcon = new Texture(-4, std::string("Settings/EngineResources/logo.rgtexture"));
 	sceneIcon->Load();
 	
-	//TODO: Load audio icon texture
-	//audioIcon = new Texture(-5, std::string("Settings/EngineResources/logo.rgtexture"));
-	//audioIcon->Load();
+	audioIcon = new Texture(-5, std::string("Settings/EngineResources/audioFile.rgtexture"));
+	audioIcon->Load();
 
 	return true;
 }
@@ -167,7 +166,7 @@ bool ContentBrowserMenu::Update(float dt)
 			ImGui::ImageButton(sceneIcon ? (ImTextureID)sceneIcon->GetId() : "", { cell, cell });
 			break;
 		case ResourceType::AUDIO:
-			ImGui::ImageButton(modelIcon ? (ImTextureID)sceneIcon->GetId() : "", { cell, cell });
+			ImGui::ImageButton(audioIcon ? (ImTextureID)audioIcon->GetId() : "", { cell, cell });
 			break;
 		}
 		if (ImGui::IsItemClicked())

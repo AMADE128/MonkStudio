@@ -37,11 +37,12 @@ private:
 
 	void Reimport();
 
-	unsigned int id;
-
 	AudioParameters parameters;
 	AudioFile<float> audioFile;
 	ALuint buffer;
+
+	bool muted = false;
+	bool loop = false;
 
 	std::string path;
 
