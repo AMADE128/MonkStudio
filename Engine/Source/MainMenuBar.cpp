@@ -14,6 +14,7 @@
 #include "Texture.h"
 #include "TextureImporter.h"
 #include "ResourceManager.h"
+#include "AudioMixer.h"
 
 #include "Dialogs.h"
 
@@ -30,6 +31,7 @@ MainMenuBar::MainMenuBar() : Menu(true), saveWindow(false), buttonPlay(nullptr),
 	menus.emplace_back(new InspectorMenu());
 	menus.emplace_back(new HierarchyMenu());
 	menus.emplace_back(new ContentBrowserMenu());
+	menus.emplace_back(new AudioMixer());
 }
 
 MainMenuBar::~MainMenuBar()
@@ -130,6 +132,7 @@ bool MainMenuBar::Update(float dt)
 			ImGui::MenuItem("Configuration", NULL, &menus[(int)Menus::CONFIGURATION]->active);
 			ImGui::MenuItem("Hierarchy", NULL, &menus[(int)Menus::HIERARCHY]->active);
 			ImGui::MenuItem("Inspector", NULL, &menus[(int)Menus::INSPECTOR]->active);
+			ImGui::MenuItem("Audio Mixer", NULL, &menus[(int)Menus::AUDIO_MIXER]->active);
 
 			ImGui::EndMenu();
 		}

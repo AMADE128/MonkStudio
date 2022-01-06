@@ -295,6 +295,9 @@
     <ClInclude Include="Dependencies\Wwise\include\Win32\stdafx.h">
       <Filter>Sources\Libraries\AK</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Source\AudioMixer.h">
+      <Filter>Sources\Menus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Source\ModuleCamera3D.cpp">
@@ -491,6 +494,9 @@
     </ClCompile>
     <ClCompile Include="Dependencies\Wwise\include\Win32\stdafx.cpp">
       <Filter>Sources\Libraries\AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\AudioMixer.cpp">
+      <Filter>Sources\Menus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
