@@ -4,10 +4,13 @@
 #include "JsonParsing.h"
 #include <AudioFile/AudioFile.h>
 #include "Texture.h"
+#include "AudioGroup.h"
 
 #include <Win32/AkFilePackageLowLevelIOBlocking.h>
 #include "OpenAL/AL/alc.h"
 #include "OpenAL/AL/al.h"
+
+#include <vector>
 
 class ModuleAudio : public Module
 {
@@ -32,6 +35,8 @@ public:
 
 	void LoadSounBank(const char* path);
 
+	AudioGroup* GetMasterGroup();
+
 	Texture* buttonPlay = nullptr;
 	Texture* buttonStop = nullptr;
 	Texture* buttonMute = nullptr;
@@ -42,6 +47,8 @@ private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 	ALCdevice* device = nullptr;
 	ALCcontext* context = nullptr;
+
+	AudioGroup* master;
 
 	ALuint configSource;
 

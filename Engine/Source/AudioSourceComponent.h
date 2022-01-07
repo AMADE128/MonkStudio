@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "AudioListenerComponent.h"
 #include "Audio.h"
+#include "AudioGroup.h"
 #include "OpenAL/AL/al.h"
 
 class AudioSourceComponent : public Component
@@ -26,7 +27,7 @@ public:
 
 private:
 
-	AudioListenerComponent* output = nullptr;
+	AudioGroup* output = nullptr;
 	Audio* clip = nullptr;
 	ALuint source;
 	ALint clipState;

@@ -298,6 +298,9 @@
     <ClInclude Include="Engine\Source\AudioMixer.h">
       <Filter>Sources\Menus</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Source\AudioGroup.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Source\ModuleCamera3D.cpp">
@@ -497,6 +500,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Source\AudioMixer.cpp">
       <Filter>Sources\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\AudioGroup.cpp">
+      <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

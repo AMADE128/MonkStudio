@@ -74,6 +74,8 @@ bool ModuleAudio::Init(JsonParsing& node)
 
 	InitializeOpenAl(ret);
 
+	master = new AudioGroup("Master", nullptr);
+
 	return ret;
 }
 
@@ -251,6 +253,7 @@ bool ModuleAudio::CleanUp()
 	RELEASE(buttonStop);
 	RELEASE(buttonMute);
 	RELEASE(buttonLoop);
+	RELEASE(master);
 
 	return ret;
 }
@@ -294,4 +297,9 @@ void ModuleAudio::LoadSounBank(const char* path)
 
 	AKRESULT eResult = AK::SoundEngine::LoadBank(path, bankID);
 	assert(eResult == AK_Success);
+}
+
+AudioGroup* ModuleAudio::GetMasterGroup()
+{
+	return master;
 }
