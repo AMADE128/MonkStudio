@@ -16,6 +16,12 @@ public:
 	bool Update(float dt) override;
 	bool CleanUp() override;
 
+	void RecursiveGroupTree(AudioGroup* parent);
+	void RecursiveVolumeSlider(AudioGroup* parent);
+	void GetNumberOfGroups(int& number, AudioGroup* parent);
+
 private:
+
+	AudioGroup* selectedGroup = nullptr;
 
 };
