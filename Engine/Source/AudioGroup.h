@@ -4,6 +4,8 @@
 #include <string>
 #include "OpenAL/AL/al.h"
 
+class AudioSourceComponent;
+
 class AudioGroup
 {
 public:
@@ -16,7 +18,8 @@ public:
 	void SetVolume(float newVolume);
 	void SetParent(AudioGroup* newParent);
 	void AddGroup(AudioGroup* newGroup);
-	void AddSource(ALuint& source);
+	void AddSource(AudioSourceComponent* source);
+	void ClearSource(AudioSourceComponent* source);
 
 	//Get values
 	std::string GetName();
@@ -24,10 +27,10 @@ public:
 	AudioGroup* GetChild(const char* name);
 
 	std::vector<AudioGroup*> childList;
-	std::vector<ALuint> sourceList;
+	std::vector<AudioSourceComponent*> sourceList;
 
 	float volume;
-	bool isSelected = false;
+	bool isSelected;
 
 private:
 

@@ -58,7 +58,7 @@ namespace AK
 }
 
 
-ModuleAudio::ModuleAudio()
+ModuleAudio::ModuleAudio() : buttonPlay(nullptr), buttonLoop(nullptr), buttonMute(nullptr), buttonStop(nullptr), device(nullptr), context(nullptr), master(nullptr), configSource(0)
 {
 }
 
@@ -302,4 +302,16 @@ void ModuleAudio::LoadSounBank(const char* path)
 AudioGroup* ModuleAudio::GetMasterGroup()
 {
 	return master;
+}
+
+void ModuleAudio::GetNumberOfGroups(int& number, AudioGroup* parent)
+{
+	if (parent != nullptr)
+	{
+		number++;
+		for (unsigned int i = 0; i < parent->childList.size(); i++)
+		{
+			GetNumberOfGroups(number, parent->childList[i]);
+		}
+	}
 }

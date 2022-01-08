@@ -3,8 +3,11 @@
 #include "Component.h"
 #include "AudioListenerComponent.h"
 #include "Audio.h"
-#include "AudioGroup.h"
+#include <vector>
+#include <string>
 #include "OpenAL/AL/al.h"
+
+class AudioGroup;
 
 class AudioSourceComponent : public Component
 {
@@ -14,6 +17,7 @@ public:
 	~AudioSourceComponent();
 
 	void OnEditor() override;
+	void RecursiveGroupNameList(std::vector<std::string>& nameList, AudioGroup* parent);
 	bool Update(float dt) override;
 
 	void Play(float delay = 0);
@@ -21,16 +25,17 @@ public:
 	void Stop();
 
 	ALint GetClipState();
-	void SetLoop(bool loop);
-	void SetPitch(float pitch);
+	void SetLoop(bool _loop);
+	void SetPitch(float _pitch);
 	void SetClipBuffer(ALuint buffer);
+	void SetVolume(float newVolume);
 
 private:
 
-	AudioGroup* output = nullptr;
-	Audio* clip = nullptr;
+	Audio* clip;
 	ALuint source;
 	ALint clipState;
+	std::string current_item;
 
 	bool mute = false;
 	bool playOnAwake = true;

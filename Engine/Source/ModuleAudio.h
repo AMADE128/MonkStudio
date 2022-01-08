@@ -36,17 +36,18 @@ public:
 	void LoadSounBank(const char* path);
 
 	AudioGroup* GetMasterGroup();
+	void GetNumberOfGroups(int& number, AudioGroup* parent);
 
-	Texture* buttonPlay = nullptr;
-	Texture* buttonStop = nullptr;
-	Texture* buttonMute = nullptr;
-	Texture* buttonLoop = nullptr;
+	Texture* buttonPlay;
+	Texture* buttonStop;
+	Texture* buttonMute;
+	Texture* buttonLoop;
 
 private:
 
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
-	ALCdevice* device = nullptr;
-	ALCcontext* context = nullptr;
+	ALCdevice* device;
+	ALCcontext* context;
 
 	AudioGroup* master;
 
