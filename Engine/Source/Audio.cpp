@@ -74,6 +74,12 @@ void Audio::DrawOnEditor()
 			loop = !loop;
 			alSourcei(app->audio->GetConfigSource(), AL_LOOPING, loop);
 		}
+		if (ImGui::Button("Save Changes"))
+		{
+			std::string audio = this->GetLibraryPath();
+			app->fs->RemoveFile(this->GetLibraryPath().c_str());
+			app->fs->Save(this->GetLibraryPath().c_str(), audio.c_str(), audio.size());
+		}
 	}
 	ImGui::PopID();
 }
@@ -85,4 +91,5 @@ ALuint Audio::GetBuffer()
 
 void Audio::Reimport()
 {
+	
 }
