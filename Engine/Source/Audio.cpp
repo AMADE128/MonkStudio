@@ -74,11 +74,9 @@ void Audio::DrawOnEditor()
 			loop = !loop;
 			alSourcei(app->audio->GetConfigSource(), AL_LOOPING, loop);
 		}
-		if (ImGui::Button("Save Changes"))
+		if (ImGui::Button("Apply Changes"))
 		{
-			std::string audio = this->GetLibraryPath();
-			app->fs->RemoveFile(this->GetLibraryPath().c_str());
-			app->fs->Save(this->GetLibraryPath().c_str(), audio.c_str(), audio.size());
+			Audio::Reimport();
 		}
 	}
 	ImGui::PopID();
@@ -91,5 +89,8 @@ ALuint Audio::GetBuffer()
 
 void Audio::Reimport()
 {
-	
+	std::string metaPath = AUDIO_FOLDER + std::string("audio_") + std::to_string(uid) + ".meta";
+	app->fs->RemoveFile(metaPath.c_str());
+	AudioImporter::CreateMetaAudio(metaPath, parameters, assetsPath, uid);
+
 }
