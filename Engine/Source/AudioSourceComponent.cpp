@@ -44,7 +44,9 @@ void AudioSourceComponent::OnEditor()
 		Checkbox(this, "Active", active);
 		Checkbox(this, "Mute", mute);
 		Checkbox(this, "Play On Awake", playOnAwake);
-		Checkbox(this, "Loop", loop);
+		ImGui::PushID(this);
+		if (ImGui::Checkbox("Loop", &loop)) SetLoop(loop);
+		ImGui::PopID();
 
 		ImGui::SliderFloat("Volume", &volume, 0.0f, 1.0f, "%.2f");
 		ImGui::SliderFloat("Pitch", &pitch, 0.1f, 0.0f, "%.2f");
@@ -152,6 +154,8 @@ void AudioSourceComponent::Play(float delay)
 {
 	if (GetClipState() != AL_PLAYING)
 	{
+		ALfloat x, y, z;
+		alGetSource3f(source, AL_POSITION, &x, &y, &z);
 		alSourcePlay(source);
 	}
 }

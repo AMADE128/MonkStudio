@@ -17,6 +17,7 @@ public:
 	void SetListenerPosition(float x, float y, float z);
 	void SetListenerVelocity(float x, float y, float z);
 	void SetListenerOrientation(float3 forward, float3 up);
+	void SetDistanceModel(ALenum disModel);
 
 private:
 };
