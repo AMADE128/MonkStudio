@@ -1,4 +1,5 @@
 #include "AudioListenerComponent.h"
+#include "GameObject.h"
 
 AudioListenerComponent::AudioListenerComponent(GameObject* own)
 {
@@ -18,7 +19,7 @@ void AudioListenerComponent::OnEditor()
 {
 	ImGui::PushID(this);
 
-	if (ImGui::CollapsingHeader("Audio Source"))
+	if (ImGui::CollapsingHeader("Audio Listener"))
 	{
 		Checkbox(this, "Active", active);
 	}
@@ -29,6 +30,13 @@ void AudioListenerComponent::OnEditor()
 bool AudioListenerComponent::Update(float dt)
 {
 	bool ret = true;
+
+	if (owner->GetComponent<CameraComponent>() != nullptr && owner->GetComponent<CameraComponent>()->active == true)
+	{
+		float3 pos = owner->GetComponent<TransformComponent>()->GetPosition();
+		SetListenerPosition(pos.x, pos.y, pos.z);
+	}
+
 	return ret;
 }
 

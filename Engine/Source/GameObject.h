@@ -61,6 +61,8 @@ public:
 	void OnLoad(JsonParsing& node);
 	void OnSave(JsonParsing& node, JSON_Array* array);
 
+	void PlayOnAwake(GameObject* gameObject);
+
 	inline const std::vector<Component*> GetComponents() const { return components; }
 
 	template<typename T>

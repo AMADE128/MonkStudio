@@ -125,9 +125,14 @@ void GameObject::DrawEditor()
 			CreateComponent(ComponentType::MATERIAL);
 			newComponent = false;
 		}
-		if (ImGui::Selectable("Audio Souce Component"))
+		if (ImGui::Selectable("Audio Source Component"))
 		{
 			CreateComponent(ComponentType::AUDIO_SOURCE);
+			newComponent = false;
+		}
+		if (ImGui::Selectable("Audio Listener Component"))
+		{
+			CreateComponent(ComponentType::AUDIO_LISTENER);
 			newComponent = false;
 		}
 		else if (!ImGui::IsAnyItemHovered() && ((ImGui::GetIO().MouseClicked[0] || ImGui::GetIO().MouseClicked[1])))
@@ -156,6 +161,11 @@ void GameObject::DrawEditor()
 			if (ImGui::Button("Audio Source Component"))
 			{
 				CreateComponent(ComponentType::AUDIO_SOURCE);
+				newComponent = false;
+			}
+			if (ImGui::Button("Audio Source Component"))
+			{
+				CreateComponent(ComponentType::AUDIO_LISTENER);
 				newComponent = false;
 			}
 			else if (!ImGui::IsAnyItemHovered() && ((ImGui::GetIO().MouseClicked[0] || ImGui::GetIO().MouseClicked[1])))
@@ -239,6 +249,9 @@ Component* GameObject::CreateComponent(ComponentType type)
 		break;
 	case ComponentType::AUDIO_SOURCE:
 		component = new AudioSourceComponent(this);
+		break;
+	case ComponentType::AUDIO_LISTENER:
+		component = new AudioListenerComponent(this);
 		break;
 	case ComponentType::MATERIAL:
 		component = new MaterialComponent(this);
@@ -450,5 +463,20 @@ void GameObject::OnSave(JsonParsing& node, JSON_Array* array)
 	for (int i = 0; i < children.size(); ++i)
 	{
 		children[i]->OnSave(node, array);
+	}
+}
+
+void GameObject::PlayOnAwake(GameObject* gameObject)
+{
+	if (gameObject->GetComponent<AudioSourceComponent>() != nullptr)
+	{
+		if (gameObject->GetComponent<AudioSourceComponent>()->playOnAwake && gameObject->GetComponent<AudioSourceComponent>()->active)
+		{
+			gameObject->GetComponent<AudioSourceComponent>()->pendingToPlay = true;
+		}
+	}
+	for (unsigned int i = 0; i < gameObject->children.size(); i++)
+	{
+		PlayOnAwake(gameObject->children[i]);
 	}
 }

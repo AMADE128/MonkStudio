@@ -468,6 +468,8 @@ void ModuleScene::Play()
 		DEBUG_LOG("Scene couldn't be saved");
 
 	RELEASE_ARRAY(buf);
+
+	root->PlayOnAwake(root);
 	
 	gameState = GameState::PLAYING;
 	gameTimer.ResetTimer();

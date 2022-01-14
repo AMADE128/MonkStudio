@@ -39,6 +39,7 @@ void Audio::Load()
 
 void Audio::UnLoad()
 {
+	alDeleteBuffers(1, &buffer);
 }
 
 void Audio::DrawOnEditor()
@@ -63,8 +64,8 @@ void Audio::DrawOnEditor()
 		ImGui::SameLine();
 		if (ImGui::ImageButton((ImTextureID)app->audio->buttonMute->GetId(), { 27,18 }))
 		{
-			if (muted) alListenerf(AL_GAIN, 1.0f);
-			else alListenerf(AL_GAIN, 0.0f);
+			if (muted) alSourcef(app->audio->GetConfigSource(), AL_GAIN, 1.0f);
+			else alSourcef(app->audio->GetConfigSource(), AL_GAIN, 0.0f);
 
 			muted = !muted;
 		}

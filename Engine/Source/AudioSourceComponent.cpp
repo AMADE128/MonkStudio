@@ -1,21 +1,27 @@
 
 #include "AudioSourceComponent.h"
 #include "Application.h"
+#include "FileSystem.h"
+#include "ResourceManager.h" 
 #include "ModuleAudio.h"
 #include "AudioGroup.h"
+#include "GameObject.h"
 #include "OpenAL/AL/al.h"
 
-AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), clipState(0)
+AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), clipState(0), pendingToPlay(false)
 {
 	owner = _owner;
 	type = ComponentType::AUDIO_SOURCE;
 
 	alGenSources(1, &source);
-	alSource3f(source, AL_POSITION, 1.f, 0.f, 0.f);
+	SetRolloff(1);
+	SetMinDistance(6);
+	SetMaxDistance(15);
+	SetPosition(owner->GetComponent<TransformComponent>()->GetPosition());
 	alSource3f(source, AL_VELOCITY, 0.f, 0.f, 0.f);
-	alSourcef(source, AL_PITCH, 1.f);
-	alSourcef(source, AL_GAIN, 1.f);
-	alSourcei(source, AL_LOOPING, AL_FALSE);
+	SetPitch(1.f);
+	SetVolume(1.f);
+	SetLoop(false);
 }
 
 AudioSourceComponent::~AudioSourceComponent()
@@ -30,30 +36,10 @@ void AudioSourceComponent::OnEditor()
 	if (ImGui::CollapsingHeader("Audio Source"))
 	{
 		//Audio clip selector
+		AudioClipSelector();
 
 		//Group output selector
-		std::vector<std::string> groupsNameList;
-		RecursiveGroupNameList(groupsNameList, app->audio->GetMasterGroup());
-
-		if (ImGui::BeginCombo("##combo", current_item.c_str()))
-		{
-			for (int n = 0; n < groupsNameList.size(); n++)
-			{
-				bool is_selected = (current_item == groupsNameList[n]);
-				if (ImGui::Selectable(groupsNameList[n].c_str(), is_selected))
-				{
-					if (groupsNameList[n] != current_item)
-					{
-						if (current_item != "") app->audio->GetMasterGroup()->GetChild(current_item.c_str())->ClearSource(this);
-						current_item = groupsNameList[n];
-						app->audio->GetMasterGroup()->GetChild(current_item.c_str())->AddSource(this);
-					}
-				}
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();
-			}
-			ImGui::EndCombo();
-		}
+		OutputGroupSelector();
 
 		Checkbox(this, "Active", active);
 		Checkbox(this, "Mute", mute);
@@ -72,6 +58,66 @@ void AudioSourceComponent::OnEditor()
 	ImGui::PopID();
 }
 
+void AudioSourceComponent::AudioClipSelector()
+{
+	std::vector<std::string> groupsNameList;
+	app->fs->DiscoverFiles("Library/Audio/", groupsNameList);
+
+	if (ImGui::BeginCombo("Audio Clip", currentItem.c_str()))
+	{
+		for (std::vector<std::string>::iterator it = groupsNameList.begin(); it != groupsNameList.end(); ++it)
+		{
+			if ((*it).find(".rgaudio") != std::string::npos)
+			{
+				bool is_selected = (currentItem == *it);
+
+				app->fs->GetFilenameWithoutExtension(*it);
+				*it = (*it).substr((*it).find_last_of("_") + 1, (*it).length());
+				uint uid = std::stoll(*it);
+				std::shared_ptr<Resource> res = ResourceManager::GetInstance()->GetResource(uid);
+				if (ImGui::Selectable(res->GetName().c_str(), is_selected))
+				{
+					if (res->GetName() != currentItem)
+					{
+						currentItem = res->GetName();
+						res->Load();
+						SetClipBuffer(res);
+					}
+				}
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+}
+
+void AudioSourceComponent::OutputGroupSelector()
+{
+	std::vector<std::string> groupsNameList;
+	RecursiveGroupNameList(groupsNameList, app->audio->GetMasterGroup());
+
+	if (ImGui::BeginCombo("Output", groupCurrentItem.c_str()))
+	{
+		for (int n = 0; n < groupsNameList.size(); n++)
+		{
+			bool is_selected = (groupCurrentItem == groupsNameList[n]);
+			if (ImGui::Selectable(groupsNameList[n].c_str(), is_selected))
+			{
+				if (groupsNameList[n] != groupCurrentItem)
+				{
+					if (groupCurrentItem != "") app->audio->GetMasterGroup()->GetChild(groupCurrentItem.c_str())->ClearSource(this);
+					groupCurrentItem = groupsNameList[n];
+					app->audio->GetMasterGroup()->GetChild(groupCurrentItem.c_str())->AddSource(this);
+				}
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+}
+
 void AudioSourceComponent::RecursiveGroupNameList(std::vector<std::string>& nameList, AudioGroup* parent)
 {
 	if (parent != nullptr)
@@ -88,7 +134,16 @@ bool AudioSourceComponent::Update(float dt)
 {
 	bool ret = true;
 
+	if (owner->GetComponent<TransformComponent>() != nullptr && owner->GetComponent<TransformComponent>()->active == true)
+	{
+		SetPosition(owner->GetComponent<TransformComponent>()->GetPosition());
+	}
 
+	if (pendingToPlay)
+	{
+		Play();
+		pendingToPlay = false;
+	}
 
 	return ret;
 }
@@ -129,13 +184,38 @@ void AudioSourceComponent::SetPitch(float _pitch)
 	pitch = _pitch;
 }
 
-void AudioSourceComponent::SetClipBuffer(ALuint buffer)
+void AudioSourceComponent::SetClipBuffer(std::shared_ptr<Resource> _clip)
 {
-	alSourcei(source, AL_BUFFER, buffer);
+	alSourcei(source, AL_BUFFER, std::static_pointer_cast<Audio>(_clip)->GetBuffer());
 }
 
 void AudioSourceComponent::SetVolume(float newVolume)
 {
 	alSourcef(source, AL_GAIN, newVolume);
 	volume = newVolume;
+}
+
+void AudioSourceComponent::SetPosition(float x, float y, float z)
+{
+	alSource3f(source, AL_POSITION, x, y, z);
+}
+
+void AudioSourceComponent::SetPosition(float3 _position)
+{
+	alSource3f(source, AL_POSITION, _position.x, _position.y, _position.z);
+}
+
+void AudioSourceComponent::SetRolloff(float _rolloff)
+{
+	alSourcef(source, AL_ROLLOFF_FACTOR, _rolloff);
+}
+
+void AudioSourceComponent::SetMaxDistance(float maxDis)
+{
+	alSourcef(source, AL_MAX_DISTANCE, maxDis);
+}
+
+void AudioSourceComponent::SetMinDistance(float minDis)
+{
+	alSourcef(source, AL_REFERENCE_DISTANCE, minDis);
 }
