@@ -13,7 +13,7 @@
 
 #include "Profiling.h"
 
-ModuleScene::ModuleScene() : sceneDir(""), mainCamera(nullptr), gameState(GameState::NOT_PLAYING), frameSkip(0), resetQuadtree(true), goToRecalculate(nullptr)
+ModuleScene::ModuleScene() : sceneDir(""), mainCamera(nullptr), gameState(GameState::NOT_PLAYING), frameSkip(0), resetQuadtree(true), goToRecalculate(nullptr), car(nullptr)
 {
 	root = new GameObject();
 	root->SetName("Untitled");
@@ -106,6 +106,21 @@ bool ModuleScene::Update(float dt)
 		resetQuadtree = false;
 	}
 
+	if (gameState == GameState::PLAYING)
+	{
+		if (root->GetNameString() == "AudioDemo")
+		{
+			car = GetGOByName("Red Car");
+			if (car != nullptr && car->GetActive())
+			{
+				float3 oldPos = car->GetComponent<TransformComponent>()->GetPosition();
+
+				if (oldPos.z <= -34) car->GetComponent<TransformComponent>()->SetPosition(float3(oldPos.x, oldPos.y, 47));
+				else car->GetComponent<TransformComponent>()->SetPosition(float3(oldPos.x, oldPos.y, oldPos.z - 0.5f));
+			}
+		}
+	}
+
 	return true;
 }
 
@@ -153,6 +168,7 @@ bool ModuleScene::Draw()
 bool ModuleScene::CleanUp()
 {
 	RELEASE(root);
+	RELEASE(car);
 
 	return true;
 }
@@ -334,6 +350,28 @@ GameObject* ModuleScene::GetGoByUuid(double uuid) const
 		GameObject* go = goStack.top();
 		goStack.pop();
 		if (go->GetUUID() == uuid)	return go;
+		else
+		{
+			for (int i = 0; i < go->GetChilds().size(); ++i)
+			{
+				goStack.push(go->GetChilds()[i]);
+			}
+		}
+	}
+
+	return nullptr;
+}
+
+GameObject* ModuleScene::GetGOByName(std::string goName) const
+{
+	std::stack<GameObject*> goStack;
+	goStack.push(root);
+
+	while (!goStack.empty())
+	{
+		GameObject* go = goStack.top();
+		goStack.pop();
+		if (go->GetName() == goName)	return go;
 		else
 		{
 			for (int i = 0; i < go->GetChilds().size(); ++i)

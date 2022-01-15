@@ -112,6 +112,13 @@ void TransformComponent::SetTransform(float3 pos, Quat rot, float3 sca)
 	DEBUG_LOG("This is %s", owner->GetName());
 }
 
+void TransformComponent::SetPosition(float3 pos)
+{
+	position = pos;
+	globalMatrix = float4x4::FromTRS(position, rotation, scale);
+	changeTransform = true;
+}
+
 void TransformComponent::SetTransform(float4x4 trMatrix)
 {
 	globalMatrix = trMatrix;

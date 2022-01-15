@@ -44,6 +44,7 @@ public:
 
 	inline uint const GetUUID() const { return uuid; }
 	inline const char* GetName() const { return name.c_str(); }
+	std::string GetNameString() { return name; }
 	inline GameObject* GetParent() const { return parent; }
 	inline const bool& GetActive() const { return active; }
 	inline std::vector<GameObject*>& GetChilds() { return children; }

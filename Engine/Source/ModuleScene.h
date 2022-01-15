@@ -46,6 +46,7 @@ public:
 	inline GameObject* GetRoot() const { return root; }
 	inline GameState GetGameState() const { return gameState; }
 	GameObject* GetGoByUuid(double uuid) const;
+	GameObject* GetGOByName(std::string goName) const;
 
 	void SetMainCamera(CameraComponent* camComponent) { mainCamera = camComponent; }
 	void Play();
@@ -91,6 +92,8 @@ private:
 
 	GameTimer gameTimer;
 	GameObject* goToRecalculate;
+
+	GameObject* car;
 
 	std::string sceneDir;
 };

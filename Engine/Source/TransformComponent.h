@@ -30,6 +30,7 @@ public:
 	void OnEditor() override;
 
 	void SetTransform(float3 pos, Quat rot, float3 sca);
+	void SetPosition(float3 pos);
 	void SetTransform(float4x4 trMatrix);
 
 	bool OnLoad(JsonParsing& node) override;
