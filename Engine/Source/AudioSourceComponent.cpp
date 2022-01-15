@@ -162,12 +162,12 @@ bool AudioSourceComponent::Update(float dt)
 
 void AudioSourceComponent::Play(float delay)
 {
-	if (GetClipState() != AL_PLAYING)
+	/*if (GetClipState() != AL_PLAYING)
 	{
 		ALfloat x, y, z;
 		alGetSource3f(source, AL_POSITION, &x, &y, &z);
 		alSourcePlay(source);
-	}
+	}*/
 	AK::SoundEngine::PostEvent(AK::EVENTS::PLAY, audioClip);
 }
 
