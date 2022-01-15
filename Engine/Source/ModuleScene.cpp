@@ -29,6 +29,7 @@ bool ModuleScene::Start()
 
 	GameObject* camera = CreateGameObject(nullptr);
 	camera->CreateComponent(ComponentType::CAMERA);
+	camera->CreateComponent(ComponentType::AUDIO_LISTENER);
 	camera->SetName("Camera");
 	
 	qTree.Create(AABB(float3(-200, -50, -200), float3(200, 50, 200)));

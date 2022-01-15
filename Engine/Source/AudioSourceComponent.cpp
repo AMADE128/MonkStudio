@@ -8,7 +8,7 @@
 #include "GameObject.h"
 #include "OpenAL/AL/al.h"
 
-AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), clipState(0), pendingToPlay(false)
+AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), clipState(0), pendingToPlay(false), audioClip(0)
 {
 	owner = _owner;
 	type = ComponentType::AUDIO_SOURCE;
@@ -138,7 +138,17 @@ bool AudioSourceComponent::Update(float dt)
 
 	if (owner->GetComponent<TransformComponent>() != nullptr && owner->GetComponent<TransformComponent>()->active == true)
 	{
+		//Set Source Position
 		SetPosition(owner->GetComponent<TransformComponent>()->GetPosition());
+
+		//Set Source orientation
+		Quat rot = owner->GetComponent<TransformComponent>()->GetRotation();
+		float3 forward = rot.Mul(float3(0.0f, 0.0f, 1.0f));
+		float3 up = rot.Mul(float3(0.0f, 1.0f, 0.0f));
+		SetOrientation(forward, up);
+
+		//Update Source Transform
+		AK::SoundEngine::SetPosition(audioClip, sourceTransform);
 	}
 
 	if (pendingToPlay)
@@ -158,6 +168,7 @@ void AudioSourceComponent::Play(float delay)
 		alGetSource3f(source, AL_POSITION, &x, &y, &z);
 		alSourcePlay(source);
 	}
+	AK::SoundEngine::PostEvent(AK::EVENTS::PLAY, audioClip);
 }
 
 void AudioSourceComponent::Pause()
@@ -182,15 +193,30 @@ void AudioSourceComponent::SetLoop(bool _loop)
 	loop = _loop;
 }
 
+bool AudioSourceComponent::GetLoop()
+{
+	ALint ret = false;
+	alGetSourcei(source, AL_LOOPING, &ret);
+	return (bool)ret;
+}
+
 void AudioSourceComponent::SetPitch(float _pitch)
 {
 	alSourcef(source, AL_PITCH, _pitch);
 	pitch = _pitch;
 }
 
+float AudioSourceComponent::GetPitch()
+{
+	float ret = 0.0f;
+	alGetSourcef(source, AL_PITCH, &ret);
+	return ret;
+}
+
 void AudioSourceComponent::SetClipBuffer(std::shared_ptr<Resource> _clip)
 {
 	alSourcei(source, AL_BUFFER, std::static_pointer_cast<Audio>(_clip)->GetBuffer());
+	//clip = _clip;
 }
 
 void AudioSourceComponent::SetVolume(float newVolume)
@@ -199,14 +225,38 @@ void AudioSourceComponent::SetVolume(float newVolume)
 	volume = newVolume;
 }
 
+float AudioSourceComponent::GetVolume()
+{
+	float ret = 0.0f;
+	alGetSourcef(source, AL_GAIN, &ret);
+	return ret;
+}
+
 void AudioSourceComponent::SetPosition(float x, float y, float z)
 {
-	alSource3f(source, AL_POSITION, x, y, z);
+	//OPENAL code
+	//alSource3f(source, AL_POSITION, x, y, z);
+	AkVector newPos = { x, y, z };
+	sourceTransform.SetPosition(newPos);
 }
 
 void AudioSourceComponent::SetPosition(float3 _position)
 {
-	alSource3f(source, AL_POSITION, _position.x, _position.y, _position.z);
+	//OPENAL code
+	//alSource3f(source, AL_POSITION, _position.x, _position.y, _position.z);
+	AkVector newPos = { _position.x, _position.y, _position.z };
+	sourceTransform.SetPosition(newPos);
+}
+
+void AudioSourceComponent::SetOrientation(float3 forward, float3 up)
+{
+}
+
+float3 AudioSourceComponent::GetPosition()
+{
+	float3 ret = { 0, 0, 0 };
+	alGetSource3f(source, AL_POSITION, &ret.x, &ret.y, &ret.z);
+	return ret;
 }
 
 void AudioSourceComponent::SetRolloff(float _rolloff)
@@ -214,12 +264,33 @@ void AudioSourceComponent::SetRolloff(float _rolloff)
 	alSourcef(source, AL_ROLLOFF_FACTOR, _rolloff);
 }
 
+float AudioSourceComponent::GetRolloff()
+{
+	float ret = 0.0f;
+	alGetSourcef(source, AL_ROLLOFF_FACTOR, &ret);
+	return ret;
+}
+
 void AudioSourceComponent::SetMaxDistance(float maxDis)
 {
 	alSourcef(source, AL_MAX_DISTANCE, maxDis);
 }
 
+float AudioSourceComponent::GetMaxDistance()
+{
+	float ret = 0.0f;
+	alGetSourcef(source, AL_MAX_DISTANCE, &ret);
+	return ret;
+}
+
 void AudioSourceComponent::SetMinDistance(float minDis)
 {
 	alSourcef(source, AL_REFERENCE_DISTANCE, minDis);
+}
+
+float AudioSourceComponent::GetMinDistance()
+{
+	float ret = 0.0f;
+	alGetSourcef(source, AL_REFERENCE_DISTANCE, &ret);
+	return ret;
 }

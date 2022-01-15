@@ -1,0 +1,51 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "12",
+  "SoundbankVersion": "140",
+  "RootPaths": {
+   "ProjectRoot": "D:\\Descargas\\GameEngine\\MonkStudioProject\\",
+   "SourceFilesRoot": "D:\\Descargas\\GameEngine\\MonkStudioProject\\.cache\\Windows\\",
+   "SoundBanksRoot": "D:\\Github\\MonkStudio\\Output\\Assets\\Wwise\\",
+   "ExternalSourcesInputFile": "",
+   "ExternalSourcesOutputRoot": "D:\\Descargas\\GameEngine\\MonkStudioProject\\GeneratedSoundBanks\\Windows"
+  },
+  "DialogueEvents": [],
+  "StreamedFiles": [],
+  "MediaFilesNotInAnyBank": [],
+  "SoundBanks": [
+   {
+    "Id": "1355168291",
+    "Language": "SFX",
+    "Hash": "1958929096",
+    "ObjectPath": "Init",
+    "ShortName": "Init",
+    "Path": "Init.bnk"
+   },
+   {
+    "Id": "3161908922",
+    "Language": "SFX",
+    "Hash": "4096459365",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
+    "ShortName": "Main",
+    "Path": "Main.bnk",
+    "IncludedEvents": [
+     {
+      "Id": "1256202815",
+      "Name": "Play",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "47440207",
+        "Language": "SFX",
+        "ShortName": "audio_test.wav",
+        "Path": "SFX\\audio_test_10C4C929.wem"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

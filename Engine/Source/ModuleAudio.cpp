@@ -2,13 +2,7 @@
 #include "ModuleAudio.h"
 #include "Globals.h"
 
-#include <AK/SoundEngine/Common/AkMemoryMgr.h>
-#include <AK/SoundEngine/Common/AkModule.h>
-#include <AK/SoundEngine/Common/AkStreamMgrModule.h>
-#include <AK/SoundEngine/Common/AkSoundEngine.h>
-#include <AK/MusicEngine/Common/AkMusicEngine.h>
-#include <AK/SoundEngine/Common/AkTypes.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h> 
+#include "WwiseInclude.h"
 
 #include <iostream>
 
@@ -131,7 +125,7 @@ void ModuleAudio::InitializeWwise(bool& ret)
 		ret = false;
 	}
 	//Setup banks path
-	g_lowLevelIO.SetBasePath(AKTEXT("."));
+	g_lowLevelIO.SetBasePath(AKTEXT("Assets/Wwise/"));
 	AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 	DEBUG_LOG("Streaming device created");
 
@@ -182,8 +176,6 @@ bool ModuleAudio::Start()
 {
 	bool ret = true;
 
-	SetDefaultListener();
-
 	CreateConfigSource();
 
 	buttonPlay = new Texture(-5, std::string("Settings/EngineResources/PlayButton.rgtexture"));
@@ -198,18 +190,14 @@ bool ModuleAudio::Start()
 	buttonLoop = new Texture(-7, std::string("Settings/EngineResources/LoopButton.rgtexture"));
 	buttonLoop->Load();
 
-	return ret;
-}
+	AkBankID bankID;
+	AKRESULT eResult = AK::SoundEngine::LoadBank("Init.bnk", bankID);
+	assert(eResult == AK_Success);
 
-void ModuleAudio::SetDefaultListener()
-{
-	alListener3f(AL_POSITION, 0.f, 0.f, 0.f);
-	alListener3f(AL_VELOCITY, 0.f, 0.f, 0.f);
-	ALfloat forwardAndUpVectors[] = {
-		/*forward = */ 1.f, 0.f, 0.f,
-		/* up = */ 0.f, 1.f, 0.f
-	};
-	alListenerfv(AL_ORIENTATION, forwardAndUpVectors);
+	eResult = AK::SoundEngine::LoadBank("Main.bnk", bankID);
+	assert(eResult == AK_Success);
+
+	return ret;
 }
 
 void ModuleAudio::CreateConfigSource()
@@ -236,7 +224,22 @@ bool ModuleAudio::Update(float dt)
 {
 	bool ret = true;
 
+	if (test)
+	{
+		const AkGameObjectID id = 100;
+		AK::SoundEngine::RegisterGameObj(id, "ID");
+		AK::SoundEngine::PostEvent(AK::EVENTS::PLAY, id);
+		test = false;
+	}
 
+	return ret;
+}
+
+bool ModuleAudio::PostUpdate()
+{
+	bool ret = true;
+
+	AK::SoundEngine::RenderAudio();
 
 	return ret;
 }

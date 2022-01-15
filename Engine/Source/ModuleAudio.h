@@ -20,8 +20,8 @@ public:
 
 	bool Init(JsonParsing& node) override;
 	bool Start() override;
-	void SetDefaultListener();
 	bool Update(float dt) override;
+	bool PostUpdate() override;
 	bool CleanUp() override;
 
 	void InitializeWwise(bool& ret);
@@ -48,7 +48,7 @@ private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 	ALCdevice* device;
 	ALCcontext* context;
-
+	bool test = true;
 	AudioGroup* master;
 
 	ALuint configSource;
