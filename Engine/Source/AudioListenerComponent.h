@@ -13,6 +13,8 @@ public:
 	~AudioListenerComponent();
 
 	void OnEditor() override;
+	bool OnLoad(JsonParsing& node) override;
+	bool OnSave(JsonParsing& node, JSON_Array* array) override;
 	bool Update(float dt) override;
 
 	void SetListenerSpatialized(bool bSpace);

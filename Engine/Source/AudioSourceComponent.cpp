@@ -294,3 +294,50 @@ float AudioSourceComponent::GetMinDistance()
 	alGetSourcef(source, AL_REFERENCE_DISTANCE, &ret);
 	return ret;
 }
+
+bool AudioSourceComponent::OnSave(JsonParsing& node, JSON_Array* array)
+{
+	JsonParsing file = JsonParsing();
+
+	file.SetNewJsonBool(file.ValueToObject(file.GetRootValue()), "Play on Awake", playOnAwake);
+
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Source", source);
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Clip State", clipState);
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Min Distance", minDis);
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Max Distance", maxDis);
+
+	file.SetNewJsonBool(file.ValueToObject(file.GetRootValue()), "Mute", mute);
+	file.SetNewJsonBool(file.ValueToObject(file.GetRootValue()), "Loop", loop);
+
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Volume", volume);
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Pitch", pitch);
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Stereo Pan", stereoPan);
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Doppler Level", dopplerLevel);
+
+
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Type", (int)type);
+
+	node.SetValueToArray(array, file.GetRootValue());
+
+	return true;
+}
+
+bool AudioSourceComponent::OnLoad(JsonParsing& node)
+{
+	playOnAwake = node.GetJsonBool("Play on Awake");
+
+	source = node.GetJsonNumber("Source");
+	clipState = node.GetJsonNumber("Clip State");
+	minDis = node.GetJsonNumber("Min Distance");
+	maxDis = node.GetJsonNumber("Max Distance");
+
+	mute = node.GetJsonBool("Mute");
+	loop = node.GetJsonNumber("Loop");
+
+	volume = node.GetJsonNumber("Volume");
+	pitch = node.GetJsonNumber("Pitch");
+	stereoPan = node.GetJsonNumber("Stereo Pan");
+	dopplerLevel = node.GetJsonNumber("Doppler Level");
+
+	return true;
+}

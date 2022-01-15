@@ -91,3 +91,18 @@ void AudioListenerComponent::SetDistanceModel(ALenum disModel)
 {
 	alDistanceModel(disModel);
 }
+
+bool AudioListenerComponent::OnSave(JsonParsing& node, JSON_Array* array)
+{
+	JsonParsing file = JsonParsing();
+
+	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Type", (int)type);
+
+	return true;
+}
+
+bool AudioListenerComponent::OnLoad(JsonParsing& node)
+{
+	
+	return true;
+}

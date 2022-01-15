@@ -21,6 +21,8 @@ public:
 	void OnEditor() override;
 	void AudioClipSelector();
 	void OutputGroupSelector();
+	bool OnLoad(JsonParsing& node) override;
+	bool OnSave(JsonParsing& node, JSON_Array* array) override;
 	void RecursiveGroupNameList(std::vector<std::string>& nameList, AudioGroup* parent);
 	bool Update(float dt) override;
 
