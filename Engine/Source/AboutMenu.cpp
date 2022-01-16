@@ -21,13 +21,13 @@ bool AboutMenu::Update(float dt)
 {
 	if (ImGui::Begin("About Ragnar Engine", &active))
 	{
-		ImGui::TextWrapped("Ragnar Engine v0.3");
+		ImGui::TextWrapped("Ragnar Engine v1");
 		ImGui::NewLine();
 		ImGui::TextWrapped
-		(" This is a videogame engine created for our game engine project. We are two students, Lucas Perez and Oriol Bernal, and the final goal for this engine is"
-			" to create a videogame."
+		(" The purpose of this project is to create a friendly-user, well optimized Game Engine for the subject VideoGame Engines from the 3rd year. The short term plan is to implement the basic features of a Game Engine, such as loading models, working in a 3D environment, etc..."
+			"More specifically, we want to develop a good Audio engine, capable of loading audios, edit multiple parameters and create effects with them."
 		);
-		ImGui::TextWrapped("By Oriol Bernal & Lucas Perez");
+		ImGui::TextWrapped("By Himar Bravo, Marc Pavon & Pol Vazquez, forked from Ragnar Engine");
 		ImGui::NewLine();
 
 		ImGui::TextWrapped("3rd Party Libraries used:");
@@ -41,6 +41,9 @@ bool AboutMenu::Update(float dt)
 		ImGui::TextWrapped("-Assimp version %d.%d", aiGetVersionMajor(), aiGetVersionMinor());
 		ImGui::TextWrapped("-DevIL version 1.8.0");
 		ImGui::TextWrapped("-PhysFS version %d.%d.%d", PHYSFS_VER_MAJOR, PHYSFS_VER_MINOR, PHYSFS_VER_PATCH);
+		ImGui::TextWrapped("WWise version 20021.1.5");
+		ImGui::TextWrapped("OpenAl verison 1.1");
+		ImGui::TextWrapped("AudioFile 1.1.0");
 
 		ImGui::NewLine();
 		ImGui::TextWrapped("License:");
