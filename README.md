@@ -25,7 +25,7 @@ This engine was made by:
 ## Installation
 
 The installation is pretty straight-forward and easy, just go into the [releases tab](https://github.com/AMADE128/MonkStudio/releases), and download the latest version.
-The download files include an exe and you just have to execute it to test our engine.
+The download files include an exe and you just have to execute it to use our engine.
 
 **Careful**: You can edit the config file to modify some properties like the window and everything, but they come with an optimal configuration already.
 
@@ -37,6 +37,7 @@ The download files include an exe and you just have to execute it to test our en
 - While selecting a GameObject and holding Alt + left click: Orbit the camera around the GameObject.
 - While selecting a GameObject and pressing F: Focus the GameObject.
 - Key T: Reset the camera (World axis reset).
+- Left click GameObject on Scene or hierarchy: Select GameObject.
 - Right click GameObject in the hierarchy: Open GameObject options.
 - Supr while a GameObject is selected: Delete the GameObject.
 - Supr while a resource is selected: Delete the resource.
@@ -64,7 +65,7 @@ Pause button will pause the game preview until you hit it again. When having the
 - Properties of the audio (all editable).
 - Play / Stop button.
 - Mute and Loop button.
-- You can drag and drop audio files, add them to game objects, and it follows the game object as it should.
+- You can drag and drop audio files, add them to GameObjects to convert the GameObject into audio sources (More than one audio file can be added to the same GameObject).
 
 ### v0.8
 
