@@ -1,0 +1,20 @@
+Event	ID	Name			Wwise Object Path	Notes
+	352130103	Birds			\Default Work Unit\Birds	
+	2414341763	CarEngine			\Default Work Unit\CarEngine	
+	3086540886	StopAll			\Default Work Unit\StopAll	
+	3115765196	PlayBackgroundMusic			\Default Work Unit\PlayBackgroundMusic	
+
+State Group	ID	Name			Wwise Object Path	Notes
+	2073497030	MusicBackground			\Default Work Unit\MusicBackground	
+
+State	ID	Name	State Group			Notes
+	748895195	None	MusicBackground			
+	1730564816	Music2	MusicBackground			
+	1730564819	Music1	MusicBackground			
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	163851461	song1	C:\Users\Marc\Documents\WwiseProjects\Test\.cache\Windows\SFX\song1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\MusicBackground\Music1\Music1\song1		5926976
+	342312394	song2	C:\Users\Marc\Documents\WwiseProjects\Test\.cache\Windows\SFX\song2_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\MusicBackground\Music2\Music2\song2		4083776
+	448059398	car_engine	C:\Users\Marc\Documents\WwiseProjects\Test\.cache\Windows\SFX\car_engine_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\car_engine		1253580
+	983408888	birds	C:\Users\Marc\Documents\WwiseProjects\Test\.cache\Windows\SFX\birds_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\birds		1469892
+

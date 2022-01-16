@@ -1,0 +1,134 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "12",
+  "SoundbankVersion": "140",
+  "RootPaths": {
+   "ProjectRoot": "C:\\Users\\Marc\\Documents\\WwiseProjects\\Test\\",
+   "SourceFilesRoot": "C:\\Users\\Marc\\Documents\\WwiseProjects\\Test\\.cache\\Windows\\",
+   "SoundBanksRoot": "C:\\Users\\Marc\\Documents\\GitHub\\MonkStudio\\Output\\Assets\\Wwise\\",
+   "ExternalSourcesInputFile": "",
+   "ExternalSourcesOutputRoot": "C:\\Users\\Marc\\Documents\\WwiseProjects\\Test\\GeneratedSoundBanks\\Windows"
+  },
+  "DialogueEvents": [],
+  "StreamedFiles": [],
+  "MediaFilesNotInAnyBank": [],
+  "SoundBanks": [
+   {
+    "Id": "1355168291",
+    "Language": "SFX",
+    "Hash": "3735169826",
+    "ObjectPath": "Init",
+    "ShortName": "Init",
+    "Path": "Init.bnk"
+   },
+   {
+    "Id": "3161908922",
+    "Language": "SFX",
+    "Hash": "1330952371",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
+    "ShortName": "Main",
+    "Path": "Main.bnk",
+    "IncludedEvents": [
+     {
+      "Id": "352130103",
+      "Name": "Birds",
+      "ObjectPath": "\\Events\\Default Work Unit\\Birds",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "983408888",
+        "Language": "SFX",
+        "ShortName": "birds.wav",
+        "Path": "SFX\\birds_D79FB2B7.wem"
+       }
+      ]
+     },
+     {
+      "Id": "2414341763",
+      "Name": "CarEngine",
+      "ObjectPath": "\\Events\\Default Work Unit\\CarEngine",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "448059398",
+        "Language": "SFX",
+        "ShortName": "car_engine.wav",
+        "Path": "SFX\\car_engine_D79FB2B7.wem"
+       }
+      ]
+     },
+     {
+      "Id": "3115765196",
+      "Name": "PlayBackgroundMusic",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayBackgroundMusic",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "163851461",
+        "Language": "SFX",
+        "ShortName": "song1.wav",
+        "Path": "SFX\\song1_D79FB2B7.wem"
+       },
+       {
+        "Id": "342312394",
+        "Language": "SFX",
+        "ShortName": "song2.wav",
+        "Path": "SFX\\song2_D79FB2B7.wem"
+       }
+      ],
+      "SwitchContainers": [
+       {
+        "SwitchValue": "{0D60BAE6-6339-4BF5-A294-FCF25ED3EA93}",
+        "Media": [
+         {
+          "Id": "163851461"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{C6EF0923-55FB-403F-A55B-B3092081D0ED}",
+        "Media": [
+         {
+          "Id": "342312394"
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "Id": "3086540886",
+      "Name": "StopAll",
+      "ObjectPath": "\\Events\\Default Work Unit\\StopAll"
+     }
+    ],
+    "StateGroups": [
+     {
+      "Id": "2073497030",
+      "Name": "MusicBackground",
+      "ObjectPath": "\\States\\Default Work Unit\\MusicBackground",
+      "GUID": "{92372342-8DF6-4A13-AEDF-AE418EA3FA77}",
+      "States": [
+       {
+        "Id": "748895195",
+        "Name": "None",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicBackground\\None",
+        "GUID": "{660A5E2D-8EA4-4FB6-8267-B698E6B1AC2B}"
+       },
+       {
+        "Id": "1730564819",
+        "Name": "Music1",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicBackground\\Music1",
+        "GUID": "{0D60BAE6-6339-4BF5-A294-FCF25ED3EA93}"
+       },
+       {
+        "Id": "1730564816",
+        "Name": "Music2",
+        "ObjectPath": "\\States\\Default Work Unit\\MusicBackground\\Music2",
+        "GUID": "{C6EF0923-55FB-403F-A55B-B3092081D0ED}"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

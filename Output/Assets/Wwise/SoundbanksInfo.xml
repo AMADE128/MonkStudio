@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
+	<RootPaths>
+		<ProjectRoot>C:\Users\Marc\Documents\WwiseProjects\Test\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\Marc\Documents\WwiseProjects\Test\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\Marc\Documents\GitHub\MonkStudio\Output\Assets\Wwise\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Users\Marc\Documents\WwiseProjects\Test\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX" Hash="3735169826">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="3161908922" Language="SFX" Hash="4092244750">
+			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
+			<ShortName>Main</ShortName>
+			<Path>Main.bnk</Path>
+			<IncludedEvents>
+				<Event Id="3115765196" Name="PlayBackgroundMusic" ObjectPath="\Events\Default Work Unit\PlayBackgroundMusic">
+					<IncludedMemoryFiles>
+						<File Id="163851461" Language="SFX">
+							<ShortName>song1.wav</ShortName>
+							<Path>SFX\song1_D79FB2B7.wem</Path>
+						</File>
+						<File Id="342312394" Language="SFX">
+							<ShortName>song2.wav</ShortName>
+							<Path>SFX\song2_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+					<SwitchContainers>
+						<SwitchContainer SwitchValue="{0D60BAE6-6339-4BF5-A294-FCF25ED3EA93}">
+							<Media>
+								<File Id="163851461"/>
+							</Media>
+						</SwitchContainer>
+						<SwitchContainer SwitchValue="{C6EF0923-55FB-403F-A55B-B3092081D0ED}">
+							<Media>
+								<File Id="342312394"/>
+							</Media>
+						</SwitchContainer>
+					</SwitchContainers>
+				</Event>
+			</IncludedEvents>
+			<StateGroups>
+				<StateGroup Id="2073497030" Name="MusicBackground" ObjectPath="\States\Default Work Unit\MusicBackground" GUID="{92372342-8DF6-4A13-AEDF-AE418EA3FA77}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\MusicBackground\None" GUID="{660A5E2D-8EA4-4FB6-8267-B698E6B1AC2B}"/>
+						<State Id="1730564819" Name="Music1" ObjectPath="\States\Default Work Unit\MusicBackground\Music1" GUID="{0D60BAE6-6339-4BF5-A294-FCF25ED3EA93}"/>
+						<State Id="1730564816" Name="Music2" ObjectPath="\States\Default Work Unit\MusicBackground\Music2" GUID="{C6EF0923-55FB-403F-A55B-B3092081D0ED}"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>
