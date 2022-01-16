@@ -76,6 +76,7 @@ private:
 	ALuint source;
 	ALint clipState;
 	std::string currentItem;
+	std::string currentEventName;
 	std::string groupCurrentItem;
 
 	bool mute = false;

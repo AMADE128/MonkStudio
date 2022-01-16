@@ -45,7 +45,7 @@ public:
 	Texture* buttonMute;
 	Texture* buttonLoop;
 
-	std::vector<std::string> eventsList;
+	std::vector<AkGameObjectID> eventsList;
 
 private:
 

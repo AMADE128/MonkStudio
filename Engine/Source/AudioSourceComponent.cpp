@@ -63,27 +63,19 @@ void AudioSourceComponent::OnEditor()
 void AudioSourceComponent::AudioClipSelector()
 {
 
-	if (ImGui::BeginCombo("Audio Clip", currentItem.c_str()))
+	if (ImGui::BeginCombo("Audio Event", currentItem.c_str()))
 	{
 		for (unsigned int i = 0;  i < app->audio->eventsList.size(); i++)
 		{
-			/*bool is_selected = (currentItem == );
+			bool is_selected = (currentItem == std::to_string(app->audio->eventsList[i]));
 
-			app->fs->GetFilenameWithoutExtension(*it);
-			*it = (*it).substr((*it).find_last_of("_") + 1, (*it).length());
-			uint uid = std::stoll(*it);
-			std::shared_ptr<Resource> res = ResourceManager::GetInstance()->GetResource(uid);
-			if (ImGui::Selectable(res->GetName().c_str(), is_selected))
+			if (ImGui::Selectable(std::to_string(app->audio->eventsList[i]).c_str(), is_selected))
 			{
-				if (res->GetName() != currentItem)
-				{
-					currentItem = res->GetName();
-					res->Load();
-					SetClipBuffer(res);
-				}
+				audioClip = app->audio->eventsList[i];
+				currentItem = app->audio->eventsList[i];
 			}
 			if (is_selected)
-				ImGui::SetItemDefaultFocus();*/
+				ImGui::SetItemDefaultFocus();
 		}
 		ImGui::EndCombo();
 	}

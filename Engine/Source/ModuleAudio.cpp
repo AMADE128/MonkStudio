@@ -322,7 +322,7 @@ void ModuleAudio::LoadSoundEvents(const char* path)
 		for (size_t i = 0; i < size; i++)
 		{
 			JsonParsing eventSB = sceneFile.GetJsonArrayValue(arr, i);
-			eventsList.push_back(eventSB.GetJsonString("Name"));
+			eventsList.push_back(eventSB.GetJsonNumber("Id"));
 		}
 	}
 }

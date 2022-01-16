@@ -1,6 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	1256202815	Play			\Default Work Unit\Play	
-
-In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	47440207	audio_test	D:\Descargas\GameEngine\MonkStudioProject\.cache\Windows\SFX\audio_test_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\audio_test		634944
-
