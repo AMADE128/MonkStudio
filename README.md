@@ -19,9 +19,9 @@ More specifically, we want to develop a good Audio engine, capable of loading au
 <img src="MonkStudio/WebPage/teamphoto.jpeg">
 
 This engine was made by:
-- Pol Vázquez Porcar: [GitHub: @AMADE128](https://github.com/Amade128)
-- Himar Bravo González: [GitHub: @himar33](https://github.com/himar33)
-- Marc Pavon Llop: [GitHub: @Marckitus](https://github.com/Marckitus)
+- Pol Vázquez Porcar: [GitHub: @AMADE128](https://github.com/Amade128): Audio Importer + Scene demo montage
+- Himar Bravo González: [GitHub: @himar33](https://github.com/himar33): OpenAL Implementation + Audio Module
+- Marc Pavon Llop: [GitHub: @Marckitus](https://github.com/Marckitus): Wise Implementation + Audio Effects
 
 <br></br>
 ## Installation
@@ -57,6 +57,17 @@ Pause button will pause the game preview until you hit it again. When having the
 
 <br></br>
 ## Features
+
+v1.0
+
+- Audio import, including the creation of .meta and audio files.
+- Inspector to show all the properties of the audio.
+- Camera is now set as the main Audio Listener.
+- Audio effects.
+- Properties of the audio (all editable).
+- Play / Stop button.
+- Mute and Loop button.
+- You can drag and drop audio files, add them to game objects, and it follows the game object as it should.
 
 v0.8
 
