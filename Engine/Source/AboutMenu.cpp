@@ -27,7 +27,7 @@ bool AboutMenu::Update(float dt)
 		(" The purpose of this project is to create a friendly-user, well optimized Game Engine for the subject VideoGame Engines from the 3rd year. The short term plan is to implement the basic features of a Game Engine, such as loading models, working in a 3D environment, etc..."
 			"More specifically, we want to develop a good Audio engine, capable of loading audios, edit multiple parameters and create effects with them."
 		);
-		ImGui::TextWrapped("By Himar Bravo, Marc Pavon & Pol Vazquez, forked from Ragnar Engine");
+		ImGui::TextWrapped("By Himar Bravo, Marc Pavon & Pol Vazquez, forked from Ragnar Engine v0.8");
 		ImGui::NewLine();
 
 		ImGui::TextWrapped("3rd Party Libraries used:");
@@ -50,7 +50,7 @@ bool AboutMenu::Update(float dt)
 		ImGui::NewLine();
 		ImGui::TextWrapped("MIT License");
 		ImGui::NewLine();
-		ImGui::TextWrapped("Copyright(c) 2021 Oriol Bernal Martinez & Lucas Perez Garcia");
+		ImGui::TextWrapped("Copyright(c) 2021 Himar Bravo, Marc Pavon & Pol Vazquez");
 		ImGui::NewLine();
 		ImGui::TextWrapped(
 			"Permission is hereby granted, free of charge, to any person obtaining a copy"
