@@ -33,7 +33,7 @@ the specific language governing permissions and limitations under the License.
 
 #if !defined( AK_OPTIMIZED ) && !( defined AK_DISABLE_MEMDEBUG )
 	#ifndef AK_MEMDEBUG
-		#define AK_MEMDEBUG
+		//#define AK_MEMDEBUG
 	#endif
 #endif
 

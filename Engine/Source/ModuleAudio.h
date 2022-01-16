@@ -5,6 +5,7 @@
 #include <AudioFile/AudioFile.h>
 #include "Texture.h"
 #include "AudioGroup.h"
+#include "WwiseInclude.h"
 
 #include <Win32/AkFilePackageLowLevelIOBlocking.h>
 #include "OpenAL/AL/alc.h"
@@ -34,6 +35,7 @@ public:
 	ALuint GetConfigSource();
 
 	void LoadSounBank(const char* path);
+	void LoadSoundEvents(const char* path);
 
 	AudioGroup* GetMasterGroup();
 	void GetNumberOfGroups(int& number, AudioGroup* parent);
@@ -42,6 +44,8 @@ public:
 	Texture* buttonStop;
 	Texture* buttonMute;
 	Texture* buttonLoop;
+
+	std::vector<std::string> eventsList;
 
 private:
 

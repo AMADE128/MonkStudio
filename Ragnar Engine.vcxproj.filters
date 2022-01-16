@@ -304,6 +304,18 @@
     <ClInclude Include="Engine\Source\WwiseInclude.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkDefaultLowLevelIODispatcher.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Win32\AkFileHelpers.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFilePackageLowLevelIO.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFileLocationBase.h">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Source\ModuleCamera3D.cpp">
@@ -507,11 +519,22 @@
     <ClCompile Include="Engine\Source\AudioGroup.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkDefaultLowLevelIODispatcher.cpp">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkFileLocationBase.cpp">
+      <Filter>Sources\Libraries\AK</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Ragnar Engine.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Output\Settings\EngineResources\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dependencies\Wwise\include\Common\AkFilePackageLowLevelIO.inl">
+      <Filter>Sources\Libraries\AK</Filter>
+    </None>
   </ItemGroup>
 </Project>

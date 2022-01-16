@@ -2,8 +2,6 @@
 #include "ModuleAudio.h"
 #include "Globals.h"
 
-#include "WwiseInclude.h"
-
 #include <iostream>
 
 #include "OpenAL/AL/al.h"
@@ -67,6 +65,8 @@ bool ModuleAudio::Init(JsonParsing& node)
 	InitializeWwise(ret);
 
 	InitializeOpenAl(ret);
+
+	LoadSoundEvents("Assets/Wwise/SoundbanksInfo.json");
 
 	master = new AudioGroup("Master", nullptr);
 
@@ -228,7 +228,7 @@ bool ModuleAudio::Update(float dt)
 	{
 		const AkGameObjectID id = 100;
 		AK::SoundEngine::RegisterGameObj(id, "ID");
-		AK::SoundEngine::PostEvent(AK::EVENTS::PLAY, id);
+		AK::SoundEngine::PostEvent("Play", id);
 		test = false;
 	}
 
@@ -300,6 +300,31 @@ void ModuleAudio::LoadSounBank(const char* path)
 
 	AKRESULT eResult = AK::SoundEngine::LoadBank(path, bankID);
 	assert(eResult == AK_Success);
+}
+
+void ModuleAudio::LoadSoundEvents(const char* path)
+{
+	JsonParsing sceneFile = JsonParsing();
+	if (sceneFile.ParseFile(path) > 0)
+	{
+		JSON_Value* val =  sceneFile.GetRootValue();
+
+		JsonParsing name = sceneFile.GetChild(val, "SoundBanksInfo");
+		val = name.GetRootValue();
+		JSON_Object* obj = name.ValueToObject(val);
+		JSON_Array* arr = name.GetJsonArray(obj, "SoundBanks");
+
+		JsonParsing mainSB = sceneFile.GetJsonArrayValue(arr, 1);
+		val = mainSB.GetRootValue();
+		obj = mainSB.ValueToObject(val);
+		arr = mainSB.GetJsonArray(obj, "IncludedEvents");
+		size_t size = sceneFile.GetJsonArrayCount(arr);
+		for (size_t i = 0; i < size; i++)
+		{
+			JsonParsing eventSB = sceneFile.GetJsonArrayValue(arr, i);
+			eventsList.push_back(eventSB.GetJsonString("Name"));
+		}
+	}
 }
 
 AudioGroup* ModuleAudio::GetMasterGroup()

@@ -62,7 +62,34 @@ void AudioSourceComponent::OnEditor()
 
 void AudioSourceComponent::AudioClipSelector()
 {
-	std::vector<std::string> groupsNameList;
+
+	if (ImGui::BeginCombo("Audio Clip", currentItem.c_str()))
+	{
+		for (unsigned int i = 0;  i < app->audio->eventsList.size(); i++)
+		{
+			/*bool is_selected = (currentItem == );
+
+			app->fs->GetFilenameWithoutExtension(*it);
+			*it = (*it).substr((*it).find_last_of("_") + 1, (*it).length());
+			uint uid = std::stoll(*it);
+			std::shared_ptr<Resource> res = ResourceManager::GetInstance()->GetResource(uid);
+			if (ImGui::Selectable(res->GetName().c_str(), is_selected))
+			{
+				if (res->GetName() != currentItem)
+				{
+					currentItem = res->GetName();
+					res->Load();
+					SetClipBuffer(res);
+				}
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();*/
+		}
+		ImGui::EndCombo();
+	}
+
+	//OPENAL code
+	/*std::vector<std::string> groupsNameList;
 	app->fs->DiscoverFiles("Library/Audio/", groupsNameList);
 
 	if (ImGui::BeginCombo("Audio Clip", currentItem.c_str()))
@@ -91,7 +118,7 @@ void AudioSourceComponent::AudioClipSelector()
 			}
 		}
 		ImGui::EndCombo();
-	}
+	}*/
 }
 
 void AudioSourceComponent::OutputGroupSelector()

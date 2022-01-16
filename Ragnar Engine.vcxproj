@@ -85,8 +85,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Wwise\External;$(SolutionDir)Dependencies\Wwise\wwiseRelease;$(SolutionDir)Dependencies\glew\lib;$(SolutionDir)Dependencies\SDL\libx86;$(SolutionDir)Dependencies\MathGeoLib\lib\Release;$(SolutionDir)Dependencies\Assimp\lib;$(SolutionDir)Dependencies\PhysFS\lib;$(SolutionDir)Dependencies\Optick\lib;$(SolutionDir)Dependencies\DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ILU.lib;ILUT.lib;DevIL.lib;OptickCore.lib;physfs.lib;assimp-vc142-mt.lib;glew32s.lib;MathGeoLib.lib;opengl32.lib;SDL2main.lib;SDL2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;AkMemoryMgr.lib;AkMusicEngine.lib;AkSoundEngine.lib;AkStreamMgr.lib;dinput8.lib;dsound.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Github\MonkStudio\Dependencies\OpenAL\release;$(SolutionDir)Dependencies\Wwise\External;$(SolutionDir)Dependencies\Wwise\wwiseRelease;$(SolutionDir)Dependencies\glew\lib;$(SolutionDir)Dependencies\SDL\libx86;$(SolutionDir)Dependencies\MathGeoLib\lib\Release;$(SolutionDir)Dependencies\Assimp\lib;$(SolutionDir)Dependencies\PhysFS\lib;$(SolutionDir)Dependencies\Optick\lib;$(SolutionDir)Dependencies\DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ILU.lib;ILUT.lib;DevIL.lib;OptickCore.lib;physfs.lib;assimp-vc142-mt.lib;glew32s.lib;MathGeoLib.lib;opengl32.lib;SDL2main.lib;SDL2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;AkMemoryMgr.lib;AkMusicEngine.lib;AkSoundEngine.lib;AkStreamMgr.lib;dinput8.lib;dsound.lib;dxguid.lib;OpenAL32.lib;common.lib;ex-common.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -109,10 +109,14 @@
     <ClInclude Include="Dependencies\json\parson.h" />
     <ClInclude Include="Dependencies\mmgr\mmgr.h" />
     <ClInclude Include="Dependencies\mmgr\nommgr.h" />
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkDefaultLowLevelIODispatcher.h" />
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFileLocationBase.h" />
     <ClInclude Include="Dependencies\Wwise\include\Common\AkFilePackage.h" />
+    <ClInclude Include="Dependencies\Wwise\include\Common\AkFilePackageLowLevelIO.h" />
     <ClInclude Include="Dependencies\Wwise\include\Common\AkFilePackageLUT.h" />
     <ClInclude Include="Dependencies\Wwise\include\Common\AkMultipleFileLocation.h" />
     <ClInclude Include="Dependencies\Wwise\include\Win32\AkDefaultIOHookBlocking.h" />
+    <ClInclude Include="Dependencies\Wwise\include\Win32\AkFileHelpers.h" />
     <ClInclude Include="Dependencies\Wwise\include\Win32\stdafx.h" />
     <ClInclude Include="Engine\Source\AboutMenu.h" />
     <ClInclude Include="Engine\Source\Application.h" />
@@ -186,6 +190,8 @@
     <ClCompile Include="Dependencies\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="Dependencies\json\parson.c" />
     <ClCompile Include="Dependencies\mmgr\mmgr.cpp" />
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkDefaultLowLevelIODispatcher.cpp" />
+    <ClCompile Include="Dependencies\Wwise\include\Common\AkFileLocationBase.cpp" />
     <ClCompile Include="Dependencies\Wwise\include\Common\AkFilePackage.cpp" />
     <ClCompile Include="Dependencies\Wwise\include\Common\AkFilePackageLUT.cpp" />
     <ClCompile Include="Dependencies\Wwise\include\Common\AkMultipleFileLocation.cpp" />
@@ -249,6 +255,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Output\Settings\EngineResources\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dependencies\Wwise\include\Common\AkFilePackageLowLevelIO.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
