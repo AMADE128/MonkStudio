@@ -16,7 +16,7 @@ More specifically, we want to develop a good Audio engine, capable of loading au
 <br></br>
 # Creators
 
-<img src="MonkStudio/WebPage/teamphoto.jpeg">
+<img src="WebPage/teamphoto.jpeg">
 
 This engine was made by:
 - Pol Vázquez Porcar: [GitHub: @AMADE128](https://github.com/Amade128): Audio Importer + Scene demo montage
