@@ -1,20 +1,60 @@
 # Ragnar Engine
 
-Ragnar Engine is a Video Game Engine created by [Lucas Pérez](https://github.com/LucasPG14). and [Oriol Bernal](https://github.com/UriKurae)., two students from the university Universitat Politècnica de Catalunya (CITM). 
+Monk Studio is an engine under development as the "Engine Development" subject project for the CITM in Video Game Design and Devolpment degree. 
+
+Monk Studio is a fast C++ 3D game engine, focused on the Audio part of the engine.
+
+## Collaboration with Rangar Engine
+
+For this assignment and last deploy, we, the team of Monk Studio have forked from Rangar Engine pre-last release and implemented an Audio system.
 
 ## Planning
 
 The purpose of this project is to create a friendly-user, well optimized Game Engine for the subject "VideoGame Engines" from the 3rd year. The short term plan is to implement the basic features of a Game Engine, such as loading models, working in a 3D environment, etc...
 
-For the long term, we would love to create a game with this Video Game Engine
+More specifically, we want to develop a good Audio engine, capable of loading audios, edit multiple parameters and create effects with them.
 
+<br></br>
+# Creators
+
+This engine was made by:
+- Pol Vázquez Porcar: [GitHub: @AMADE128](https://github.com/Amade128)
+- Himar Bravo González: [GitHub: @himar33](https://github.com/himar33)
+- Marc Pavon Llop: [GitHub: @Marckitus](https://github.com/Marckitus)
+
+<br></br>
 ## Installation
 
-The installation is pretty straight-forward and easy, just go into the [releases tab](https://github.com/UriKurae/Ragnar-Engine/releases), and download the latest version.
+The installation is pretty straight-forward and easy, just go into the [releases tab](https://github.com/AMADE128/MonkStudio/releases), and download the latest version.
 The download files include an exe and you just have to execute it to test our engine.
 
-**Carefull**: You can edit the config file to modify some properties like the window and everything, but they come with an optimal configuration already.
+**Careful**: You can edit the config file to modify some properties like the window and everything, but they come with an optimal configuration already.
 
+<br></br>
+## Controls
+
+- Right click + WASD: Move the camera in it's own axis.
+- Right click + Q/E: Move the camera up or down in it's own axis.
+- Mouse scroll wheel: Move the camera forward and backwards in it's own axis.
+- While selecting a GameObject and holding Alt + left click: Orbit the camera around the GameObject.
+- While selecting a GameObject and pressing F: Focus the GameObject.
+- Key T: Reset the camera (World axis reset).
+- Right click GameObject in the hierarchy: Open GameObject options.
+- Supr while a GameObject is selected: Delete the GameObject.
+- Supr while a resource is selected: Delete the resource.
+- Hold left click in the hierarchy menu: Move GameObjects in the hierarchy (Reparenting).
+- W,E,R buttons: show Move, Scale, Rotate guizmos. 
+- Ctrl + N: Generate a new scene (You will be warned to save your current project).
+- Ctrl + O: Opens the explorer window to search for a file and open it.
+- Ctrl + S: Saves the current Scene.
+- Ctrl + Shift + S: Opens the explorer window to save the scene in a desired location.
+- Ctrl + D: Duplicates the selected game object.
+
+- Play/Stop/Pause and Advance frame: To start a game preview, hit the play button, when you hit the play button, the preview will start, and the play button will be swapped by
+the stop button. Hitting the stop button will stop the game preview.
+Pause button will pause the game preview until you hit it again. When having the game in pause, you can advance one frame if you want. Also, the buttons and the whole engine will have different UI colors to let the user know that he is in game preview mode.
+
+<br></br>
 ## Features
 
 v0.8
@@ -60,28 +100,6 @@ v0.5
 - Opengl options (Wireframe Mode, Texture2D, Vsync, Stencil, etc...).
 - Ability to close and reopen menus from the editor.
 
-## Controls
-
-- Right click + WASD: Move the camera in it's own axis.
-- Right click + Q/E: Move the camera up or down in it's own axis.
-- Mouse scroll wheel: Move the camera forward and backwards in it's own axis.
-- While selecting a GameObject and holding Alt + left click: Orbit the camera around the GameObject.
-- While selecting a GameObject and pressing F: Focus the GameObject.
-- Key T: Reset the camera (World axis reset).
-- Right click GameObject in the hierarchy: Open GameObject options.
-- Supr while a GameObject is selected: Delete the GameObject.
-- Supr while a resource is selected: Delete the resource.
-- Hold left click in the hierarchy menu: Move GameObjects in the hierarchy (Reparenting).
-- W,E,R buttons: show Move, Scale, Rotate guizmos. 
-- Ctrl + N: Generate a new scene (You will be warned to save your current project).
-- Ctrl + O: Opens the explorer window to search for a file and open it.
-- Ctrl + S: Saves the current Scene.
-- Ctrl + Shift + S: Opens the explorer window to save the scene in a desired location.
-- Ctrl + D: Duplicates the selected game object.
-
-- Play/Stop/Pause and Advance frame: To start a game preview, hit the play button, when you hit the play button, the preview will start, and the play button will be swapped by
-the stop button. Hitting the stop button will stop the game preview.
-Pause button will pause the game preview until you hit it again. When having the game in pause, you can advance one frame if you want. Also, the buttons and the whole engine will have different UI colors to let the user know that he is in game preview mode.
 
 ## User Interface
 
@@ -89,14 +107,8 @@ The menus are also very straight-forward, you can navigate through them and have
 - You can close any tab from the user interface, but don't worry, as you can re-open any window at any time.
 - You can click and hold any tab to reallocate it anywhere you want.
 
-
-## Game Engine Developers
-
-- [Lucas Pérez García](https://github.com/LucasPG14).
-- [Oriol Bernal Martínez](https://github.com/UriKurae).
-
 ## License
 
-**Copyright (c) Lucas Pérez and Oriol Bernal. License Under the MIT License.**
+**Copyright (c) Pol Vázquez, Himar Bravo and Marc Pavon. License Under the MIT License.**
 
 - [MIT License link to check more details about it.](https://opensource.org/licenses/MIT)
