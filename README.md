@@ -19,8 +19,8 @@ More specifically, we want to develop a good Audio engine, capable of loading au
 
 This engine was made by:
 - Pol Vázquez Porcar: [GitHub: @AMADE128](https://github.com/Amade128): Audio Importer + Scene demo montage
-- Himar Bravo González: [GitHub: @himar33](https://github.com/himar33): OpenAL Implementation + Audio Module
-- Marc Pavon Llop: [GitHub: @Marckitus](https://github.com/Marckitus): Wise Implementation + Audio Effects
+- Himar Bravo González: [GitHub: @himar33](https://github.com/himar33): WWise Implementation + Audio Module
+- Marc Pavon Llop: [GitHub: @Marckitus](https://github.com/Marckitus): OpenAL Implementation + Audio Effects
 
 ## Installation
 
