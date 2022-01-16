@@ -13,7 +13,6 @@ The purpose of this project is to create a friendly-user, well optimized Game En
 
 More specifically, we want to develop a good Audio engine, capable of loading audios, edit multiple parameters and create effects with them.
 
-<br></br>
 # Creators
 
 <img src="WebPage/teamphoto.jpeg">
@@ -23,7 +22,6 @@ This engine was made by:
 - Himar Bravo González: [GitHub: @himar33](https://github.com/himar33): OpenAL Implementation + Audio Module
 - Marc Pavon Llop: [GitHub: @Marckitus](https://github.com/Marckitus): Wise Implementation + Audio Effects
 
-<br></br>
 ## Installation
 
 The installation is pretty straight-forward and easy, just go into the [releases tab](https://github.com/AMADE128/MonkStudio/releases), and download the latest version.
@@ -31,7 +29,6 @@ The download files include an exe and you just have to execute it to test our en
 
 **Careful**: You can edit the config file to modify some properties like the window and everything, but they come with an optimal configuration already.
 
-<br></br>
 ## Controls
 
 - Right click + WASD: Move the camera in it's own axis.
@@ -55,12 +52,12 @@ The download files include an exe and you just have to execute it to test our en
 the stop button. Hitting the stop button will stop the game preview.
 Pause button will pause the game preview until you hit it again. When having the game in pause, you can advance one frame if you want. Also, the buttons and the whole engine will have different UI colors to let the user know that he is in game preview mode.
 
-<br></br>
 ## Features
 
-v1.0
+### v1.0
 
 - Audio import, including the creation of .meta and audio files.
+- Audio Mixer with allmost the same features as the Unity's audio mixer.
 - Inspector to show all the properties of the audio.
 - Camera is now set as the main Audio Listener.
 - Audio effects.
@@ -69,7 +66,7 @@ v1.0
 - Mute and Loop button.
 - You can drag and drop audio files, add them to game objects, and it follows the game object as it should.
 
-v0.8
+### v0.8
 
 - Stencil border for the selected GameObject.
 - Raycasting objects to select them (MousePicking).
@@ -96,7 +93,7 @@ v0.8
 - AABB system for all the GameObjects.
 - Shortcuts and explorer viewer for save, load and open files for better user experience.
 
-v0.5
+### v0.5
 
 - Camera movement (Rotate, Move, Orbit, Focus).
 - Drag and drop textures and models.
