@@ -1,7 +1,6 @@
 Event	ID	Name			Wwise Object Path	Notes
 	352130103	Birds			\Default Work Unit\Birds	
 	2414341763	CarEngine			\Default Work Unit\CarEngine	
-	3086540886	StopAll			\Default Work Unit\StopAll	
 	3115765196	PlayBackgroundMusic			\Default Work Unit\PlayBackgroundMusic	
 
 State Group	ID	Name			Wwise Object Path	Notes
@@ -11,6 +10,9 @@ State	ID	Name	State Group			Notes
 	748895195	None	MusicBackground			
 	1730564816	Music2	MusicBackground			
 	1730564819	Music1	MusicBackground			
+
+Effect plug-ins	ID	Name	Type				Notes
+	484890516	Church_Small_Wood	Wwise RoomVerb			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	163851461	song1	C:\Users\Marc\Documents\WwiseProjects\Test\.cache\Windows\SFX\song1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\MusicBackground\Music1\Music1\song1		5926976

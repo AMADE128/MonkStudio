@@ -16,7 +16,6 @@ namespace AK
         static const AkUniqueID BIRDS = 352130103U;
         static const AkUniqueID CARENGINE = 2414341763U;
         static const AkUniqueID PLAYBACKGROUNDMUSIC = 3115765196U;
-        static const AkUniqueID STOPALL = 3086540886U;
     } // namespace EVENTS
 
     namespace STATES

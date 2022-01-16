@@ -18,7 +18,7 @@
    {
     "Id": "1355168291",
     "Language": "SFX",
-    "Hash": "3735169826",
+    "Hash": "3461420037",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk"
@@ -26,7 +26,7 @@
    {
     "Id": "3161908922",
     "Language": "SFX",
-    "Hash": "1330952371",
+    "Hash": "1788570741",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -93,11 +93,6 @@
         ]
        }
       ]
-     },
-     {
-      "Id": "3086540886",
-      "Name": "StopAll",
-      "ObjectPath": "\\Events\\Default Work Unit\\StopAll"
      }
     ],
     "StateGroups": [
