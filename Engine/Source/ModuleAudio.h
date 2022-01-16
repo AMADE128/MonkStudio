@@ -40,19 +40,21 @@ public:
 	AudioGroup* GetMasterGroup();
 	void GetNumberOfGroups(int& number, AudioGroup* parent);
 
+	void StopAll();
+
 	Texture* buttonPlay;
 	Texture* buttonStop;
 	Texture* buttonMute;
 	Texture* buttonLoop;
 
-	std::vector<AkGameObjectID> eventsList;
+	std::vector<std::string> eventsList;
 
 private:
 
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 	ALCdevice* device;
 	ALCcontext* context;
-	bool test = true;
+
 	AudioGroup* master;
 
 	ALuint configSource;

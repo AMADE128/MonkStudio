@@ -155,6 +155,14 @@ void ModuleAudio::InitializeWwise(bool& ret)
 	}
 	DEBUG_LOG("Music Engine initialized");
 
+	AkSpatialAudioInitSettings settings;
+	if (AK::SpatialAudio::Init(settings) != AK_Success)
+	{
+		assert(!"Could not initialize the Spatial Audio.");
+		ret = false;
+	}
+	DEBUG_LOG("Spatial Audio initialized");
+
 #ifndef AK_OPTIMIZED
 
 	// Initializing communications
@@ -224,14 +232,6 @@ bool ModuleAudio::Update(float dt)
 {
 	bool ret = true;
 
-	if (test)
-	{
-		const AkGameObjectID id = 100;
-		AK::SoundEngine::RegisterGameObj(id, "ID");
-		AK::SoundEngine::PostEvent("Play", id);
-		test = false;
-	}
-
 	return ret;
 }
 
@@ -247,6 +247,8 @@ bool ModuleAudio::PostUpdate()
 bool ModuleAudio::CleanUp()
 {
 	bool ret = true;
+
+	AK::SoundEngine::UnregisterAllGameObj();
 
 	CleanUpWwise();
 
@@ -322,7 +324,7 @@ void ModuleAudio::LoadSoundEvents(const char* path)
 		for (size_t i = 0; i < size; i++)
 		{
 			JsonParsing eventSB = sceneFile.GetJsonArrayValue(arr, i);
-			eventsList.push_back(eventSB.GetJsonNumber("Id"));
+			eventsList.push_back(eventSB.GetJsonString("Name"));
 		}
 	}
 }
@@ -342,4 +344,9 @@ void ModuleAudio::GetNumberOfGroups(int& number, AudioGroup* parent)
 			GetNumberOfGroups(number, parent->childList[i]);
 		}
 	}
+}
+
+void ModuleAudio::StopAll()
+{
+	AK::SoundEngine::StopAll();
 }

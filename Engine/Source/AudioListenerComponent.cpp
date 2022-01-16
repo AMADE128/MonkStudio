@@ -5,11 +5,15 @@ AudioListenerComponent::AudioListenerComponent(GameObject* own) : listener(0)
 {
 	type = ComponentType::AUDIO_LISTENER;
 	owner = own;
+	LCG randomizer;
+	listener = randomizer.IntFast();
 
 	AK::SoundEngine::RegisterGameObj(listener, "Default Listener");
+	AK::SpatialAudio::RegisterListener(listener);
 	AK::SoundEngine::SetDefaultListeners(&listener, 1);
 
-	channelConfig.SetStandard(AK_ChannelConfigType_Standard);
+	channelConfig.SetStandard(AK_SPEAKER_SETUP_7_1);
+	SetListenerSpatialized(true);
 
 	//OPENAL code
 	/*SetDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
@@ -20,6 +24,8 @@ AudioListenerComponent::AudioListenerComponent(GameObject* own) : listener(0)
 
 AudioListenerComponent::~AudioListenerComponent()
 {
+	AK::SpatialAudio::UnregisterListener(listener);
+	AK::SoundEngine::UnregisterGameObj(listener);
 }
 
 void AudioListenerComponent::OnEditor()

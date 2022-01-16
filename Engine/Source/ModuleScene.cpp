@@ -8,6 +8,7 @@
 #include "FileSystem.h"
 #include "Resource.h"
 #include "ResourceManager.h"
+#include "ModuleAudio.h"
 
 #include <stack>
 
@@ -521,6 +522,7 @@ void ModuleScene::Stop()
 	qTree.Clear();
 	qTree.Create(AABB(float3(-200, -50, -200), float3(200, 50, 200)));
 	gameState = GameState::NOT_PLAYING;
+	app->audio->StopAll();
 }
 
 void ModuleScene::Pause()

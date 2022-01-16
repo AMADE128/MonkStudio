@@ -71,12 +71,12 @@ public:
 private:
 
 	std::shared_ptr<Audio> clip;
-	AkGameObjectID audioClip;
-	AkTransform sourceTransform;
+	std::string audioClip;
+	AkGameObjectID goID;
+	AkSoundPosition soundPos;
 	ALuint source;
 	ALint clipState;
 	std::string currentItem;
-	std::string currentEventName;
 	std::string groupCurrentItem;
 
 	bool mute = false;

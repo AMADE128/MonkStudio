@@ -8,10 +8,15 @@
 #include "GameObject.h"
 #include "OpenAL/AL/al.h"
 
-AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), clipState(0), pendingToPlay(false), audioClip(0)
+AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), clipState(0), pendingToPlay(false), goID(0), audioClip("")
 {
 	owner = _owner;
 	type = ComponentType::AUDIO_SOURCE;
+	LCG randomizer;
+	goID = randomizer.IntFast();
+
+	std::string sourceName = owner->GetName() + std::string(" Audio Source");
+	AK::SoundEngine::RegisterGameObj(goID, sourceName.c_str());
 
 	alGenSources(1, &source);
 	SetRolloff(1);
@@ -27,6 +32,7 @@ AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), 
 AudioSourceComponent::~AudioSourceComponent()
 {
 	alDeleteSources(1, &source);
+	AK::SoundEngine::UnregisterGameObj(goID);
 }
 
 void AudioSourceComponent::OnEditor()
@@ -67,9 +73,9 @@ void AudioSourceComponent::AudioClipSelector()
 	{
 		for (unsigned int i = 0;  i < app->audio->eventsList.size(); i++)
 		{
-			bool is_selected = (currentItem == std::to_string(app->audio->eventsList[i]));
+			bool is_selected = (currentItem == app->audio->eventsList[i]);
 
-			if (ImGui::Selectable(std::to_string(app->audio->eventsList[i]).c_str(), is_selected))
+			if (ImGui::Selectable(app->audio->eventsList[i].c_str(), is_selected))
 			{
 				audioClip = app->audio->eventsList[i];
 				currentItem = app->audio->eventsList[i];
@@ -167,7 +173,8 @@ bool AudioSourceComponent::Update(float dt)
 		SetOrientation(forward, up);
 
 		//Update Source Transform
-		AK::SoundEngine::SetPosition(audioClip, sourceTransform);
+		//AK::SoundEngine::SetPosition(goID, sourceTransform);
+		AK::SoundEngine::SetPosition(goID, soundPos);
 	}
 
 	if (pendingToPlay)
@@ -187,7 +194,10 @@ void AudioSourceComponent::Play(float delay)
 		alGetSource3f(source, AL_POSITION, &x, &y, &z);
 		alSourcePlay(source);
 	}*/
-	AK::SoundEngine::PostEvent(AK::EVENTS::PLAY, audioClip);
+	if (audioClip.c_str() != "")
+	{
+		AK::SoundEngine::PostEvent(audioClip.c_str(), goID);
+	}
 }
 
 void AudioSourceComponent::Pause()
@@ -253,22 +263,26 @@ float AudioSourceComponent::GetVolume()
 
 void AudioSourceComponent::SetPosition(float x, float y, float z)
 {
+	soundPos.SetPosition(x, y, z);
+
 	//OPENAL code
 	//alSource3f(source, AL_POSITION, x, y, z);
-	AkVector newPos = { x, y, z };
-	sourceTransform.SetPosition(newPos);
 }
 
 void AudioSourceComponent::SetPosition(float3 _position)
 {
+	soundPos.SetPosition(_position.x, _position.y, _position.z);
+
 	//OPENAL code
 	//alSource3f(source, AL_POSITION, _position.x, _position.y, _position.z);
-	AkVector newPos = { _position.x, _position.y, _position.z };
-	sourceTransform.SetPosition(newPos);
 }
 
 void AudioSourceComponent::SetOrientation(float3 forward, float3 up)
 {
+	AkVector _forward = { forward.x, forward.y, forward.z };
+	AkVector _up = { up.x, up.y, up.z };
+
+	soundPos.SetOrientation(_forward, _up);
 }
 
 float3 AudioSourceComponent::GetPosition()
@@ -324,6 +338,7 @@ bool AudioSourceComponent::OnSave(JsonParsing& node, JSON_Array* array)
 	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Clip State", clipState);
 	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Min Distance", minDis);
 	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Max Distance", maxDis);
+	file.SetNewJsonString(file.ValueToObject(file.GetRootValue()), "Event Name", audioClip.c_str());
 
 	file.SetNewJsonBool(file.ValueToObject(file.GetRootValue()), "Mute", mute);
 	file.SetNewJsonBool(file.ValueToObject(file.GetRootValue()), "Loop", loop);
@@ -344,6 +359,9 @@ bool AudioSourceComponent::OnSave(JsonParsing& node, JSON_Array* array)
 bool AudioSourceComponent::OnLoad(JsonParsing& node)
 {
 	playOnAwake = node.GetJsonBool("Play on Awake");
+
+	audioClip = node.GetJsonString("Event Name");
+	currentItem = audioClip;
 
 	source = node.GetJsonNumber("Source");
 	clipState = node.GetJsonNumber("Clip State");

@@ -27,6 +27,6 @@ public:
 
 private:
 	AkGameObjectID listener;
-	AkTransform listenerTransform;
+	AkListenerPosition listenerTransform;
 	AkChannelConfig channelConfig;
 };

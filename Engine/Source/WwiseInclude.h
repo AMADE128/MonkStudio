@@ -9,6 +9,7 @@
 #include <AK/MusicEngine/Common/AkMusicEngine.h>
 #include <AK/SoundEngine/Common/AkTypes.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h>
+#include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 #include "Wwise_IDs.h"
 
 #endif
