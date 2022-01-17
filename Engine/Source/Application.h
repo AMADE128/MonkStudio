@@ -18,7 +18,7 @@ class FileSystem;
 class ModuleAudio;
 
 #define CONFIG_FILENAME	"config.json"
-#define APPLICATION_NAME "Ragnar Engine"
+#define APPLICATION_NAME "Monk Studio Engine"
 #define ORGANIZATION_NAME "Yggdrasil Studios"
 
 class Application

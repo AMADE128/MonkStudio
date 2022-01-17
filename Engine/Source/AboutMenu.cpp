@@ -19,9 +19,9 @@ AboutMenu::~AboutMenu()
 
 bool AboutMenu::Update(float dt)
 {
-	if (ImGui::Begin("About Ragnar Engine", &active))
+	if (ImGui::Begin("About Monk Studio", &active))
 	{
-		ImGui::TextWrapped("Ragnar Engine v1");
+		ImGui::TextWrapped("Monk Studio v1");
 		ImGui::NewLine();
 		ImGui::TextWrapped
 		(" The purpose of this project is to create a friendly-user, well optimized Game Engine for the subject VideoGame Engines from the 3rd year. The short term plan is to implement the basic features of a Game Engine, such as loading models, working in a 3D environment, etc..."

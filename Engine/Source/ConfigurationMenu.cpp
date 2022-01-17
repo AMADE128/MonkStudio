@@ -76,7 +76,7 @@ bool ConfigurationMenu::Update(float dt)
 	}
 	if (ImGui::CollapsingHeader("Application"))
 	{
-		ImGui::Text("Ragnar Engine");
+		ImGui::Text("Monk Studio");
 		ImGui::Text("UPC CITM");
 
 		int framerate = app->GetFPSLimit();
