@@ -5,11 +5,11 @@
   "SchemaVersion": "12",
   "SoundbankVersion": "140",
   "RootPaths": {
-   "ProjectRoot": "C:\\Users\\Marc\\Documents\\WwiseProjects\\Test\\",
-   "SourceFilesRoot": "C:\\Users\\Marc\\Documents\\WwiseProjects\\Test\\.cache\\Windows\\",
-   "SoundBanksRoot": "C:\\Users\\Marc\\Documents\\GitHub\\MonkStudio\\Output\\Assets\\Wwise\\",
+   "ProjectRoot": "D:\\Descargas\\Test\\Test\\",
+   "SourceFilesRoot": "D:\\Descargas\\Test\\Test\\.cache\\Windows\\",
+   "SoundBanksRoot": "D:\\Github\\MonkStudio\\Output\\Assets\\Wwise\\",
    "ExternalSourcesInputFile": "",
-   "ExternalSourcesOutputRoot": "C:\\Users\\Marc\\Documents\\WwiseProjects\\Test\\GeneratedSoundBanks\\Windows"
+   "ExternalSourcesOutputRoot": "D:\\Descargas\\Test\\Test\\GeneratedSoundBanks\\Windows"
   },
   "DialogueEvents": [],
   "StreamedFiles": [],
@@ -18,42 +18,75 @@
    {
     "Id": "1355168291",
     "Language": "SFX",
-    "Hash": "3461420037",
+    "Hash": "1109738140",
     "ObjectPath": "Init",
     "ShortName": "Init",
-    "Path": "Init.bnk"
+    "Path": "Init.bnk",
+    "IncludedAuxBusses": [
+     {
+      "Id": "348963605",
+      "Name": "Reverb",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\Reverb"
+     },
+     {
+      "Id": "1160234136",
+      "Name": "Normal",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\Normal"
+     }
+    ]
    },
    {
     "Id": "3161908922",
     "Language": "SFX",
-    "Hash": "2643175235",
+    "Hash": "25637529",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
     "IncludedEvents": [
      {
-      "Id": "352130103",
-      "Name": "Birds",
-      "ObjectPath": "\\Events\\Default Work Unit\\Birds",
-      "IncludedMemoryFiles": [
-       {
-        "Id": "983408888",
-        "Language": "SFX",
-        "ShortName": "birds.wav",
-        "Path": "SFX\\birds_D79FB2B7.wem"
-       }
-      ]
+      "Id": "2190380339",
+      "Name": "DisableBypass",
+      "ObjectPath": "\\Events\\Default Work Unit\\DisableBypass"
      },
      {
-      "Id": "2414341763",
-      "Name": "CarEngine",
-      "ObjectPath": "\\Events\\Default Work Unit\\CarEngine",
+      "Id": "3559920456",
+      "Name": "EnableBypass",
+      "ObjectPath": "\\Events\\Default Work Unit\\EnableBypass"
+     },
+     {
+      "Id": "1256202815",
+      "Name": "Play",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play",
       "IncludedMemoryFiles": [
        {
         "Id": "448059398",
         "Language": "SFX",
         "ShortName": "car_engine.wav",
         "Path": "SFX\\car_engine_D79FB2B7.wem"
+       },
+       {
+        "Id": "983408888",
+        "Language": "SFX",
+        "ShortName": "birds.wav",
+        "Path": "SFX\\birds_D79FB2B7.wem"
+       }
+      ],
+      "SwitchContainers": [
+       {
+        "SwitchValue": "{95D22397-3FCA-4778-9A60-E3486189AEAC}",
+        "Media": [
+         {
+          "Id": "983408888"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{CA27F7CC-1209-4FD7-BAF7-307E32419833}",
+        "Media": [
+         {
+          "Id": "448059398"
+         }
+        ]
        }
       ]
      },
@@ -119,6 +152,28 @@
         "Name": "Music2",
         "ObjectPath": "\\States\\Default Work Unit\\MusicBackground\\Music2",
         "GUID": "{C6EF0923-55FB-403F-A55B-B3092081D0ED}"
+       }
+      ]
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "3161908922",
+      "Name": "Main",
+      "ObjectPath": "\\Switches\\Default Work Unit\\Main",
+      "GUID": "{A12E86DE-0E4E-4390-A27F-1359AD238A07}",
+      "Switches": [
+       {
+        "Id": "1544377644",
+        "Name": "Bird",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Main\\Bird",
+        "GUID": "{95D22397-3FCA-4778-9A60-E3486189AEAC}"
+       },
+       {
+        "Id": "983016381",
+        "Name": "Car",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Main\\Car",
+        "GUID": "{CA27F7CC-1209-4FD7-BAF7-307E32419833}"
        }
       ]
      }

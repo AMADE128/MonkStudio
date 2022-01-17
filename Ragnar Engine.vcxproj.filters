@@ -316,6 +316,9 @@
     <ClInclude Include="Dependencies\Wwise\include\Common\AkFileLocationBase.h">
       <Filter>Sources\Libraries\AK</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Source\AudioRoomComponent.h">
+      <Filter>Sources\GameObject\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Source\ModuleCamera3D.cpp">
@@ -524,6 +527,9 @@
     </ClCompile>
     <ClCompile Include="Dependencies\Wwise\include\Common\AkFileLocationBase.cpp">
       <Filter>Sources\Libraries\AK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\AudioRoomComponent.cpp">
+      <Filter>Sources\GameObject\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

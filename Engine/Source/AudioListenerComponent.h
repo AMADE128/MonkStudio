@@ -25,6 +25,8 @@ public:
 	void SetOrientation(float3 forward, float3 up);
 	void SetDistanceModel(ALenum disModel);
 
+	AkGameObjectID GetListenerID();
+
 private:
 	AkGameObjectID listener;
 	AkListenerPosition listenerTransform;

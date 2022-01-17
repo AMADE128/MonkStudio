@@ -4,6 +4,7 @@
 #include "ModuleScene.h"
 #include "Globals.h"
 #include "AudioSourceComponent.h"
+#include "AudioRoomComponent.h"
 
 #include "JsonParsing.h"
 #include "VertexBuffer.h"
@@ -135,6 +136,11 @@ void GameObject::DrawEditor()
 			CreateComponent(ComponentType::AUDIO_LISTENER);
 			newComponent = false;
 		}
+		if (ImGui::Selectable("Audio Room Component"))
+		{
+			CreateComponent(ComponentType::AUDIO_ROOM);
+			newComponent = false;
+		}
 		else if (!ImGui::IsAnyItemHovered() && ((ImGui::GetIO().MouseClicked[0] || ImGui::GetIO().MouseClicked[1])))
 		{
 			newComponent = false;
@@ -252,6 +258,9 @@ Component* GameObject::CreateComponent(ComponentType type)
 		break;
 	case ComponentType::AUDIO_LISTENER:
 		component = new AudioListenerComponent(this);
+		break;
+	case ComponentType::AUDIO_ROOM:
+		component = new AudioRoomComponent(this);
 		break;
 	case ComponentType::MATERIAL:
 		component = new MaterialComponent(this);

@@ -50,7 +50,7 @@ namespace AK
 }
 
 
-ModuleAudio::ModuleAudio() : buttonPlay(nullptr), buttonLoop(nullptr), buttonMute(nullptr), buttonStop(nullptr), device(nullptr), context(nullptr), master(nullptr), configSource(0)
+ModuleAudio::ModuleAudio() : buttonPlay(nullptr), buttonLoop(nullptr), buttonMute(nullptr), buttonStop(nullptr), device(nullptr), context(nullptr), master(nullptr), configSource(0), defaultListener(nullptr)
 {
 }
 
@@ -68,7 +68,7 @@ bool ModuleAudio::Init(JsonParsing& node)
 
 	LoadSoundEvents("Assets/Wwise/SoundbanksInfo.json");
 
-	master = new AudioGroup("Master", nullptr);
+	master = new AudioGroup("Default", nullptr);
 
 	return ret;
 }
@@ -315,16 +315,44 @@ void ModuleAudio::LoadSoundEvents(const char* path)
 		val = name.GetRootValue();
 		JSON_Object* obj = name.ValueToObject(val);
 		JSON_Array* arr = name.GetJsonArray(obj, "SoundBanks");
-
 		JsonParsing mainSB = sceneFile.GetJsonArrayValue(arr, 1);
 		val = mainSB.GetRootValue();
 		obj = mainSB.ValueToObject(val);
-		arr = mainSB.GetJsonArray(obj, "IncludedEvents");
-		size_t size = sceneFile.GetJsonArrayCount(arr);
+
+		//Load Included Events
+		JSON_Array* eventsArr = mainSB.GetJsonArray(obj, "IncludedEvents");
+		size_t size = sceneFile.GetJsonArrayCount(eventsArr);
 		for (size_t i = 0; i < size; i++)
 		{
-			JsonParsing eventSB = sceneFile.GetJsonArrayValue(arr, i);
+			JsonParsing eventSB = mainSB.GetJsonArrayValue(eventsArr, i);
 			eventsList.push_back(eventSB.GetJsonString("Name"));
+		}
+
+		//Load State Groups
+		JSON_Array* statesGroupsArr = mainSB.GetJsonArray(obj, "StateGroups");
+		JsonParsing state = mainSB.GetJsonArrayValue(statesGroupsArr, 0);
+		JSON_Value* statesVal = state.GetRootValue();
+		JSON_Object* statesObj = state.ValueToObject(statesVal);
+		JSON_Array* statesArr = state.GetJsonArray(statesObj, "States");
+		size = sceneFile.GetJsonArrayCount(statesArr);
+		for (size_t i = 0; i < size; i++)
+		{
+			JsonParsing eventSB = sceneFile.GetJsonArrayValue(statesArr, i);
+			statesList.push_back(eventSB.GetJsonString("Name"));
+		}
+
+		//Load Switch Groups
+		JSON_Array* swichGroupsArr = mainSB.GetJsonArray(obj, "SwitchGroups");
+		JsonParsing switchGroups = mainSB.GetJsonArrayValue(swichGroupsArr, 0);
+		JSON_Value* switchVal = switchGroups.GetRootValue();
+		JSON_Object* switchObj = switchGroups.ValueToObject(switchVal);
+		JSON_Array* switchesArr = switchGroups.GetJsonArray(switchObj, "Switches");
+
+		size = sceneFile.GetJsonArrayCount(switchesArr);
+		for (size_t i = 0; i < size; i++)
+		{
+			JsonParsing eventSB = sceneFile.GetJsonArrayValue(switchesArr, i);
+			switchList.push_back(eventSB.GetJsonString("Name"));
 		}
 	}
 }

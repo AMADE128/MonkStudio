@@ -13,8 +13,9 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID BIRDS = 352130103U;
-        static const AkUniqueID CARENGINE = 2414341763U;
+        static const AkUniqueID DISABLEBYPASS = 2190380339U;
+        static const AkUniqueID ENABLEBYPASS = 3559920456U;
+        static const AkUniqueID PLAY = 1256202815U;
         static const AkUniqueID PLAYBACKGROUNDMUSIC = 3115765196U;
     } // namespace EVENTS
 
@@ -33,6 +34,21 @@ namespace AK
         } // namespace MUSICBACKGROUND
 
     } // namespace STATES
+
+    namespace SWITCHES
+    {
+        namespace MAIN
+        {
+            static const AkUniqueID GROUP = 3161908922U;
+
+            namespace SWITCH
+            {
+                static const AkUniqueID BIRD = 1544377644U;
+                static const AkUniqueID CAR = 983016381U;
+            } // namespace SWITCH
+        } // namespace MAIN
+
+    } // namespace SWITCHES
 
     namespace GAME_PARAMETERS
     {
@@ -61,6 +77,12 @@ namespace AK
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
         static const AkUniqueID MOTION_FACTORY_BUS = 985987111U;
     } // namespace BUSSES
+
+    namespace AUX_BUSSES
+    {
+        static const AkUniqueID NORMAL = 1160234136U;
+        static const AkUniqueID REVERB = 348963605U;
+    } // namespace AUX_BUSSES
 
     namespace AUDIO_DEVICES
     {

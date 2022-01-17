@@ -88,12 +88,14 @@ private:
 	GameState gameState;
 	bool frameSkip;
 
+	int musicFrameCounter = 0;
 	bool resetQuadtree;
 
 	GameTimer gameTimer;
 	GameObject* goToRecalculate;
 
 	GameObject* car;
+	GameObject* musicGO;
 
 	std::string sceneDir;
 };

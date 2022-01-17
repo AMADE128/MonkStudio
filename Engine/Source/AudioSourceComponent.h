@@ -21,6 +21,8 @@ public:
 	void OnEditor() override;
 	void AudioClipSelector();
 	void OutputGroupSelector();
+	void SwitchClipSelector();
+	void StateClipSelector();
 	bool OnLoad(JsonParsing& node) override;
 	bool OnSave(JsonParsing& node, JSON_Array* array) override;
 	void RecursiveGroupNameList(std::vector<std::string>& nameList, AudioGroup* parent);
@@ -31,6 +33,10 @@ public:
 	void Pause();
 	void Stop();
 	ALint GetClipState();
+
+	//Set Audio Clip state functions
+	void SetMusicState(const char* state);
+	void SetSFXSwitch(const char* _stateID);
 
 	//Source Loop Functions
 	void SetLoop(bool _loop);
@@ -67,17 +73,25 @@ public:
 
 	bool pendingToPlay;
 	bool playOnAwake = true;
+	std::string state;
 
 private:
 
-	std::shared_ptr<Audio> clip;
 	std::string audioClip;
+	std::string switchName;
 	AkGameObjectID goID;
 	AkSoundPosition soundPos;
+
+	std::shared_ptr<Audio> clip;
 	ALuint source;
 	ALint clipState;
+
+	bool isMusic;
+
 	std::string currentItem;
 	std::string groupCurrentItem;
+	std::string switchCurrentItem;
+	std::string stateCurrentItem;
 
 	bool mute = false;
 	bool loop = false;

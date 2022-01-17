@@ -9,6 +9,7 @@
 #include "Resource.h"
 #include "ResourceManager.h"
 #include "ModuleAudio.h"
+#include "AudioSourceComponent.h"
 
 #include <stack>
 
@@ -39,6 +40,8 @@ bool ModuleScene::Start()
 	ResourceManager::GetInstance()->ImportAllResources();
 	ImportPrimitives();
 	ResourceManager::GetInstance()->LoadResource(std::string("Assets/Resources/Street.fbx"));
+
+	LoadScene("Assets/Scenes/AudioDemo.ragnar");
 
 	return true;
 }
@@ -109,15 +112,31 @@ bool ModuleScene::Update(float dt)
 
 	if (gameState == GameState::PLAYING)
 	{
-		if (root->GetNameString() == "AudioDemo")
+		car = GetGOByName("Red Car");
+		if (car != nullptr && car->GetActive())
 		{
-			car = GetGOByName("Red Car");
-			if (car != nullptr && car->GetActive())
-			{
-				float3 oldPos = car->GetComponent<TransformComponent>()->GetPosition();
+			float3 oldPos = car->GetComponent<TransformComponent>()->GetPosition();
 
-				if (oldPos.z <= -34) car->GetComponent<TransformComponent>()->SetPosition(float3(oldPos.x, oldPos.y, 47));
-				else car->GetComponent<TransformComponent>()->SetPosition(float3(oldPos.x, oldPos.y, oldPos.z - 0.5f));
+			if (oldPos.z <= -34) car->GetComponent<TransformComponent>()->SetPosition(float3(oldPos.x, oldPos.y, 47));
+			else car->GetComponent<TransformComponent>()->SetPosition(float3(oldPos.x, oldPos.y, oldPos.z - 0.5f));
+		}
+
+		musicGO = GetGOByName("Music");
+		if (musicGO)
+		{
+			musicFrameCounter++;
+			if (musicFrameCounter >= 1000)
+			{
+				std::string stateName = musicGO->GetComponent<AudioSourceComponent>()->state;
+				if (stateName == "Music1")
+				{
+					musicGO->GetComponent<AudioSourceComponent>()->SetMusicState("Music2");
+				}
+				else if (stateName == "Music2")
+				{
+					musicGO->GetComponent<AudioSourceComponent>()->SetMusicState("Music1");
+				}
+				musicFrameCounter = 0;
 			}
 		}
 	}
@@ -170,6 +189,7 @@ bool ModuleScene::CleanUp()
 {
 	RELEASE(root);
 	RELEASE(car);
+	RELEASE(musicGO);
 
 	return true;
 }

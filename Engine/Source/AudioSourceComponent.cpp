@@ -8,7 +8,7 @@
 #include "GameObject.h"
 #include "OpenAL/AL/al.h"
 
-AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), clipState(0), pendingToPlay(false), goID(0), audioClip("")
+AudioSourceComponent::AudioSourceComponent(GameObject* _owner) : clip(nullptr), clipState(0), pendingToPlay(false), goID(0), audioClip(""), switchName(""), isMusic(false)
 {
 	owner = _owner;
 	type = ComponentType::AUDIO_SOURCE;
@@ -41,26 +41,36 @@ void AudioSourceComponent::OnEditor()
 
 	if (ImGui::CollapsingHeader("Audio Source"))
 	{
+		Checkbox(this, "Active", active);
+
 		//Audio clip selector
 		AudioClipSelector();
+
+		if (audioClip == "Play") isMusic = false;
+		else if (audioClip == "PlayBackgroundMusic") isMusic = true;
+
+		if (isMusic) StateClipSelector();
+		else SwitchClipSelector();
 
 		//Group output selector
 		OutputGroupSelector();
 
-		Checkbox(this, "Active", active);
-		Checkbox(this, "Mute", mute);
-		Checkbox(this, "Play On Awake", playOnAwake);
-		ImGui::PushID(this);
-		if (ImGui::Checkbox("Loop", &loop)) SetLoop(loop);
-		ImGui::PopID();
+		//if (ImGui::Checkbox("Mute", &mute))	SetVolume(0.0f);
 
-		ImGui::SliderFloat("Volume", &volume, 0.0f, 1.0f, "%.2f");
-		ImGui::SliderFloat("Pitch", &pitch, 0.1f, 0.0f, "%.2f");
+		Checkbox(this, "Play On Awake", playOnAwake);
+
+		/*ImGui::PushID(this);
+		if (ImGui::Checkbox("Loop", &loop)) SetLoop(loop);
+		ImGui::PopID();*/
+
+		if (ImGui::SliderFloat("Volume", &volume, 0.0f, 1.0f, "%.2f")) SetVolume(volume);
+
+		/*ImGui::SliderFloat("Pitch", &pitch, 0.1f, 0.0f, "%.2f");
 		ImGui::SliderFloat("Stereo Pan", &stereoPan, 0.1f, -1.0f, "%.2f");
 
 		ImGui::DragFloat("Doppler Level", &dopplerLevel, 0.1f, 0.0f, 5.0f, "%.2f");
 		ImGui::DragInt("Min Distance", &minDis, 0.1f, 0.0f, 500.0f);
-		ImGui::DragInt("Max Distance", &maxDis, 0.1f, 0.0f, 500.0f);
+		ImGui::DragInt("Max Distance", &maxDis, 0.1f, 0.0f, 500.0f);*/
 	}
 
 	ImGui::PopID();
@@ -145,6 +155,48 @@ void AudioSourceComponent::OutputGroupSelector()
 	}
 }
 
+void AudioSourceComponent::SwitchClipSelector()
+{
+	if (ImGui::BeginCombo("Switch Clip", switchCurrentItem.c_str()))
+	{
+		for (unsigned int i = 0; i < app->audio->switchList.size(); i++)
+		{
+			bool is_selected = (switchCurrentItem == app->audio->switchList[i]);
+
+			if (ImGui::Selectable(app->audio->switchList[i].c_str(), is_selected))
+			{
+				switchName = app->audio->switchList[i];
+				switchCurrentItem = app->audio->switchList[i];
+				SetSFXSwitch(switchName.c_str());
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+}
+
+void AudioSourceComponent::StateClipSelector()
+{
+	if (ImGui::BeginCombo("State Clip", stateCurrentItem.c_str()))
+	{
+		for (unsigned int i = 0; i < app->audio->statesList.size(); i++)
+		{
+			bool is_selected = (stateCurrentItem == app->audio->statesList[i]);
+
+			if (ImGui::Selectable(app->audio->statesList[i].c_str(), is_selected))
+			{
+				state = app->audio->statesList[i];
+				stateCurrentItem = app->audio->statesList[i];
+				SetMusicState(state.c_str());
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+}
+
 void AudioSourceComponent::RecursiveGroupNameList(std::vector<std::string>& nameList, AudioGroup* parent)
 {
 	if (parent != nullptr)
@@ -196,6 +248,8 @@ void AudioSourceComponent::Play(float delay)
 	}*/
 	if (audioClip.c_str() != "")
 	{
+		SetSFXSwitch(switchName.c_str());
+		SetMusicState(state.c_str());
 		AK::SoundEngine::PostEvent(audioClip.c_str(), goID);
 	}
 }
@@ -214,6 +268,16 @@ ALint AudioSourceComponent::GetClipState()
 {
 	alGetSourcei(source, AL_SOURCE_STATE, &clipState);
 	return clipState;
+}
+
+void AudioSourceComponent::SetMusicState(const char* state)
+{
+	AK::SoundEngine::SetState("MusicBackGround", state);
+}
+
+void AudioSourceComponent::SetSFXSwitch(const char* _stateID)
+{
+	AK::SoundEngine::SetSwitch("Main", _stateID, goID);
 }
 
 void AudioSourceComponent::SetLoop(bool _loop)
@@ -250,8 +314,11 @@ void AudioSourceComponent::SetClipBuffer(std::shared_ptr<Resource> _clip)
 
 void AudioSourceComponent::SetVolume(float newVolume)
 {
-	alSourcef(source, AL_GAIN, newVolume);
-	volume = newVolume;
+	AK::SoundEngine::SetGameObjectOutputBusVolume(goID, app->audio->defaultListener->GetListenerID(), newVolume);
+
+	//OPENAL code
+	/*alSourcef(source, AL_GAIN, newVolume);
+	volume = newVolume;*/
 }
 
 float AudioSourceComponent::GetVolume()
@@ -332,6 +399,8 @@ bool AudioSourceComponent::OnSave(JsonParsing& node, JSON_Array* array)
 {
 	JsonParsing file = JsonParsing();
 
+	file.SetNewJsonString(file.ValueToObject(file.GetRootValue()), "AKGameObject Id", std::to_string(goID).c_str());
+
 	file.SetNewJsonBool(file.ValueToObject(file.GetRootValue()), "Play on Awake", playOnAwake);
 
 	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Source", source);
@@ -339,6 +408,8 @@ bool AudioSourceComponent::OnSave(JsonParsing& node, JSON_Array* array)
 	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Min Distance", minDis);
 	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Max Distance", maxDis);
 	file.SetNewJsonString(file.ValueToObject(file.GetRootValue()), "Event Name", audioClip.c_str());
+	file.SetNewJsonString(file.ValueToObject(file.GetRootValue()), "Switch Name", switchName.c_str());
+	file.SetNewJsonString(file.ValueToObject(file.GetRootValue()), "State Name", state.c_str());
 
 	file.SetNewJsonBool(file.ValueToObject(file.GetRootValue()), "Mute", mute);
 	file.SetNewJsonBool(file.ValueToObject(file.GetRootValue()), "Loop", loop);
@@ -362,6 +433,12 @@ bool AudioSourceComponent::OnLoad(JsonParsing& node)
 
 	audioClip = node.GetJsonString("Event Name");
 	currentItem = audioClip;
+
+	switchName = node.GetJsonString("Switch Name");
+	switchCurrentItem = switchName;
+	
+	state = node.GetJsonString("State Name");
+	stateCurrentItem = state;
 
 	source = node.GetJsonNumber("Source");
 	clipState = node.GetJsonNumber("Clip State");

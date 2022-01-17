@@ -13,6 +13,8 @@
 
 #include <vector>
 
+class AudioListenerComponent;
+
 class ModuleAudio : public Module
 {
 public:
@@ -48,6 +50,10 @@ public:
 	Texture* buttonLoop;
 
 	std::vector<std::string> eventsList;
+	std::vector<std::string> switchList;
+	std::vector<std::string> statesList;
+
+	AudioListenerComponent* defaultListener;
 
 private:
 

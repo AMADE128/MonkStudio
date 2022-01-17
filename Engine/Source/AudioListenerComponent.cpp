@@ -1,4 +1,7 @@
+
 #include "AudioListenerComponent.h"
+#include "Application.h"
+#include "ModuleAudio.h"
 #include "GameObject.h"
 
 AudioListenerComponent::AudioListenerComponent(GameObject* own) : listener(0)
@@ -10,6 +13,7 @@ AudioListenerComponent::AudioListenerComponent(GameObject* own) : listener(0)
 
 	AK::SoundEngine::RegisterGameObj(listener, "Default Listener");
 	AK::SpatialAudio::RegisterListener(listener);
+
 	AK::SoundEngine::SetDefaultListeners(&listener, 1);
 
 	channelConfig.SetStandard(AK_SPEAKER_SETUP_7_1);
@@ -20,12 +24,14 @@ AudioListenerComponent::AudioListenerComponent(GameObject* own) : listener(0)
 	SetListenerPosition(0.0f, 0.0f, 0.0f);
 	SetListenerVelocity(0.0f, 0.0f, 0.0f);
 	SetListenerOrientation(float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));*/
+
+	app->audio->defaultListener = this;
 }
 
 AudioListenerComponent::~AudioListenerComponent()
 {
-	AK::SpatialAudio::UnregisterListener(listener);
-	AK::SoundEngine::UnregisterGameObj(listener);
+	//AK::SpatialAudio::UnregisterListener(listener);
+	//AK::SoundEngine::UnregisterGameObj(listener);
 }
 
 void AudioListenerComponent::OnEditor()
@@ -48,7 +54,7 @@ bool AudioListenerComponent::Update(float dt)
 	{
 		//Set Listener orientation
 		Quat rot = owner->GetComponent<TransformComponent>()->GetRotation();
-		float3 forward = rot.Mul(float3(0.0f, 0.0f, 1.0f));
+		float3 forward = rot.Mul(float3(0.0f, 0.0f, -1.0f));
 		float3 up = rot.Mul(float3(0.0f, 1.0f, 0.0f));
 		SetOrientation(forward, up);
 
@@ -98,11 +104,17 @@ void AudioListenerComponent::SetDistanceModel(ALenum disModel)
 	alDistanceModel(disModel);
 }
 
+AkGameObjectID AudioListenerComponent::GetListenerID()
+{
+	return listener;
+}
+
 bool AudioListenerComponent::OnSave(JsonParsing& node, JSON_Array* array)
 {
 	JsonParsing file = JsonParsing();
 
 	file.SetNewJsonNumber(file.ValueToObject(file.GetRootValue()), "Type", (int)type);
+	node.SetValueToArray(array, file.GetRootValue());
 
 	return true;
 }
