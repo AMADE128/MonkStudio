@@ -56,7 +56,7 @@ Pause button will pause the game preview until you hit it again. When having the
 
 ## Features
 
-Audio Demo: <href="WebPage/DemoVideo.mp4">
+Audio Demo: <video src="WebPage/DemoVideo.mp4">
 
 ### v1.0
 
